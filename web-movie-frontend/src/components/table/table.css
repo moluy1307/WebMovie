@@ -1,0 +1,271 @@
+table {
+    width: 100%;
+    border-radius: 4px;
+    border-collapse: separate;
+    border: unset;
+    border-spacing: unset;
+}
+
+thead th {
+    -moz-user-select: none !important;
+    -webkit-touch-callout: none !important;
+    -webkit-user-select: none !important;
+    -khtml-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+}
+
+tr {
+    height: 48px;
+    min-height: 48px;
+    max-height: 48px;
+    background-color: #fff;
+
+    /* display: flex;
+    align-items: center; */
+}
+
+th {
+    position: sticky;
+    top: 0;
+    text-transform: uppercase;
+    background-color: #eeeeee !important;
+    border-right: 1px solid #e0e0e0;
+    z-index: 13;
+    padding: 0 16px;
+}
+
+td {
+    border-bottom: 1px solid #e0e0e0;
+    padding: 0 16px;
+    border-right: 1px solid #e0e0e0;
+    word-wrap: break-word;
+}
+
+th:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 14;
+    background-color: #eeeeee;
+}
+
+td:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 11;
+    background-color: #fff;
+    word-wrap: break-word;
+}
+
+th:last-child {
+    position: sticky;
+    right: 0;
+
+    z-index: 13;
+    background-color: #e0e0e0;
+    border-left: 1px solid #eeeeee;
+}
+
+td:last-child {
+    position: sticky;
+    right: 0;
+    /* z-index: 11; */
+    background-color: #fff;
+    border-left: 1px solid #eeeeee;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-salary {
+    text-align: right;
+    border-right: none !important;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-function-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+table tbody .circle {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1px solid #e0e0e0;
+    background-color: #eeeeee;
+    margin-right: 8px;
+}
+
+@keyframes shimmer {
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+table tbody .row-table:hover {
+    background-color: #f2f2f2;
+}
+
+table tbody .row-child:hover {
+    background-color: transparent;
+}
+
+table tbody .row-table:hover td {
+    background-color: #f2f2f2 !important;
+}
+
+table tbody .row-table:hover button {
+    background-color: #f2f2f2;
+}
+
+table tbody .row-child td {
+    word-break: break-word;
+}
+
+.column-150 {
+    min-width: 150px;
+}
+
+.column-230 {
+    min-width: 230px;
+}
+
+.column-120 {
+    min-width: 120px;
+}
+
+.column-150-imp {
+    min-width: 150px !important;
+    max-width: 150px !important;
+    width: 150px !important;
+}
+
+.column-230-imp {
+    min-width: 230px;
+    max-width: 230px;
+    width: 230px !important;
+}
+
+.column-240-imp {
+    min-width: 240px;
+    max-width: 240px;
+    width: 235px !important;
+}
+
+.column-64 {
+    width: 64px;
+    height: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.col-explain {
+    width: 370px !important;
+    min-width: 370px !important;
+    max-width: 370px !important;
+}
+
+.column-120-imp {
+    min-width: 120px;
+    max-width: 120px;
+    width: 120px !important;
+}
+
+.element-col-150 {
+    display: flex;
+    justify-content: flex-end;
+    width: 125px;
+}
+
+.element-col-120 {
+    width: 95px;
+    padding: 10px 0;
+}
+
+.element-col-230 {
+    display: flex;
+    justify-content: flex-end;
+    width: 205px;
+    padding-right: 30px;
+}
+
+.column-16 {
+    min-width: 16px;
+    max-width: 16px;
+    widows: 16px;
+    padding: 0;
+    border: none;
+    background-color: #fff !important;
+}
+
+.column-20 {
+    min-width: 20px;
+    max-width: 20px;
+    widows: 20px;
+    padding: 0;
+    border: none;
+    background-color: #fff !important;
+}
+
+.column-24 {
+    min-width: 24px;
+    max-width: 24px;
+    widows: 24px;
+    padding: 0;
+    border: none;
+    background-color: #eeeff1 !important;
+}
+
+/* Title lương */
+.title-salary {
+    min-width: 120px;
+    border-right: none;
+}
+
+/* Title chức năng */
+.title-function {
+    min-width: 120px;
+    border-right: none;
+    border-left: 1px solid #e0e0e0 !important;
+}
+
+.columnIsSelected {
+    z-index: 12 !important;
+}
+
+.is-row-root {
+    font-weight: 700 !important;
+}
+
+.column-extend {
+    display: flex;
+    column-gap: 8px;
+}
+
+.element-child {
+    width: 100%;
+    position: relative;
+    display: flex;
+}
+
+.row-child .table-child table tbody .br-none {
+    position: sticky;
+    right: 0;
+    left: 30px;
+}
+
+.rewrite-td {
+    z-index: 12 !important;
+}
