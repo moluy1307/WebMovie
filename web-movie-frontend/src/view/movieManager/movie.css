@@ -1,0 +1,342 @@
+.form {
+    width: 900px;
+    padding: 24px 24px 12px 24px;
+    background-color: #fff;
+    /* display: none; */
+}
+
+.form-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    /* position: relative; */
+}
+
+.frm-header-left {
+    display: flex;
+    column-gap: 35px;
+    align-items: center;
+}
+
+.frm-title {
+    color: #1f1f1f;
+    font-size: 2.4rem;
+    font-weight: 700;
+}
+
+.content-gap-12 {
+    display: flex;
+    column-gap: 6px;
+}
+
+.content-flex {
+    display: flex;
+    column-gap: 32px;
+    margin-bottom: 32px;
+}
+
+.content-element {
+    display: flex;
+    flex: 1;
+    column-gap: 8px;
+}
+
+/* .infor {
+    display: flex;
+    flex-direction: column;
+} */
+
+.w-content {
+    width: 404px;
+}
+
+.frm-manual {
+    width: 150px;
+}
+
+.frm-cal {
+    flex: 1;
+}
+
+.content-element {
+    display: flex;
+    column-gap: 8px;
+}
+
+.m-row {
+    display: flex;
+    height: 32px;
+    column-gap: 12px;
+    align-items: center;
+}
+
+.line {
+    padding-bottom: 32px;
+    border-bottom: 1px solid #b8bcc3;
+}
+
+.btn-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 20px;
+}
+
+.box-error {
+    /* position: relative;
+    justify-content: center; */
+    display: block;
+}
+
+.button-wrapper {
+    position: relative;
+    width: 150px;
+    text-align: center;
+    /* margin: 20% auto; */
+    margin: 0 auto;
+}
+
+.button-wrapper span.label {
+    position: relative;
+    z-index: 0;
+    display: inline-block;
+    width: 100%;
+    background: #50b83c;
+    /* background: #00bfff; */
+    cursor: pointer;
+    color: #fff;
+    padding: 10px 0;
+    text-transform: uppercase;
+    font-size: 12px;
+}
+
+.upload-box {
+    display: inline-block;
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 50px;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.master-detail {
+    flex: 1;
+    height: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.master-section {
+    /* background-color: #0075c0; */
+    background-color: #fff !important;
+    height: 50%;
+    overflow: auto;
+    position: relative;
+}
+
+.detail-section {
+    background-color: #fff !important;
+    flex: 1;
+    height: 0;
+    overflow: auto;
+    margin-bottom: 8px;
+}
+
+.divider-section {
+    height: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.icon-extend-table {
+    width: 48px;
+    height: 13px;
+    position: relative;
+    background-color: #d4d7dc;
+}
+
+.tab-item {
+    padding: 4px 16px;
+    display: inline-block;
+    border: 1px solid #e0e0e0;
+    background: #f2ebbf;
+    border-radius: 5px 5px 0 0;
+    border-bottom: 2px solid var(--tab__border-color);
+    box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.16);
+    font-weight: 700;
+}
+
+.btn-batch-excution {
+    border: 1px solid #3b3c3f;
+    width: 175px;
+    cursor: pointer;
+    height: 32px;
+    border-radius: 4px;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    position: relative;
+    font-weight: 700;
+}
+
+.icon-batch-excution {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: transparent;
+    top: 6px;
+    right: 12px;
+}
+
+.icon-batch-excution:hover {
+    background-color: transparent;
+}
+
+.disabled-table {
+    position: absolute;
+    width: 175px;
+    height: 32px;
+    background-color: #fff9;
+    left: -1px;
+    border-radius: 4px;
+    border: 1px solid #b1b2b3;
+}
+
+/* =================================================== */
+/*Css form chi tiền*/
+.modal-pay-money {
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.4);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    /* display: none; */
+    z-index: 99;
+    overflow: unset;
+}
+
+.form-pay {
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+}
+
+.form-pay-header {
+    background-color: #eceef1;
+    padding: 16px 16px 12px 16px;
+    align-items: center;
+    margin: 0;
+}
+
+.name-payment {
+    display: flex;
+    column-gap: 8px;
+    align-items: center;
+}
+
+.instruction {
+    display: flex;
+    column-gap: 4px;
+    align-items: center;
+}
+
+.title-instruction {
+    color: #0075c0;
+}
+
+.main-information {
+    padding: 8px 20px;
+    background-color: #eceef1;
+}
+
+.basic-information {
+    display: flex;
+    justify-content: space-between;
+}
+
+.right-information {
+    display: flex;
+}
+
+.right-line-information {
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+    padding-right: 16px;
+    border-right: 1px solid #d4d7dc;
+}
+
+.fields-information {
+    display: flex;
+    width: 950px;
+}
+.w-350 {
+    width: 300px;
+    padding-right: 16px;
+}
+
+.field-flex {
+    flex: 1;
+}
+
+.left-line-information {
+    display: flex;
+    flex-direction: column;
+    padding-left: 16px;
+    row-gap: 8px;
+}
+
+.total-money {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.value-money {
+    font-weight: 700;
+    font-size: 36px;
+}
+
+.control-row-table {
+    display: flex;
+    padding: 10px 0 0 20px;
+}
+
+.form-pay-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 8px 20px;
+    background-color: #38393d;
+}
+
+.btn-form-pay {
+    background-color: transparent;
+    border: 1px solid #6b6c72;
+    color: #fff;
+}
+
+.btn-form-pay:hover {
+    background-color: #2f3034;
+    border: 1px solid #6b6c72;
+    color: #fff;
+}
+
+.dropdown-reason {
+    min-height: 112px;
+    /* height: 112px; */
+    overflow: auto;
+}
+
+.combobox-object {
+    z-index: 20;
+}
+
+/* ======================================
+Css danh sách phim */

@@ -1,0 +1,14 @@
+C:\D\WorkSpace\WebMovie\WebMovie.Backend\WebMovie.Backend.Common\bin\Debug\net6.0\WebMovie.Backend.Common.deps.json
+C:\D\WorkSpace\WebMovie\WebMovie.Backend\WebMovie.Backend.Common\bin\Debug\net6.0\WebMovie.Backend.Common.dll
+C:\D\WorkSpace\WebMovie\WebMovie.Backend\WebMovie.Backend.Common\bin\Debug\net6.0\WebMovie.Backend.Common.pdb
+C:\D\WorkSpace\WebMovie\WebMovie.Backend\WebMovie.Backend.Common\obj\Debug\net6.0\WebMovie.Backend.Common.csproj.AssemblyReference.cache
+C:\D\WorkSpace\WebMovie\WebMovie.Backend\WebMovie.Backend.Common\obj\Debug\net6.0\WebMovie.Backend.Common.ResourceVI.resources
+C:\D\WorkSpace\WebMovie\WebMovie.Backend\WebMovie.Backend.Common\obj\Debug\net6.0\WebMovie.Backend.Common.csproj.GenerateResource.cache
+C:\D\WorkSpace\WebMovie\WebMovie.Backend\WebMovie.Backend.Common\obj\Debug\net6.0\WebMovie.Backend.Common.GeneratedMSBuildEditorConfig.editorconfig
+C:\D\WorkSpace\WebMovie\WebMovie.Backend\WebMovie.Backend.Common\obj\Debug\net6.0\WebMovie.Backend.Common.AssemblyInfoInputs.cache
+C:\D\WorkSpace\WebMovie\WebMovie.Backend\WebMovie.Backend.Common\obj\Debug\net6.0\WebMovie.Backend.Common.AssemblyInfo.cs
+C:\D\WorkSpace\WebMovie\WebMovie.Backend\WebMovie.Backend.Common\obj\Debug\net6.0\WebMovie.Backend.Common.csproj.CoreCompileInputs.cache
+C:\D\WorkSpace\WebMovie\WebMovie.Backend\WebMovie.Backend.Common\obj\Debug\net6.0\WebMovie.Backend.Common.dll
+C:\D\WorkSpace\WebMovie\WebMovie.Backend\WebMovie.Backend.Common\obj\Debug\net6.0\refint\WebMovie.Backend.Common.dll
+C:\D\WorkSpace\WebMovie\WebMovie.Backend\WebMovie.Backend.Common\obj\Debug\net6.0\WebMovie.Backend.Common.pdb
+C:\D\WorkSpace\WebMovie\WebMovie.Backend\WebMovie.Backend.Common\obj\Debug\net6.0\ref\WebMovie.Backend.Common.dll

@@ -1,0 +1,121 @@
+.form {
+    width: 900px;
+    padding: 24px 24px 12px 24px;
+    background-color: #fff;
+    /* display: none; */
+}
+
+.form-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    /* position: relative; */
+}
+
+.frm-header-left {
+    display: flex;
+    column-gap: 35px;
+    align-items: center;
+}
+
+.frm-title {
+    color: #1f1f1f;
+    font-size: 2.4rem;
+    font-weight: 700;
+}
+
+.content-gap-12 {
+    display: flex;
+    column-gap: 6px;
+}
+
+.content-flex {
+    display: flex;
+    column-gap: 32px;
+    margin-bottom: 32px;
+}
+
+.content-element {
+    display: flex;
+    flex: 1;
+    column-gap: 8px;
+}
+
+/* .infor {
+    display: flex;
+    flex-direction: column;
+} */
+
+.w-content {
+    width: 404px;
+}
+
+.frm-manual {
+    width: 150px;
+}
+
+.frm-cal {
+    flex: 1;
+}
+
+.content-element {
+    display: flex;
+    column-gap: 8px;
+}
+
+.m-row {
+    display: flex;
+    height: 32px;
+    column-gap: 12px;
+    align-items: center;
+}
+
+.line {
+    padding-bottom: 32px;
+    border-bottom: 1px solid #b8bcc3;
+}
+
+.btn-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 20px;
+}
+
+.box-error {
+    /* position: relative;
+    justify-content: center; */
+    display: block;
+}
+
+/* .button-wrapper {
+    position: relative;
+    width: 150px;
+    text-align: center;
+    margin: 20% auto;
+}
+
+.button-wrapper span.label {
+    position: relative;
+    z-index: 0;
+    display: inline-block;
+    width: 100%;
+    background: #00bfff;
+    cursor: pointer;
+    color: #fff;
+    padding: 10px 0;
+    text-transform: uppercase;
+    font-size: 12px;
+}
+
+.upload-box {
+    display: inline-block;
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 50px;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    cursor: pointer;
+} */

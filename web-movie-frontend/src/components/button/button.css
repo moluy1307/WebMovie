@@ -1,6 +1,6 @@
 /* button mặc định */
 /* ================================================ */
-.btn {
+.btn-custom-default {
     height: 36px;
     background-color: #50b83c;
     border-radius: 3px;
@@ -12,15 +12,15 @@
     cursor: pointer;
 }
 
-.btn:hover {
+.btn-custom-default:hover {
     background-color: #73c663;
 }
 
-.btn:active {
+.btn-custom-default:active {
     background-color: #96d58a;
 }
 
-.btn:focus {
+.btn-custom-default:focus {
     outline: none;
     box-shadow: 0 0 0 2px rgba(115, 198, 99, 0.4);
 }
@@ -40,12 +40,13 @@
     min-width: 24px;
     min-height: 24px;
     cursor: pointer;
+    color: #4280bf;
 }
 
 .btn-clicked {
-    border: 1px solid #e0e1e4;
+    border: 1px solid #dcf836;
     font-weight: 700;
-    color: #212121;
+    color: #dcf836;
 }
 
 .btn-none {

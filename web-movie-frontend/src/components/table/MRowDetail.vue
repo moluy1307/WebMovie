@@ -1,28 +1,16 @@
 <template>
     <tr>
-        <td>{{ orderNumber }}</td>
-        <td><MInput></MInput></td>
-        <td>
-            <MDropdownList
-                typeCbo="dropdown"
-                propValue="valueCombobox"
-                propName="title"
-                v-model="dataCombobox.valueCombobox"
-                :dataCombobox="dataCombobox"
-            ></MDropdownList>
-        </td>
-        <td>
-            <MDropdownList
-                typeCbo="dropdown"
-                propValue="valueCombobox"
-                propName="title"
-                v-model="dataCombobox.valueCombobox"
-                :dataCombobox="dataCombobox"
-            ></MDropdownList>
-        </td>
+        <td class="text-center">{{ orderNumber }}</td>
+        <template v-for="(propVal, indexVal) in titleTableData" :key="indexVal">
+            <td>
+                <input type="text" :value="orderNumber" />
+            </td>
+        </template>
+        <!-- <td><MInput></MInput></td>
         <td><MInput></MInput></td>
         <td><MInput></MInput></td>
-        <td></td>
+        <td><MInput></MInput></td>
+        <td></td> -->
         <td>
             <MIcon
                 nameIcon="trash"
@@ -40,6 +28,15 @@ export default {
         orderNumber: {
             type: Number,
         },
+        objectDetail: {
+            type: Object,
+        },
+        titleTableData: {
+            type: Array,
+        },
+    },
+    created() {
+        console.log('object nhan duoc: ', this.objectDetail);
     },
     data() {
         return {

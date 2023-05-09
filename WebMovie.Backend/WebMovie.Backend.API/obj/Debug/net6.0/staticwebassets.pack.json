@@ -1,0 +1,97 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Actor-00001.png",
+      "PackagePath": "staticwebassets\\Images\\Actors\\Actor-00001.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Actor-00002.png",
+      "PackagePath": "staticwebassets\\Images\\Actors\\Actor-00002.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Actor-00003.png",
+      "PackagePath": "staticwebassets\\Images\\Actors\\Actor-00003.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Actor-00004.png",
+      "PackagePath": "staticwebassets\\Images\\Actors\\Actor-00004.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Actor-00005.png",
+      "PackagePath": "staticwebassets\\Images\\Actors\\Actor-00005.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Actor-00006.png",
+      "PackagePath": "staticwebassets\\Images\\Actors\\Actor-00006.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Actor-00007.png",
+      "PackagePath": "staticwebassets\\Images\\Actors\\Actor-00007.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Actor-00008.png",
+      "PackagePath": "staticwebassets\\Images\\Actors\\Actor-00008.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Actor-00009.png",
+      "PackagePath": "staticwebassets\\Images\\Actors\\Actor-00009.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Actor-00010.png",
+      "PackagePath": "staticwebassets\\Images\\Actors\\Actor-00010.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Actor-00011.png",
+      "PackagePath": "staticwebassets\\Images\\Actors\\Actor-00011.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Movie-00001.png",
+      "PackagePath": "staticwebassets\\Images\\Movie-00001.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Movie-00002.png",
+      "PackagePath": "staticwebassets\\Images\\Movie-00002.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Movie-00003.png",
+      "PackagePath": "staticwebassets\\Images\\Movie-00003.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Movie-00004.png",
+      "PackagePath": "staticwebassets\\Images\\Movie-00004.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Movie-00005.png",
+      "PackagePath": "staticwebassets\\Images\\Movie-00005.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Movie-00006.png",
+      "PackagePath": "staticwebassets\\Images\\Movie-00006.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\bannerMovie1.png",
+      "PackagePath": "staticwebassets\\Images\\bannerMovie1.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\bannerMovie2.png",
+      "PackagePath": "staticwebassets\\Images\\bannerMovie2.png"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.WebMovie.Backend.API.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.build.WebMovie.Backend.API.props",
+      "PackagePath": "build\\WebMovie.Backend.API.props"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.buildMultiTargeting.WebMovie.Backend.API.props",
+      "PackagePath": "buildMultiTargeting\\WebMovie.Backend.API.props"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.buildTransitive.WebMovie.Backend.API.props",
+      "PackagePath": "buildTransitive\\WebMovie.Backend.API.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

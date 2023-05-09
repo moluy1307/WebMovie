@@ -172,10 +172,6 @@ export default {
             }
         },
 
-        onClickMore(page) {
-            console.log('kich 3 cham: ', page);
-        },
-
         /**
          * Click các button số trang trong phần paging
          * CreatedBy: huynq (16/1/2023)

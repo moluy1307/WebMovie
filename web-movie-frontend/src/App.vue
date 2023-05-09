@@ -1,26 +1,48 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div class="container-admin" v-if="accountAdmin">
+        <TheSidebar></TheSidebar>
+        <ContentAdmin></ContentAdmin>
+    </div>
+    <ContentWatchmovie v-else></ContentWatchmovie>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import ContentWatchmovie from './layout/home/Content.vue';
+import ContentAdmin from './layout/home/ContentAdmin.vue';
+import TheSidebar from './layout/home/TheSidebar.vue';
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+    name: 'App',
+    components: {
+        ContentWatchmovie,
+        ContentAdmin,
+        TheSidebar,
+    },
+    created() {
+        const storage = localStorage.getItem('adminInfor');
+        if (storage !== null) {
+            this.userInformation = JSON.parse(storage);
+            this.accountAdmin = true;
+            this.$router.push({ name: 'dashboard', params: { id: this.userInformation.userId } });
+        } else {
+            this.accountAdmin = false;
+        }
+    },
+    data() {
+        return {
+            accountAdmin: false,
+            userInformation: {},
+        };
+    },
+};
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+@import url('./css/main.css');
+
+.container-admin {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 100vh;
 }
 </style>

@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\WebMovie.Backend.API.props" />
+</Project>

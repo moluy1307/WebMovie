@@ -14,6 +14,7 @@ thead th {
     -moz-user-select: none !important;
     -ms-user-select: none !important;
     user-select: none !important;
+    vertical-align: middle !important;
 }
 
 tr {
@@ -21,7 +22,7 @@ tr {
     min-height: 48px;
     max-height: 48px;
     background-color: #fff;
-
+    vertical-align: middle !important;
     /* display: flex;
     align-items: center; */
 }
@@ -34,13 +35,21 @@ th {
     border-right: 1px solid #e0e0e0;
     z-index: 13;
     padding: 0 16px;
+    vertical-align: middle !important;
 }
 
 td {
     border-bottom: 1px solid #e0e0e0;
     padding: 0 16px;
     border-right: 1px solid #e0e0e0;
-    word-wrap: break-word;
+    /* word-wrap: break-word; */
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    /* width: 230px
+px
+; */
+    overflow: hidden;
+    vertical-align: middle !important;
 }
 
 th:first-child {
@@ -166,9 +175,7 @@ table tbody .row-child td {
 .column-64 {
     width: 64px;
     height: 48px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    text-align: center;
 }
 
 .col-explain {

@@ -49,19 +49,31 @@
                 <div class="dialog-title">{{ depict }}</div>
             </div>
             <div class="btn-dialog">
-                <button ref="btnFirstDialog" :class="hasCancelButton" @click="btnCancelButton" class="btn btn-bg">
+                <button
+                    ref="btnFirstDialog"
+                    :class="hasCancelButton"
+                    @click="btnCancelButton"
+                    class="btn-custom-default btn-bg"
+                >
                     Hủy
                 </button>
                 <div class="btn-dialog-right">
-                    <button v-if="hasCloseButton" @click="btnCloseOnClick" class="btn btn-bg">Không</button>
-                    <button ref="btnLastInDialog" v-if="dialogConfirm === 'false'" @click="btnCloseOnClick" class="btn">
+                    <button v-if="hasCloseButton" @click="btnCloseOnClick" class="btn-custom-default btn-bg">
+                        Không
+                    </button>
+                    <button
+                        ref="btnLastInDialog"
+                        v-if="dialogConfirm === 'false'"
+                        @click="btnCloseOnClick"
+                        class="btn-custom-default"
+                    >
                         {{ titleButton }}
                     </button>
                     <button
                         ref="btnLastInDialog"
                         v-else-if="dialogConfirm === 'true'"
                         @click="btnActionOnClick"
-                        class="btn"
+                        class="btn-custom-default"
                         @keydown="focusFirst"
                     >
                         {{ titleButton }}
@@ -172,6 +184,6 @@ export default {
     justify-content: center;
     align-items: center;
     /* display: none; */
-    z-index: 99;
+    z-index: 909;
 }
 </style>

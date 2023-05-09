@@ -1,0 +1,309 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\WebMovie.Backend.API.csproj": {}
+  },
+  "projects": {
+    "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\WebMovie.Backend.API.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\WebMovie.Backend.API.csproj",
+        "projectName": "WebMovie.Backend.API",
+        "projectPath": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\WebMovie.Backend.API.csproj",
+        "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
+        "outputPath": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.BL\\WebMovie.Backend.BL.csproj": {
+                "projectPath": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.BL\\WebMovie.Backend.BL.csproj"
+              },
+              "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.Common\\WebMovie.Backend.Common.csproj": {
+                "projectPath": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.Common\\WebMovie.Backend.Common.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "MailKit": {
+              "target": "Package",
+              "version": "[4.0.0, )"
+            },
+            "MySqlConnector": {
+              "target": "Package",
+              "version": "[2.2.5, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.2.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.BL\\WebMovie.Backend.BL.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.BL\\WebMovie.Backend.BL.csproj",
+        "projectName": "WebMovie.Backend.BL",
+        "projectPath": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.BL\\WebMovie.Backend.BL.csproj",
+        "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
+        "outputPath": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.BL\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.Common\\WebMovie.Backend.Common.csproj": {
+                "projectPath": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.Common\\WebMovie.Backend.Common.csproj"
+              },
+              "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.DL\\WebMovie.Backend.DL.csproj": {
+                "projectPath": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.DL\\WebMovie.Backend.DL.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "EPPlus": {
+              "target": "Package",
+              "version": "[6.2.1, )"
+            },
+            "MailKit": {
+              "target": "Package",
+              "version": "[4.0.0, )"
+            },
+            "MySqlConnector": {
+              "target": "Package",
+              "version": "[2.2.5, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.Common\\WebMovie.Backend.Common.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.Common\\WebMovie.Backend.Common.csproj",
+        "projectName": "WebMovie.Backend.Common",
+        "projectPath": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.Common\\WebMovie.Backend.Common.csproj",
+        "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
+        "outputPath": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.Common\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "MailKit": {
+              "target": "Package",
+              "version": "[4.0.0, )"
+            },
+            "Microsoft.AspNetCore.Http.Features": {
+              "target": "Package",
+              "version": "[5.0.17, )"
+            },
+            "MySqlConnector": {
+              "target": "Package",
+              "version": "[2.2.5, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.DL\\WebMovie.Backend.DL.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.DL\\WebMovie.Backend.DL.csproj",
+        "projectName": "WebMovie.Backend.DL",
+        "projectPath": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.DL\\WebMovie.Backend.DL.csproj",
+        "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
+        "outputPath": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.DL\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.Common\\WebMovie.Backend.Common.csproj": {
+                "projectPath": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.Common\\WebMovie.Backend.Common.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Dapper": {
+              "target": "Package",
+              "version": "[2.0.123, )"
+            },
+            "MailKit": {
+              "target": "Package",
+              "version": "[4.0.0, )"
+            },
+            "MySqlConnector": {
+              "target": "Package",
+              "version": "[2.2.5, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

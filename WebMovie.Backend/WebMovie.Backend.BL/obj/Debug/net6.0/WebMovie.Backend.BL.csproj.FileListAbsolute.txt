@@ -1,0 +1,17 @@
+C:\D\WorkSpace\WebMovie\WebMovie.Backend\WebMovie.Backend.BL\bin\Debug\net6.0\WebMovie.Backend.BL.deps.json
+C:\D\WorkSpace\WebMovie\WebMovie.Backend\WebMovie.Backend.BL\bin\Debug\net6.0\WebMovie.Backend.BL.dll
+C:\D\WorkSpace\WebMovie\WebMovie.Backend\WebMovie.Backend.BL\bin\Debug\net6.0\WebMovie.Backend.BL.pdb
+C:\D\WorkSpace\WebMovie\WebMovie.Backend\WebMovie.Backend.BL\bin\Debug\net6.0\WebMovie.Backend.Common.dll
+C:\D\WorkSpace\WebMovie\WebMovie.Backend\WebMovie.Backend.BL\bin\Debug\net6.0\WebMovie.Backend.DL.dll
+C:\D\WorkSpace\WebMovie\WebMovie.Backend\WebMovie.Backend.BL\bin\Debug\net6.0\WebMovie.Backend.Common.pdb
+C:\D\WorkSpace\WebMovie\WebMovie.Backend\WebMovie.Backend.BL\bin\Debug\net6.0\WebMovie.Backend.DL.pdb
+C:\D\WorkSpace\WebMovie\WebMovie.Backend\WebMovie.Backend.BL\obj\Debug\net6.0\WebMovie.Backend.BL.csproj.AssemblyReference.cache
+C:\D\WorkSpace\WebMovie\WebMovie.Backend\WebMovie.Backend.BL\obj\Debug\net6.0\WebMovie.Backend.BL.GeneratedMSBuildEditorConfig.editorconfig
+C:\D\WorkSpace\WebMovie\WebMovie.Backend\WebMovie.Backend.BL\obj\Debug\net6.0\WebMovie.Backend.BL.AssemblyInfoInputs.cache
+C:\D\WorkSpace\WebMovie\WebMovie.Backend\WebMovie.Backend.BL\obj\Debug\net6.0\WebMovie.Backend.BL.AssemblyInfo.cs
+C:\D\WorkSpace\WebMovie\WebMovie.Backend\WebMovie.Backend.BL\obj\Debug\net6.0\WebMovie.Backend.BL.csproj.CoreCompileInputs.cache
+C:\D\WorkSpace\WebMovie\WebMovie.Backend\WebMovie.Backend.BL\obj\Debug\net6.0\WebMovie.Backend.BL.csproj.CopyComplete
+C:\D\WorkSpace\WebMovie\WebMovie.Backend\WebMovie.Backend.BL\obj\Debug\net6.0\WebMovie.Backend.BL.dll
+C:\D\WorkSpace\WebMovie\WebMovie.Backend\WebMovie.Backend.BL\obj\Debug\net6.0\refint\WebMovie.Backend.BL.dll
+C:\D\WorkSpace\WebMovie\WebMovie.Backend\WebMovie.Backend.BL\obj\Debug\net6.0\WebMovie.Backend.BL.pdb
+C:\D\WorkSpace\WebMovie\WebMovie.Backend\WebMovie.Backend.BL\obj\Debug\net6.0\ref\WebMovie.Backend.BL.dll

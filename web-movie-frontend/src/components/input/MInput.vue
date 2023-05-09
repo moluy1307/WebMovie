@@ -1,6 +1,6 @@
 <template>
     <div class="infor">
-        <label for="" v-tippy="tooltip"
+        <label for="" v-tippy="tooltip" :style="styleLabel"
             >{{ labelInput
             }}<span :style="styleCompulsory" style="color: rgb(230, 0, 0); margin-bottom: 8px">{{
                 compulsory
@@ -8,6 +8,20 @@
         >
         <div class="m-row" :style="styleBoxInput" @mouseover="showTooltip" @mouseleave="show = false">
             <input
+                v-if="isInputPassword == true"
+                type="password"
+                :value="modelValue"
+                :class="newClass"
+                :style="newStyle"
+                class="txtNhap"
+                @input="$emit('update:modelValue', $event.target.value)"
+                autocomplete="off"
+                :placeholder="placeHolder"
+                ref="txtInput"
+                :tabindex="propTabindex"
+            />
+            <input
+                v-else
                 type="text"
                 :value="modelValue"
                 :class="newClass"
@@ -19,7 +33,8 @@
                 ref="txtInput"
                 :tabindex="propTabindex"
             />
-            <div v-show="show" class="type-tooltip">
+
+            <div v-show="show" class="type-tooltip" :style="styleTooltip">
                 <div class="arrow-tooltip"></div>
                 <div class="tooltip-input-error">
                     {{ errorMessage }}
@@ -47,6 +62,9 @@ export default {
         'tooltip',
         'tooltipError',
         'styleBoxInput',
+        'styleLabel',
+        'styleTooltip',
+        'isInputPassword',
     ],
     emits: ['update:modelValue'],
     watch: {

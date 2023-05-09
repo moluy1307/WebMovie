@@ -12,8 +12,8 @@
     >
         <svg
             v-if="nameIcon == 'search'"
-            width="18"
-            height="18"
+            width="20"
+            height="20"
             viewBox="0 0 16 16"
             fill="currentColor"
             xmlns="http://www.w3.org/2000/svg"
@@ -779,6 +779,103 @@
                 stroke-linejoin="round"
             />
         </svg>
+        <svg
+            v-else-if="nameIcon === 'arrow-dropdown'"
+            width="12"
+            height="9"
+            viewBox="0 0 14 9"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <path d="M1 1L7 6.64999L13 1" stroke="currentColor" stroke-width="2" />
+        </svg>
+
+        <svg
+            v-else-if="nameIcon === 'arrow-next'"
+            :style="styleSvg"
+            width="7"
+            height="12"
+            viewBox="0 0 9 14"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <path d="M1 13L6.65002 7L1 1" stroke="currentColor" stroke-width="2" />
+        </svg>
+
+        <svg
+            v-else-if="nameIcon === 'email'"
+            width="20"
+            height="16"
+            viewBox="0 0 20 16"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <path
+                d="M15.5699 4L9.83997 9.73L4.10999 4"
+                stroke="#6B6C72"
+                stroke-width="2"
+                stroke-miterlimit="10"
+                stroke-linecap="round"
+            />
+            <path
+                d="M17.36 1H2.64001C1.73427 1 1 1.73425 1 2.64V13.36C1 14.2657 1.73427 15 2.64001 15H17.36C18.2657 15 19 14.2657 19 13.36V2.64C19 1.73425 18.2657 1 17.36 1Z"
+                stroke="#6B6C72"
+                stroke-width="2"
+                stroke-miterlimit="10"
+                stroke-linecap="round"
+            />
+            <path
+                d="M5.75 10.49L4.10999 12.13"
+                stroke="#6B6C72"
+                stroke-width="2"
+                stroke-miterlimit="10"
+                stroke-linecap="round"
+            />
+            <path
+                d="M13.9301 10.49L15.5699 12.13"
+                stroke="#6B6C72"
+                stroke-width="2"
+                stroke-miterlimit="10"
+                stroke-linecap="round"
+            />
+        </svg>
+
+        <svg
+            v-else-if="nameIcon === 'user'"
+            width="32"
+            height="32"
+            style="border-radius: 50%"
+            viewBox="0 0 32 33"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <path d="M32 0H0V32H32V0Z" fill="#E2E2E2"></path>
+            <path
+                d="M29.8 29.17C29.6406 28.4731 29.3022 27.8298 28.8181 27.3037C28.3341 26.7776 27.7212 26.3868 27.04 26.17L21.76 24.37C20.44 23.89 19.84 21.73 19.76 21.01C20.7603 20.2066 21.4063 19.0437 21.56 17.77C21.56 17.29 21.68 17.17 21.68 17.17C21.7747 17.1675 21.8648 17.1287 21.9318 17.0618C21.9987 16.9948 22.0375 16.9047 22.04 16.81C22.4052 15.9775 22.5957 15.079 22.6 14.17V14.05C22.53 13.72 21.96 13.21 21.96 13.21V10C22.0361 9.4047 21.9667 8.79982 21.7577 8.23724C21.5487 7.67466 21.2064 7.1712 20.76 6.77002C20.76 5.93002 19.76 4.03003 16.04 4.03003C14.4747 4.08817 12.9906 4.74133 11.8905 5.85632C10.7903 6.97132 10.1571 8.46411 10.12 10.03V13.27C9.8893 13.5364 9.67556 13.8169 9.48001 14.11V14.23C9.69001 15.13 9.89001 16.01 10.17 16.87C10.29 16.99 10.29 17.11 10.53 17.23C10.77 17.35 10.77 17.47 10.77 17.83C10.9237 19.1037 11.5698 20.2666 12.57 21.07C12.45 21.91 11.85 23.95 10.65 24.43L5.37 26.23C4.6999 26.4666 4.09796 26.8637 3.61682 27.3867C3.13568 27.9096 2.78999 28.5425 2.60999 29.23L1.79999 32.06H30.6L29.8 29.17Z"
+                fill="#C1C1C1"
+            ></path>
+        </svg>
+
+        <svg
+            v-else-if="nameIcon === 'successDialog'"
+            width="36"
+            height="36"
+            viewBox="0 0 36 36"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <path
+                d="M18 36C27.9411 36 36 27.9411 36 18C36 8.05887 27.9411 0 18 0C8.05887 0 0 8.05887 0 18C0 27.9411 8.05887 36 18 36Z"
+                fill="#2CA01C"
+            />
+            <path
+                d="M11 18L16 23L25 13"
+                stroke="white"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+        </svg>
     </button>
 </template>
 <script>
@@ -794,6 +891,7 @@ export default {
         'anim',
         'newStyle',
         'disabledIcon',
+        'styleSvg',
     ],
     watch: {
         nameIcon: function (value) {

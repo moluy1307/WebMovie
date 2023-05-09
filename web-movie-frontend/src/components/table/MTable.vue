@@ -1,5 +1,4 @@
 <template>
-    <!-- <div class="body-content-bottom" :key="tableReload"> -->
     <MFormFilterData
         :positionFormFilter="positionFormFilter"
         v-if="isShowFormFilter"
@@ -12,10 +11,9 @@
     <table id="m-table" ref="tableData">
         <thead>
             <tr>
-                <th class="text-center" v-if="payDetail">#</th>
+                <th class="text-center" style="width: 48px !important" v-if="payDetail">#</th>
                 <th v-if="hasCheckbox" class="text-center" style="padding: 0 16px 20px 20px">
                     <label class="chkCustom">
-                        <!-- <input type="checkbox" ref="titleCheckbox" v-on:change="checkedCheckbox" /> -->
                         <input
                             type="checkbox"
                             ref="titleCheckbox"
@@ -78,10 +76,10 @@
                         </slot>
                     </div>
                 </th>
-                <th class="title-function" v-if="hasWiget" @click="testshow">Chức năng</th>
+                <th class="title-function text-center" :style="styleColumnFunction" v-if="hasWiget" @click="testshow">
+                    Chức năng
+                </th>
                 <th class="text-center" v-if="payDetail"></th>
-                <!-- <th class="column-20"></th>
-                <th class="column-24"></th> -->
             </tr>
         </thead>
         <tbody ref="bodyTable">
@@ -114,9 +112,55 @@
                 </template>
             </template>
             <template v-else-if="payDetail">
-                <template v-for="(itemAccounting, indexAccounting) in arrayRowTable" :key="indexAccounting"
-                    ><MRowDetail :orderNumber="indexAccounting + 1"></MRowDetail
-                ></template>
+                <template v-for="(itemAccounting, indexAccounting) in arrayRowTable" :key="indexAccounting">
+                    <!-- <MRowDetail
+                        :orderNumber="indexAccounting + 1"
+                        :objectDetail="itemAccounting"
+                        :titleTableData="titleTableData"
+                    ></MRowDetail> -->
+                    <tr>
+                        <td class="text-center">{{ indexAccounting + 1 }}</td>
+                        <template v-for="(col, indexCol) in titleTable" :key="indexCol">
+                            <td>
+                                <MInput
+                                    styleLabel="display: none !important"
+                                    v-model="itemAccounting[col.dataField]"
+                                ></MInput>
+                            </td>
+                        </template>
+                        <td
+                            class="text-center"
+                            style="display: flex; justify-content: center; align-items: center; height: 48px"
+                        >
+                            <MIcon
+                                @click="btnDeleteRow(indexAccounting)"
+                                nameIcon="trash"
+                                newStyle="width: 32px; height: 32px;margin-right: 4px"
+                                :class="{ 'icon-size': true }"
+                            ></MIcon>
+                        </td>
+                    </tr>
+                </template>
+            </template>
+            <template v-else-if="detailEntity">
+                <template v-for="(itemDetail, indexDetail) in arraydetailEntity" :key="indexDetail">
+                    <!-- <MRowDetail
+                        :orderNumber="indexAccounting + 1"
+                        :objectDetail="itemAccounting"
+                        :titleTableData="titleTableData"
+                    ></MRowDetail> -->
+                    <tr>
+                        <template v-for="(col, indexCol) in titleTable" :key="indexCol">
+                            <td :class="col.className">
+                                {{
+                                    col.isColumnSerial == 'true'
+                                        ? indexDetail + 1
+                                        : getFormatByData(col.formatType, itemDetail[col.dataField])
+                                }}
+                            </td>
+                        </template>
+                    </tr>
+                </template>
             </template>
             <template v-else>
                 <tr
@@ -125,6 +169,7 @@
                     @dblclick="btnEditOnClick(item)"
                     ref="rowTable"
                     :class="{ 'focus-row': checkedItem[item[propValue]], 'row-table': true }"
+                    @click="btnGetIdMaster(item)"
                 >
                     <!-- <td class="column-16" style="background-color: #fff !important"></td> -->
                     <td
@@ -146,22 +191,6 @@
                         </label>
                     </td>
                     <template v-for="(col, indexCol) in titleTable" :key="indexCol">
-                        <!-- <td v-if="col.hasExtend" :class="col.className">
-                            <div class="column-extend">
-                                <template v-if="lastValuesButtonExtend.includes(item[propValue])">
-                                    <MIcon
-                                        nameIcon="extend"
-                                        newStyle="position: relative;width: 18px; height: 18px;"
-                                        @click="extendRootEntity(item[propValue], index)"
-                                    ></MIcon>
-                                </template>
-
-                                <div ref="textcontent">{{ getFormatByData(col.formatType, item[col.dataField]) }}</div>
-                            </div>
-                        </td>
-                        <td v-else :class="col.className">
-                            {{ getFormatByData(col.formatType, item[col.dataField]) }}
-                        </td> -->
                         <td :class="col.className">
                             {{ getFormatByData(col.formatType, item[col.dataField]) }}
                         </td>
@@ -175,8 +204,9 @@
                         @dblclick.stop.prevent
                     >
                         <div class="text-function-center">
+                            <font-awesome-icon :icon="['fas', 'pen-to-square']" style="color: #1565c0" />
                             <button class="btn-action btn-edit-form" @click="btnEditOnClick(item)">Sửa</button>
-                            <MBoxFunction
+                            <!-- <MBoxFunction
                                 @getIdReplicate="transmissionIdReplicate"
                                 @itemDelete="transmissionInfoDelete"
                                 @click="($event) => recieveCombobox($event, item)"
@@ -184,23 +214,18 @@
                                     'btn-arrow-function': true,
                                     'focus-row': checkedItem[item[propValue]],
                                 }"
-                            ></MBoxFunction>
+                            ></MBoxFunction> -->
+                            <font-awesome-icon :icon="['fas', 'eraser']" style="color: #eb3333" />
+                            <button
+                                style="color: #eb3333"
+                                class="btn-action btn-edit-form"
+                                @click="btnDeleteOnClick(item)"
+                            >
+                                Xóa
+                            </button>
                         </div>
                     </td>
                 </tr>
-                <!-- <template v-if="extension.includes(item[propValue])">
-                    <MExpandRowTableVue
-                        :titleTable="titleTable"
-                        :propParentId="propParentId"
-                        :propValue="propValue"
-                        :rootId="parentId"
-                        :typeObject="typeObject"
-                        :marginLeft="positionTextChidlNumber"
-                        :isFieldMain="isFieldMain"
-                        :hasWiget="hasWiget"
-                        @rootEntityId="rootEntityId"
-                    ></MExpandRowTableVue>
-                </template> -->
             </template>
         </tbody>
     </table>
@@ -216,11 +241,11 @@
 
 <script>
 import MLoading from '@/components/loading/MLoading.vue';
-import MBoxFunction from '../other/MBoxFunction.vue';
+// import MBoxFunction from '../other/MBoxFunction.vue';
 import MFormFilterData from '../other/MFormFilterData.vue';
 // import MExpandRowTableVue from './MExpandRowTable.vue';
 import MTreeRowTable from './MTreeRowTable.vue';
-import MRowDetail from './MRowDetail.vue';
+// import MRowDetail from './MRowDetail.vue';
 
 // import axios from 'axios';
 
@@ -320,8 +345,23 @@ export default {
         arrayRowTable: {
             type: Array,
         },
+        detailEntity: {
+            type: Boolean,
+        },
+        arraydetailEntity: {
+            type: Array,
+        },
+        styleColumnFunction: {
+            type: String,
+        },
     },
-    components: { MLoading, MBoxFunction, MFormFilterData, MTreeRowTable, MRowDetail },
+    components: {
+        MLoading,
+        // MBoxFunction,
+        MFormFilterData,
+        MTreeRowTable,
+        // MRowDetail
+    },
     watch: {
         checkRows: function (value) {
             console.log('dasdas', value);
@@ -348,6 +388,29 @@ export default {
                 if (value.length <= 0) {
                     this.checkAllRows = false;
                 }
+            }
+        },
+        arrayRowTable: {
+            handler: function (value, old) {
+                // old.map((index) => {
+                //     console.log('indexOld', index);
+                //     // this.entitiesChildren = [...this.entitiesChildren, index];
+                // });
+                // value.map((index) => {
+                //     this.entitiesChildren = [index];
+                //     // console.log('indexNew', index);
+                // });
+                console.log('oldValue: ', old);
+                console.log('newValue: ', value);
+                this.$emit('newValueEp', value);
+            },
+            deep: true,
+        },
+
+        arraydetailEntity: function (value) {
+            if (value) {
+                this.showSkeleton = false;
+                console.log('mang array thay doi: ', value);
             }
         },
         // entitiesChildren: {
@@ -457,6 +520,40 @@ export default {
                 // this.entityEdit = item;
                 this.entityEdit = item[this.propValue];
                 this.$emit('getEmployeeId', this.entityEdit, item[this.propParentId]);
+            } catch (err) {
+                this.$MToastMessage({
+                    titleToast: this.$MResource.VI.TOAST.TITLE_ERROR,
+                    messageToast: err,
+                    showToastMessage: true,
+                    typeToast: 'errorToast',
+                });
+            }
+        },
+
+        /**
+         * Truyền thông tin xóa
+         * <br/>
+         * CreatedBy: huynq (5/1/2023)
+         * @param {*} item
+         */
+        btnDeleteOnClick(item) {
+            try {
+                this.$emit('getIdDeleteRecord', item[this.propValue], item[this.propValueCode]);
+            } catch (err) {
+                this.$MToastMessage({
+                    titleToast: this.$MResource.VI.TOAST.TITLE_ERROR,
+                    messageToast: err,
+                    showToastMessage: true,
+                    typeToast: 'errorToast',
+                });
+            }
+        },
+
+        btnGetIdMaster(item) {
+            try {
+                // this.entityEdit = item;
+                this.entityMaster = item[this.propValue];
+                this.$emit('getMasterId', this.entityMaster);
             } catch (err) {
                 this.$MToastMessage({
                     titleToast: this.$MResource.VI.TOAST.TITLE_ERROR,
@@ -865,6 +962,10 @@ export default {
                 });
             }
         },
+
+        btnDeleteRow(indexDel) {
+            this.$emit('indexDelRow', indexDel);
+        },
     },
 
     created() {
@@ -874,70 +975,74 @@ export default {
         //             this.checkedItem = { ...this.checkedItem, [item]: true };
         //         });
         // }
-        this.sortOrderDirection = this.sortDirection;
+        if (this.api) {
+            this.sortOrderDirection = this.sortDirection;
 
-        setTimeout(() => {
-            // Lấy dữ liệu
-            fetch(this.api)
-                .then((res) => res.json())
-                .then((data) => {
-                    this.showSkeleton = false;
-                    this.entities = data.data;
-                    // this.entities = data;
-                    this.totalPage = data.totalPages;
-                    this.totalRecord = data.totalRecords;
-                    this.$emit('totalNumberPages', this.totalPage);
-                    this.$emit('totalRecords', this.totalRecord);
+            setTimeout(() => {
+                // Lấy dữ liệu
+                fetch(this.api)
+                    .then((res) => res.json())
+                    .then((data) => {
+                        this.showSkeleton = false;
+                        this.entities = data.data;
+                        // this.entities = data;
+                        this.totalPage = data.totalPages;
+                        this.totalRecord = data.totalRecords;
+                        this.$emit('totalNumberPages', this.totalPage);
+                        this.$emit('totalRecords', this.totalRecord);
 
-                    if (this.totalRecord <= 0) {
-                        this.$emit('checkData', true);
-                        this.checkAllRows = false;
-                    } else {
-                        this.$emit('checkData', false);
-                    }
-                    // if (this.enableCheckChild == true) {
-                    //     axios
-                    //         .get(`${this.$MResource.LOCALHOST}/${this.typeObject}`)
-                    //         .then((response) => {
-                    //             this.allEntities = response.data;
-                    //             this.allEntities.map((index) => {
-                    //                 this.entities.map((indexEntities) => {
-                    //                     if (index[this.propParentId] == indexEntities[this.propValue]) {
-                    //                         this.hasButtonExtend = [...this.hasButtonExtend, index[this.propParentId]];
-                    //                     }
-                    //                 });
-                    //             });
-                    //             //Lọc các giá trị trùng lặp
-                    //             this.lastValuesButtonExtend = Array.from(new Set(this.hasButtonExtend));
-                    //         })
-                    //         .catch((err) => {
-                    //             this.$MToastMessage({
-                    //                 titleToast: this.$MResource.VI.TOAST.TITLE_ERROR,
-                    //                 messageToast: err,
-                    //                 showToastMessage: true,
-                    //                 typeToast: 'errorToast',
-                    //             });
-                    //         });
-                    // }
-                })
-                .catch((err) => {
-                    this.showSkeleton = false;
-                    this.$MToastMessage({
-                        titleToast: this.$MResource.VI.TOAST.TITLE_ERROR,
-                        messageToast: err,
-                        showToastMessage: true,
-                        typeToast: 'errorToast',
+                        if (this.totalRecord <= 0) {
+                            this.$emit('checkData', true);
+                            this.checkAllRows = false;
+                        } else {
+                            this.$emit('checkData', false);
+                        }
+                        // if (this.enableCheckChild == true) {
+                        //     axios
+                        //         .get(`${this.$MResource.LOCALHOST}/${this.typeObject}`)
+                        //         .then((response) => {
+                        //             this.allEntities = response.data;
+                        //             this.allEntities.map((index) => {
+                        //                 this.entities.map((indexEntities) => {
+                        //                     if (index[this.propParentId] == indexEntities[this.propValue]) {
+                        //                         this.hasButtonExtend = [...this.hasButtonExtend, index[this.propParentId]];
+                        //                     }
+                        //                 });
+                        //             });
+                        //             //Lọc các giá trị trùng lặp
+                        //             this.lastValuesButtonExtend = Array.from(new Set(this.hasButtonExtend));
+                        //         })
+                        //         .catch((err) => {
+                        //             this.$MToastMessage({
+                        //                 titleToast: this.$MResource.VI.TOAST.TITLE_ERROR,
+                        //                 messageToast: err,
+                        //                 showToastMessage: true,
+                        //                 typeToast: 'errorToast',
+                        //             });
+                        //         });
+                        // }
+                    })
+                    .catch((err) => {
+                        this.showSkeleton = false;
+                        this.$MToastMessage({
+                            titleToast: this.$MResource.VI.TOAST.TITLE_ERROR,
+                            messageToast: err,
+                            showToastMessage: true,
+                            typeToast: 'errorToast',
+                        });
                     });
-                });
 
-            // if (this.hasCheckbox == true) {
-            //     if (this.checkRows != undefined) {
-            //         if (this.checkRows.length === this.numberRecord) {
-            //             this.checkAllRows = true;
-            //         }
-            //     }
-            // }
-        }, 1500);
+                // if (this.hasCheckbox == true) {
+                //     if (this.checkRows != undefined) {
+                //         if (this.checkRows.length === this.numberRecord) {
+                //             this.checkAllRows = true;
+                //         }
+                //     }
+                // }
+            }, 1500);
+        } else if (this.payDetail == true) {
+            this.showSkeleton = false;
+        }
     },
 
     data() {
@@ -950,6 +1055,7 @@ export default {
             codeDelete: null,
 
             entityEdit: null,
+            entityMaster: null,
 
             totalPage: 1,
             totalRecord: 0,
