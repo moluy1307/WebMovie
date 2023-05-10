@@ -11,11 +11,13 @@
                 <p>
                     <span>{{ totalRecord }}</span> bình luận
                 </p>
-                <label>Sắp xếp theo:</label>
-                <select>
-                    <option value="popularity">Mới nhất</option>
-                    <option value="popularity">Cũ nhất</option>
-                </select>
+                <div style="display: flex; align-items: center; column-gap: 12px">
+                    <label>Sắp xếp theo:</label>
+                    <select>
+                        <option value="popularity">Mới nhất</option>
+                        <option value="popularity">Cũ nhất</option>
+                    </select>
+                </div>
             </div>
             <template v-for="(commentItem, indexComment) in commentList" :key="indexComment">
                 <div class="mv-user-review-item">
@@ -32,7 +34,7 @@
                                     :class="[n <= commentItem.rating ? 'star-selected' : 'star-icon']"
                                 />
                             </div>
-                            <a class="time"> Bình luận</a><a> &nbsp;{{ descriptionTime }} ago</a>
+                            <a class="time"> Bình luận</a><a> &nbsp;{{ descriptionTime }} trước</a>
                         </div>
                     </div>
                     <p>
@@ -95,6 +97,8 @@
 <script>
 import axios from 'axios';
 import moment from 'moment';
+import 'moment/locale/vi';
+moment.locale('vi');
 
 import commonJS from '@/js/common';
 
@@ -178,8 +182,6 @@ export default {
 
                         this.selectedRating = this.commentList[item].rating;
                     }
-
-                    console.log('gia trio: ', this.commentList);
                 })
                 .catch((err) => {
                     this.$MToastMessage({

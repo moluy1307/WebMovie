@@ -168,13 +168,53 @@ namespace WebMovie.Backend.API.Controllers
             }
         }
 
+        //[HttpGet]
+        //[Route("GetAllMovieByType")]
+        //public IActionResult GetAllMovieByType(int typeMovie, int? limit)
+        //{
+        //    try
+        //    {
+        //        var result = _movieBL.GetAllMovieByType(typeMovie, limit);
+
+        //        string imagePath = string.Empty;
+        //        string imageSavePath = string.Empty;
+
+        //        foreach (var movieItem in result)
+        //        {
+        //            imagePath = $"{movieItem.MovieCode}.png";
+        //            imageSavePath = Path.Combine(_webHostEnvironment.WebRootPath, "Images", imagePath);
+        //            movieItem.ImgByte = System.IO.File.ReadAllBytes(imageSavePath);
+        //        }
+
+        //        //Xử lý kết quả trả về
+        //        if (result != null)
+        //        {
+        //            return StatusCode(StatusCodes.Status200OK, result);
+        //        }
+        //        else
+        //        {
+        //            return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult
+        //            {
+        //                ErrorCode = Common.Enums.ErrorCode.GetFailed,
+        //                DevMsg = ResourceVI.Error_DatabaseQuery,
+        //                UserMsg = ResourceVI.Login_Failed
+        //            });
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine(ex.Message);
+        //        return HandleException(ex);
+        //    }
+        //}
+
         [HttpGet]
-        [Route("GetAllMovieByType")]
-        public IActionResult GetAllMovieByType(int typeMovie, int? limit)
+        [Route("GetAllMovieByTypeAndFilter")]
+        public IActionResult GetAllMovieByTypeAndFilter(int pageNumber, int pageSize, Guid? categoryId, int? typeMovie, int columnFilter)
         {
             try
             {
-                var result = _movieBL.GetAllMovieByType(typeMovie, limit);
+                var result = _movieBL.GetAllMovieByTypeAndFilter(pageNumber, pageSize, categoryId, typeMovie, columnFilter);
 
                 //var result = _movieBL.GetMovieById(movieId);
 
@@ -185,7 +225,53 @@ namespace WebMovie.Backend.API.Controllers
                 string imagePath = string.Empty;
                 string imageSavePath = string.Empty;
 
-                foreach (var movieItem in result)
+                foreach (var movieItem in result.Data)
+                {
+                    imagePath = $"{movieItem.MovieCode}.png";
+                    imageSavePath = Path.Combine(_webHostEnvironment.WebRootPath, "Images", imagePath);
+                    movieItem.ImgByte = System.IO.File.ReadAllBytes(imageSavePath);
+                }
+
+                //Xử lý kết quả trả về
+                if (result != null)
+                {
+                    return StatusCode(StatusCodes.Status200OK, result);
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult
+                    {
+                        ErrorCode = Common.Enums.ErrorCode.GetFailed,
+                        DevMsg = ResourceVI.Error_DatabaseQuery,
+                        UserMsg = ResourceVI.Login_Failed
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return HandleException(ex);
+            }
+        }
+
+        [HttpGet]
+        [Route("GetSimilarMovieByFilter")]
+        public IActionResult GetSimilarMovieByFilter(int pageNumber, int pageSize, Guid? movieId)
+        {
+            try
+            {
+                var result = _movieBL.GetSimilarMovieByFilter(pageNumber, pageSize, movieId);
+
+                //var result = _movieBL.GetMovieById(movieId);
+
+                //string imagePath = $"{result.MovieCode}.png";
+                //string imageSavePath = Path.Combine(_webHostEnvironment.WebRootPath, "Images", imagePath);
+                //result.ImgByte = System.IO.File.ReadAllBytes(imageSavePath);
+
+                string imagePath = string.Empty;
+                string imageSavePath = string.Empty;
+
+                foreach (var movieItem in result.Data)
                 {
                     imagePath = $"{movieItem.MovieCode}.png";
                     imageSavePath = Path.Combine(_webHostEnvironment.WebRootPath, "Images", imagePath);
@@ -311,6 +397,36 @@ namespace WebMovie.Backend.API.Controllers
             }
         }
 
+        [HttpPut]
+        [Route("UpdateMediumScore")]
+        public IActionResult UpdateMediumScore(Guid movieId, decimal mediumScore)
+        {
+            try
+            {
+
+                var result = _movieBL.UpdateMediumScore(movieId, mediumScore);
+
+                //Xử lý kết quả trả về
+                if (result > 0)
+                {
+                    return StatusCode(StatusCodes.Status201Created);
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult
+                    {
+                        ErrorCode = Common.Enums.ErrorCode.GetFailed,
+                        DevMsg = ResourceVI.Error_DatabaseQuery,
+                        UserMsg = ResourceVI.Login_Failed
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return HandleException(ex);
+            }
+        }
         #endregion
     }
 }

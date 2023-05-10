@@ -61,7 +61,9 @@
                             <div class="rate">
                                 <font-awesome-icon :icon="['fas', 'star']" style="color: #f5b50a; font-size: 24px" />
                                 <p>
-                                    <span>{{ this.mediumScore.toFixed(1) }}</span> /10<br />
+                                    <span>{{ movieInfor.mediumScore == null ? 0 : movieInfor.mediumScore }}</span>
+                                    /10<br />
+                                    <!-- <span>{{ this.mediumScore.toFixed(1) }}</span> /10<br /> -->
                                     <span class="rv">{{ countRating }} lượt đánh giá</span>
                                 </p>
                             </div>
@@ -73,7 +75,7 @@
                                     :key="n"
                                     @click="selectRating(n)"
                                     :icon="['fas', 'star']"
-                                    :class="[n <= selectedRating ? 'star-selected' : 'star-icon']"
+                                    :class="[n <= movieInfor.mediumScore ? 'star-selected' : 'star-icon']"
                                 />
                                 <!-- </template> -->
                             </div>
@@ -157,10 +159,10 @@ export default {
     // },
 
     methods: {
-        selectRating(rating) {
-            this.selectedRating = rating;
-            console.log('diem phimL: ', rating);
-        },
+        // selectRating(rating) {
+        //     this.selectedRating = rating;
+        //     console.log('diem phimL: ', rating);
+        // },
 
         callApiPaginationReview() {
             axios
@@ -169,15 +171,48 @@ export default {
                 )
                 .then((response) => {
                     this.commentList = response.data.data;
-                    let totalRating = 0;
                     this.commentList.forEach((element) => {
                         if (element.rating != null) {
                             this.countRating++;
-                            totalRating += element.rating;
+                            this.totalRating += element.rating;
                         }
+                        console.log('cacs daxnh gia: ', element.rating);
                     });
-                    this.mediumScore = totalRating / this.countRating;
-                    console.log('gia tri count: ', this.mediumScore);
+                    console.log('tong dieng: ', this.totalRating / this.countRating);
+                    // console.log('tong dieng: ', this.totalRating);
+                    // if (this.totalRating == 0 || this.totalRating == null || this.totalRating == undefined) {
+                    //     this.mediumScore = 0;
+                    // } else {
+                    //     this.mediumScore = this.totalRating / this.countRating;
+                    // }
+
+                    // axios
+                    //     .put(
+                    //         `${this.$MResource.API}/Comments/filter?keyword=${this.$route.params.id}&pageNumber=1&pageSize=1000`,
+                    //     )
+                    //     .then((response) => {
+                    //         this.commentList = response.data.data;
+                    //         this.commentList.forEach((element) => {
+                    //             if (element.rating != null) {
+                    //                 this.countRating++;
+                    //                 this.totalRating += element.rating;
+                    //             }
+                    //         });
+                    //         console.log('tong dieng: ', this.totalRating);
+                    //         if (this.totalRating == 0 || this.totalRating == null || this.totalRating == undefined) {
+                    //             this.mediumScore = 0;
+                    //         } else {
+                    //             this.mediumScore = this.totalRating / this.countRating;
+                    //         }
+                    //     })
+                    //     .catch((err) => {
+                    //         this.$MToastMessage({
+                    //             titleToast: this.$MResource.VI.TOAST.TITLE_ERROR,
+                    //             messageToast: err,
+                    //             showToastMessage: true,
+                    //             typeToast: 'errorToast',
+                    //         });
+                    //     });
                 })
                 .catch((err) => {
                     this.$MToastMessage({
@@ -360,6 +395,7 @@ export default {
                     this.movieInfor.imagePath = 'data:image/png;base64,' + this.movieInfor.imgByte;
                     // this.file = 'data:image/png;base64,' + this.movieInfor.imgByte;
                 }
+                console.log('y chinh: ', this.movieInfor);
             })
             .catch((err) => {
                 this.$MToastMessage({
@@ -392,6 +428,7 @@ export default {
             commentList: [],
 
             countRating: 0,
+            totalRating: 0,
             mediumScore: 0,
             // file: null,
         };

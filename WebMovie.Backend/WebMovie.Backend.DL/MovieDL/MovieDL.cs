@@ -17,6 +17,7 @@ using System.Transactions;
 using WebMovie.Backend.Common;
 using WebMovie.Backend.Common.Constants;
 using WebMovie.Backend.Common.Entities;
+using WebMovie.Backend.Common.Entities.DTO;
 using WebMovie.Backend.DL.UserDL;
 
 namespace WebMovie.Backend.DL.MovieDL
@@ -191,7 +192,38 @@ namespace WebMovie.Backend.DL.MovieDL
             return numberOfAffectedRows;
         }
 
-        public IEnumerable<Movie> GetAllMovieByType(int typeMovie, int? limit)
+        //public IEnumerable<Movie> GetAllMovieByType(int typeMovie, int? limit)
+        //{
+        //    //Chuẩn bị tên stored procedure
+        //    string storedProceduredName = String.Format(ProcedureName.Get, typeof(Movie).Name, "ByType");
+        //    string storedProceduredNameEpisode = String.Format(ProcedureName.Get, typeof(Episode).Name, "ByNewest");
+
+        //    //Chuẩn bị tham số đầu vào cho stored
+        //    var parameters = new DynamicParameters();
+        //    parameters.Add("p_TypeMovie", typeMovie);
+        //    parameters.Add("p_Limit", limit);
+
+        //    //Khởi tạo kết nối đến DB
+        //    using (var mySqlConnection = new MySqlConnection(DatabaseContext.ConnectionString))
+        //    {
+        //        mySqlConnection.Open();
+
+        //        //Gọi vào DB
+        //        var numberOfAffectedRows = mySqlConnection.Query<Movie>(storedProceduredName, parameters, commandType: CommandType.StoredProcedure);
+
+        //        if (numberOfAffectedRows != null)
+        //        {
+        //            foreach (var movieItem in numberOfAffectedRows)
+        //            {
+        //                var newEstEpisode = mySqlConnection.QueryFirstOrDefault<Episode>(storedProceduredNameEpisode, new { p_MovieId = movieItem.MovieId }, commandType: CommandType.StoredProcedure);
+        //                movieItem.NewestEpisode = newEstEpisode;
+        //            }
+        //        }
+        //        return numberOfAffectedRows;
+        //    }
+        //}
+
+        public PagingResult<Movie> GetAllMovieByTypeAndFilter(int pageNumber, int pageSize, Guid? categoryId, int? typeMovie, int columnFilter)
         {
             //Chuẩn bị tên stored procedure
             string storedProceduredName = String.Format(ProcedureName.Get, typeof(Movie).Name, "ByType");
@@ -199,8 +231,11 @@ namespace WebMovie.Backend.DL.MovieDL
 
             //Chuẩn bị tham số đầu vào cho stored
             var parameters = new DynamicParameters();
+            parameters.Add("@p_PageNumber", pageNumber);
+            parameters.Add("@p_PageSize", pageSize);
+            parameters.Add("p_CategoryId", categoryId);
             parameters.Add("p_TypeMovie", typeMovie);
-            parameters.Add("p_Limit", limit);
+            parameters.Add("p_ColumnFilter", columnFilter);
 
             //Khởi tạo kết nối đến DB
             using (var mySqlConnection = new MySqlConnection(DatabaseContext.ConnectionString))
@@ -208,11 +243,55 @@ namespace WebMovie.Backend.DL.MovieDL
                 mySqlConnection.Open();
 
                 //Gọi vào DB
-                var numberOfAffectedRows = mySqlConnection.Query<Movie>(storedProceduredName, parameters, commandType: CommandType.StoredProcedure);
+                //var numberOfAffectedRows = mySqlConnection.Query<Movie>(storedProceduredName, parameters, commandType: CommandType.StoredProcedure);
+                //Gọi vào DB
+                var reader = mySqlConnection.QueryMultiple(storedProceduredName, parameters, commandType: CommandType.StoredProcedure);
+                //var multi = mySqlConnection.QueryMultiple(storedProceduredTotalRecords, commandType: CommandType.StoredProcedure);
+                int count = reader.Read<int>().FirstOrDefault();
+                var listRecordByFilterPaging = reader.Read<Movie>().ToList();
+                var numberOfAffectedRows = new PagingResult<Movie>(count, pageNumber, pageSize, listRecordByFilterPaging);
 
                 if (numberOfAffectedRows != null)
                 {
-                    foreach (var movieItem in numberOfAffectedRows)
+                    foreach (var movieItem in numberOfAffectedRows.Data)
+                    {
+                        var newEstEpisode = mySqlConnection.QueryFirstOrDefault<Episode>(storedProceduredNameEpisode, new { p_MovieId = movieItem.MovieId }, commandType: CommandType.StoredProcedure);
+                        movieItem.NewestEpisode = newEstEpisode;
+                    }
+                }
+                return numberOfAffectedRows;
+            }
+        }
+
+        public PagingResult<Movie> GetSimilarMovieByFilter(int pageNumber, int pageSize, Guid? movieId)
+        {
+            //Chuẩn bị tên stored procedure
+            string storedProceduredName = String.Format(ProcedureName.Get, typeof(Movie).Name, "SimilarMovie");
+            string storedProceduredNameEpisode = String.Format(ProcedureName.Get, typeof(Episode).Name, "ByNewest");
+
+            //Chuẩn bị tham số đầu vào cho stored
+            var parameters = new DynamicParameters();
+            parameters.Add("@p_PageNumber", pageNumber);
+            parameters.Add("@p_PageSize", pageSize);
+            parameters.Add("p_MovieId", movieId);
+
+            //Khởi tạo kết nối đến DB
+            using (var mySqlConnection = new MySqlConnection(DatabaseContext.ConnectionString))
+            {
+                mySqlConnection.Open();
+
+                //Gọi vào DB
+                //var numberOfAffectedRows = mySqlConnection.Query<Movie>(storedProceduredName, parameters, commandType: CommandType.StoredProcedure);
+                //Gọi vào DB
+                var reader = mySqlConnection.QueryMultiple(storedProceduredName, parameters, commandType: CommandType.StoredProcedure);
+                //var multi = mySqlConnection.QueryMultiple(storedProceduredTotalRecords, commandType: CommandType.StoredProcedure);
+                int count = reader.Read<int>().FirstOrDefault();
+                var listRecordByFilterPaging = reader.Read<Movie>().ToList();
+                var numberOfAffectedRows = new PagingResult<Movie>(count, pageNumber, pageSize, listRecordByFilterPaging);
+
+                if (numberOfAffectedRows != null)
+                {
+                    foreach (var movieItem in numberOfAffectedRows.Data)
                     {
                         var newEstEpisode = mySqlConnection.QueryFirstOrDefault<Episode>(storedProceduredNameEpisode, new { p_MovieId = movieItem.MovieId }, commandType: CommandType.StoredProcedure);
                         movieItem.NewestEpisode = newEstEpisode;
@@ -318,6 +397,32 @@ namespace WebMovie.Backend.DL.MovieDL
                     {
                         numberOfAffectedRows = mySqlConnection.Execute("UPDATE Movie SET MovieReview = @p_MovieReview WHERE MovieId = @p_MovieId;",
                              new { p_MovieReview = totalReview, p_MovieId = movieId }, transaction: transaction);
+
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        Console.WriteLine(ex.Message);
+                    }
+                }
+            }
+            return numberOfAffectedRows;
+        }
+
+        public int UpdateMediumScore(Guid movieId, decimal mediumScore)
+        {
+            int numberOfAffectedRows = 0;
+            //Khởi tạo kết nối đến DB
+            using (var mySqlConnection = new MySqlConnection(DatabaseContext.ConnectionString))
+            {
+                mySqlConnection.Open();
+                using (var transaction = mySqlConnection.BeginTransaction())
+                {
+                    try
+                    {
+                        numberOfAffectedRows = mySqlConnection.Execute("UPDATE Movie SET MediumScore = @p_MediumScore WHERE MovieId = @p_MovieId;",
+                             new { p_MediumScore = mediumScore, p_MovieId = movieId }, transaction: transaction);
 
                         transaction.Commit();
                     }

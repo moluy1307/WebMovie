@@ -236,9 +236,11 @@ export default {
     created() {
         //Lấy danh sách phim hot
         axios
-            .get(`${this.$MResource.API}/Movies/GetAllMovieByType?typeMovie=4`)
+            .get(
+                `${this.$MResource.API}/Movies/GetAllMovieByTypeAndFilter?pageNumber=1&pageSize=1000&typeMovie=4&columnFilter=2`,
+            )
             .then((response) => {
-                this.movieHot = response.data;
+                this.movieHot = response.data.data;
 
                 // if (me.movieInfor.dateOfManufactor != null || me.movieInfor.dateOfManufactor != undefined) {
                 //     me.movieInfor.dateOfManufactor = commonJS.bindingFormatDate(me.movieInfor.dateOfManufactor);

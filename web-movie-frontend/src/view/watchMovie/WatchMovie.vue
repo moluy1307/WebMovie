@@ -21,7 +21,11 @@
                         /></template>
                     </div> -->
                     <template v-for="(itemEp, indexEp) in movieInfor.episodes" :key="indexEp">
-                        <div class="list-episode" @click="btnChooseEpisode(itemEp.episodeUrl)">
+                        <div
+                            class="list-episode"
+                            @click="btnChooseEpisode(itemEp.episodeUrl, itemEp.episodeId)"
+                            :class="{ 'selected-episode': itemEp.episodeId == checkSelectedEpisode }"
+                        >
                             Tập {{ itemEp.episodeNumber }}
                         </div>
                     </template>
@@ -97,8 +101,9 @@ export default {
             console.info(art);
         },
 
-        btnChooseEpisode(urlEpisode) {
+        btnChooseEpisode(urlEpisode, idEpisode) {
             this.option.url = urlEpisode;
+            this.checkSelectedEpisode = idEpisode;
         },
     },
     created() {
@@ -108,6 +113,10 @@ export default {
             .then((response) => {
                 me.movieInfor = response.data;
                 console.log('chi tiet: ', this.movieInfor);
+                console.log('duong dan link tai 1: ', me.movieInfor.episodes[0].episodeUrl);
+                this.option.url = me.movieInfor.episodes[0].episodeUrl;
+                this.checkSelectedEpisode = me.movieInfor.episodes[0].episodeId;
+                console.log('checked: ', this.checkSelectedEpisode);
             })
             .catch((err) => {
                 this.$MToastMessage({
@@ -170,6 +179,8 @@ export default {
 
             movieInfor: {},
             watchVideo: 0,
+
+            checkSelectedEpisode: '',
         };
     },
 };
@@ -198,5 +209,9 @@ export default {
     display: flex;
     flex-wrap: wrap;
     padding-top: 15px;
+}
+
+.selected-episode {
+    background-color: #ff9601;
 }
 </style>

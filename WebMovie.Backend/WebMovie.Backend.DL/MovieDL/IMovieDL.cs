@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebMovie.Backend.Common.Entities;
+using WebMovie.Backend.Common.Entities.DTO;
 using WebMovie.Backend.DL.BaseDL;
 
 namespace WebMovie.Backend.DL.MovieDL
@@ -16,10 +17,16 @@ namespace WebMovie.Backend.DL.MovieDL
 
         IEnumerable<Movie> GetAllMovies();
 
-        IEnumerable<Movie> GetAllMovieByType (int typeMovie, int? limit);
+        //IEnumerable<Movie> GetAllMovieByType (int typeMovie, int? limit);
+
+        PagingResult<Movie> GetAllMovieByTypeAndFilter(int pageNumber, int pageSize, Guid? categoryId, int? typeMovie, int columnFilter);
+
+        PagingResult<Movie> GetSimilarMovieByFilter(int pageNumber, int pageSize, Guid? movieId);
 
         int UpdateMovie(Guid movieId, Movie movie);
 
         int UpdateReview(Guid movieId);
+
+        int UpdateMediumScore(Guid movieId, decimal mediumScore);
     }
 }

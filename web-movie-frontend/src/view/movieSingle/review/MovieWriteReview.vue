@@ -65,7 +65,49 @@ export default {
         selectRating(rating) {
             this.selectedRating = rating;
             this.commentInfor.rating = parseInt(this.selectedRating);
-            console.log('nhan gia tri: ', this.commentInfor);
+        },
+
+        updateMediumScoreMovie() {
+            axios
+                .get(`${this.$MResource.API}/Comments/filter?keyword=${this.idMovie}&pageNumber=1&pageSize=1000`)
+                .then((response) => {
+                    this.commentList = response.data.data;
+                    this.commentList.forEach((element) => {
+                        if (element.rating != null) {
+                            this.countRating++;
+                            this.totalRating += element.rating;
+                        }
+                    });
+                    if (this.totalRating == 0 || this.totalRating == null || this.totalRating == undefined) {
+                        this.mediumScore = 0;
+                    } else {
+                        this.mediumScore = this.totalRating / this.countRating;
+                    }
+                    console.log('da co diem : ', this.mediumScore);
+
+                    //Call Api cập nhật điểm trung bình
+                    axios
+                        .put(
+                            `${this.$MResource.API}/Movies/UpdateMediumScore?movieId=${this.idMovie}&mediumScore=${this.mediumScore}`,
+                        )
+                        .then(() => {})
+                        .catch((err) => {
+                            this.$MToastMessage({
+                                titleToast: this.$MResource.VI.TOAST.TITLE_ERROR,
+                                messageToast: err,
+                                showToastMessage: true,
+                                typeToast: 'errorToast',
+                            });
+                        });
+                })
+                .catch((err) => {
+                    this.$MToastMessage({
+                        titleToast: this.$MResource.VI.TOAST.TITLE_ERROR,
+                        messageToast: err,
+                        showToastMessage: true,
+                        typeToast: 'errorToast',
+                    });
+                });
         },
 
         btnSendComment() {
@@ -85,6 +127,7 @@ export default {
                             showToastMessage: true,
                             typeToast: 'successToast',
                         });
+                        this.updateMediumScoreMovie();
                         me.$emit('onClose');
                         location.reload();
                     })
@@ -111,6 +154,11 @@ export default {
                 rating: 0,
             },
             userInformation: {},
+
+            countRating: 0,
+            totalRating: 0,
+            mediumScore: 0,
+            commentList: [],
         };
     },
 };

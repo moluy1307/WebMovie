@@ -59,6 +59,8 @@ namespace WebMovie.Backend.Common.Entities
         [NoParam]
         public object? NewestEpisode { get; set; }
 
+        public decimal? MediumScore { get; set; }
+
         public DateTime? CreatedDate { get; set; }
 
         //public Movie()
