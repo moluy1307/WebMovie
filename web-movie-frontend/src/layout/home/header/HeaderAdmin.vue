@@ -44,7 +44,7 @@
                             <div>
                                 <h4>{{ orderItem.orderName }}</h4>
                                 <p>{{ orderItem.username }}</p>
-                                <p>{{ descriptionTime }} ago</p>
+                                <p>{{ descriptionTime }} trước</p>
                             </div>
                         </li>
                     </template>
@@ -128,9 +128,9 @@ export default {
             this.userInformation = JSON.parse(storage);
             // this.accountAdmin = true;
             axios
-                .get(`${this.$MResource.API}/OrderUsers`)
+                .get(`${this.$MResource.API}/OrderUsers/filter?pageNumber=1&pageSize=1000`)
                 .then((response) => {
-                    this.orderList = response.data;
+                    this.orderList = response.data.data;
                     console.log('cac yeu cau: ', this.orderList);
                     for (var item in this.orderList) {
                         const now = moment(); // Lấy thời điểm hiện tại

@@ -7,19 +7,6 @@
                     <p style="font-size: 18px">Tổng hợp</p>
                 </div>
                 <div class="movie-rate box-list-episode">
-                    <!-- <div class="rate">
-                        <font-awesome-icon :icon="['fas', 'star']" style="color: #f5b50a; font-size: 24px" />
-                        <p>
-                            <span>8.1</span> /10<br />
-                            <span class="rv">56 lượt đánh giá</span>
-                        </p>
-                    </div>
-                    <div class="rate-star">
-                        <p>Đánh giá:</p>
-                        <template v-for="n in 10" :key="n"
-                            ><font-awesome-icon :icon="['fas', 'star']" style="color: #f5b50a; font-size: 24px"
-                        /></template>
-                    </div> -->
                     <template v-for="(itemEp, indexEp) in movieInfor.episodes" :key="indexEp">
                         <div
                             class="list-episode"
@@ -78,6 +65,7 @@
             </div>
         </div>
     </div>
+    <MLoadingClient v-if="showLoadingClient"></MLoadingClient>
 </template>
 
 <script>
@@ -92,7 +80,11 @@ export default {
     watch: {
         'option.url': function (value) {
             if (value) {
-                this.watchVideo++;
+                this.showLoadingClient = true;
+                setTimeout(() => {
+                    this.showLoadingClient = false;
+                    this.watchVideo++;
+                }, 1000);
             }
         },
     },
@@ -107,27 +99,26 @@ export default {
         },
     },
     created() {
-        var me = this;
-        axios
-            .get(`${this.$MResource.API}/Movies/GetMovieById?movieId=${this.$route.params.id}`)
-            .then((response) => {
-                me.movieInfor = response.data;
-                console.log('chi tiet: ', this.movieInfor);
-                console.log('duong dan link tai 1: ', me.movieInfor.episodes[0].episodeUrl);
-                this.option.url = me.movieInfor.episodes[0].episodeUrl;
-                this.checkSelectedEpisode = me.movieInfor.episodes[0].episodeId;
-                console.log('checked: ', this.checkSelectedEpisode);
-            })
-            .catch((err) => {
-                this.$MToastMessage({
-                    titleToast: this.$MResource.VI.TOAST.TITLE_ERROR,
-                    messageToast: err,
-                    showToastMessage: true,
-                    typeToast: 'errorToast',
+        setTimeout(() => {
+            var me = this;
+            axios
+                .get(`${this.$MResource.API}/Movies/GetMovieById?movieId=${this.$route.params.id}`)
+                .then((response) => {
+                    this.showLoadingClient = false;
+                    me.movieInfor = response.data;
+                    this.option.url = me.movieInfor.episodes[0].episodeUrl;
+                    this.checkSelectedEpisode = me.movieInfor.episodes[0].episodeId;
+                })
+                .catch((err) => {
+                    this.showLoadingClient = false;
+                    this.$MToastMessage({
+                        titleToast: this.$MResource.VI.TOAST.TITLE_ERROR,
+                        messageToast: err,
+                        showToastMessage: true,
+                        typeToast: 'errorToast',
+                    });
                 });
-            });
-
-        console.log('router: ', this.$route.params.id);
+        }, 1000);
     },
     data() {
         return {
@@ -181,6 +172,8 @@ export default {
             watchVideo: 0,
 
             checkSelectedEpisode: '',
+
+            showLoadingClient: true,
         };
     },
 };

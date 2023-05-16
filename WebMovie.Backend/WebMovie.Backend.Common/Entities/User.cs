@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace WebMovie.Backend.Common.Entities
         [RecordCode]
         public string Username { get; set; }
 
-        public string Password { get; set; }
+        public string? Password { get; set; }
 
         public Guid? RoleId { get; set; }
 

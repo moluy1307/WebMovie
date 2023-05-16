@@ -12,6 +12,12 @@ namespace WebMovie.Backend.BL.OrderUserBL
 
         ServiceResult DeleteOrder(Guid recordId);
 
-        OrderUser GetOrderByUserId(Guid userId);
+        IEnumerable<OrderUser> GetOrderByUserId(Guid userId);
+
+        IEnumerable<OrderUser> GetOrderRevenue(int? sortByYear);
+
+        IEnumerable<OrderUser> GetUserIdBoughtMovie();
+
+        Task SendEmail(string subjectMess, string accountName, string customerName, int moneyRecharge);
     }
 }

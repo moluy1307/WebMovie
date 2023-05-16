@@ -52,7 +52,7 @@ header {
     position: relative;
 }
 
-.tab .item .label {
+.tab .label {
     position: absolute;
     display: inline-block;
     white-space: normal;
@@ -64,7 +64,7 @@ header {
     color: #ffffff;
     background: #e74c3c;
     border-bottom: 2px solid #bb3c2f;
-    top: 25px;
+    top: 7px;
     border-radius: 0 5px 5px 0;
     -webkit-box-shadow: 2px 2px 3px 0px rgb(0 0 0 / 75%);
     -moz-box-shadow: 2px 2px 3px 0px rgba(0, 0, 0, 0.75);
@@ -72,7 +72,7 @@ header {
     left: 0;
 }
 
-.tab .item .name {
+.tab .name {
     margin: 0;
     color: #fff;
     font-weight: normal;
@@ -82,9 +82,13 @@ header {
     text-overflow: ellipsis;
     overflow: hidden;
     font-size: 12px;
+    /* text-align: center; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.tab .item .name a {
+.tab .name a {
     color: #fff;
 }
 
@@ -354,4 +358,42 @@ hr {
 
 .notification-item p {
     line-height: 20px !important;
+}
+
+.sub-menu {
+    position: absolute;
+    background: #0c2738;
+    width: 550px;
+    padding: 15px 25px;
+    border-top: 1px solid #899ead;
+    top: 100%;
+    transition: all 350ms ease;
+    left: 0;
+    z-index: 20;
+}
+
+@media screen and (max-width: 991px) {
+    .sub-menu {
+        width: 100%;
+        position: relative;
+        height: auto;
+    }
+    .sub-menu li {
+        width: 100%;
+    }
+}
+
+.sub-menu li {
+    width: 33.3333333%;
+    float: left;
+    display: inline-block;
+    padding: 12px;
+}
+
+.sub-menu li a {
+    color: #899ead;
+    text-decoration: none;
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 5px;
 }

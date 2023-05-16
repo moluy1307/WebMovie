@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "ssdPrB09BdGaWh7rK7Ar1L1c5VgdjSrXWUXKw9kXySQ=",
+  "Hash": "oslcS67LKxJWVFUCkXNi1gG5JTP/e/WjxC8V1hBTTTA=",
   "Source": "WebMovie.Backend.API",
   "BasePath": "_content/WebMovie.Backend.API",
   "Mode": "Default",
@@ -202,6 +202,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Images\\Actors\\Actor-00011.png"
+    },
+    {
+      "Identity": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Actor-0008.png",
+      "SourceId": "WebMovie.Backend.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\",
+      "BasePath": "_content/WebMovie.Backend.API",
+      "RelativePath": "Images/Actors/Actor-0008.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Images\\Actors\\Actor-0008.png"
     },
     {
       "Identity": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\bannerMovie1.png",

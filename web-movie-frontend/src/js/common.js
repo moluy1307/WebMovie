@@ -53,7 +53,9 @@ const commonJS = {
 
                 let year = dateTime.getFullYear();
 
-                return `${year}-${month}-${date}`;
+                if (isNaN(Date.parse(dateTime)) == true) {
+                    return '';
+                } else return `${year}-${month}-${date}`;
             } else {
                 return '';
             }
@@ -76,7 +78,30 @@ const commonJS = {
     formatCurrency(number) {
         try {
             if (number != null || number != undefined) {
+                // return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(number);
+                return new Intl.NumberFormat({ style: 'currency' }).format(number);
+            }
+            return '';
+        } catch (err) {
+            this.$MToastMessage({
+                titleToast: 'Lỗi',
+                messageToast: err,
+                showToastMessage: true,
+            });
+            return '';
+        }
+    },
+    /**
+     * Format tiền thành định dạng 0đ
+     * CreatedBy: huynq 10/12/2022
+     * @param {*} number
+     * @returns
+     */
+    formatCurrencyCorrect(number) {
+        try {
+            if (number != null || number != undefined) {
                 return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(number);
+                // return new Intl.NumberFormat({ style: 'currency' }).format(number);
             }
             return '';
         } catch (err) {
@@ -102,6 +127,27 @@ const commonJS = {
             } else if (gender == 0) {
                 return 'Nam';
             } else return 'Khác';
+        } catch (err) {
+            this.$MToastMessage({
+                titleToast: 'Lỗi',
+                messageToast: err,
+                showToastMessage: true,
+            });
+            return '';
+        }
+    },
+
+    /**
+     * Format trạng thái thành định dạng Chưa xác thực/ Đã xác thực
+     * CreatedBy: huynq 10/12/2022
+     * @param {*} status
+     * @returns
+     */
+    formatStatus(status) {
+        try {
+            if (status == 1) {
+                return 'Đã xác thực';
+            } else return 'Chưa xác thực';
         } catch (err) {
             this.$MToastMessage({
                 titleToast: 'Lỗi',

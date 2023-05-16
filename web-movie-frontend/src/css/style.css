@@ -1930,7 +1930,7 @@ tbody.collapse.in {
     top: 100%;
     left: 0;
     z-index: 1000;
-    display: none;
+    /* display: none; */
     float: left;
     min-width: 160px;
     padding: 5px 0;
@@ -4476,7 +4476,7 @@ ul {
 .movie-item-style-1 .hvr-inner a i {
     margin-right: 5px;
 }
-.movie-item-style-1:hover img {
+/* .movie-item-style-1:hover img {
     -moz-opacity: 0.5;
     -khtml-opacity: 0.5;
     -webkit-opacity: 0.5;
@@ -4494,7 +4494,7 @@ ul {
 }
 .movie-item-style-1:hover h6 a {
     color: #dcf836;
-}
+} */
 @media (max-width: 767px) {
     .movie-item-style-1 {
         margin-left: 15px;
@@ -5779,7 +5779,7 @@ ul {
 }
 .common-hero {
     height: 385px;
-    /* background: url('../images/uploads/user-hero-bg.jpg') no-repeat; */
+    background: url('../assets/img/user-hero-bg.jpg') no-repeat;
 }
 .common-hero:before {
     background-color: rgba(0, 0, 0, 0.4);

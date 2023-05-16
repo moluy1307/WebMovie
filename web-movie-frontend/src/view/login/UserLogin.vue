@@ -2,7 +2,7 @@
     <div class="overlay openform" @click.self="btnCloseForm">
         <div class="login-wrapper" id="login-content">
             <div class="login-content">
-                <a href="#" class="close">x</a>
+                <a @click.self="btnCloseForm" class="close">x</a>
                 <h3>{{ isFormSignup ? 'Đăng ký' : 'Đăng nhập' }}</h3>
                 <form method="post" action="#">
                     <div class="row" v-if="isFormSignup == false">
@@ -200,7 +200,7 @@ export default {
             this.$emit('close-form');
         },
         btnLogin() {
-            console.log('dang nhap: ', this.$MResource.API);
+            console.log('dang nhap: ', this.txtPassword);
             axios
                 .get(`${this.$MResource.API}/Users/Login?username=${this.txtUsername}&password=${this.txtPassword}`)
                 .then((response) => {
@@ -224,6 +224,7 @@ export default {
                     }
                 })
                 .catch((err) => {
+                    console.log(err);
                     let response = err.response;
                     switch (response.status) {
                         case 500:
@@ -272,13 +273,6 @@ export default {
                 this.error = [];
                 var isValid = true;
 
-                if (this.txtConfirmPass == null) {
-                    isValid = false;
-                    this.error.push('Nhập mật khẩu xác nhận');
-                    this.showDialog = true;
-                    this.errorField.confirm = true;
-                }
-
                 if (!this.insertUser.password) {
                     isValid = false;
                     this.error.push('Mật khẩu không được để trống');
@@ -286,6 +280,13 @@ export default {
                     this.errorField.password = true;
                 }
 
+                if (this.txtConfirmPass == null) {
+                    isValid = false;
+                    this.error.push('Nhập mật khẩu xác nhận');
+                    this.showDialog = true;
+                    this.errorField.confirm = true;
+                    console.log(this.txtConfirmPass);
+                }
                 if (!this.insertUser.email) {
                     isValid = false;
                     this.error.push('Địa chỉ Email không được để trống');
@@ -301,24 +302,18 @@ export default {
                     this.errorField.username = true;
                 }
 
-                if (
-                    this.insertUser.username &&
-                    this.insertUser.email &&
-                    this.insertUser.password &&
-                    this.txtConfirmPass != null
-                ) {
+                if (this.insertUser.password != null && this.txtConfirmPass != null) {
                     if (this.insertUser.password != this.txtConfirmPass) {
                         isValid = false;
                         this.error.push('Mật khẩu xác nhận chưa đúng');
                         this.showDialog = true;
                     }
-                    //Validate Email không đúng định dạng
-                    if (this.insertUser.email != null) {
-                        if (!/^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})*$/.test(this.insertUser.email)) {
-                            isValid = false;
-                            this.error.push('Email không đúng định dạng');
-                            this.showDialog = true;
-                        }
+                }
+                if (this.insertUser.email != null) {
+                    if (!/^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})*$/.test(this.insertUser.email)) {
+                        isValid = false;
+                        this.error.push('Email không đúng định dạng');
+                        this.showDialog = true;
                     }
                 }
                 return isValid;

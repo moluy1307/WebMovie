@@ -40,10 +40,10 @@
                             <div class="frm-manual">
                                 <MInput
                                     labelInput="Mã"
+                                    v-model="actorInfor.actorCode"
                                     ref="refActorCode"
                                     compulsory="*"
                                     styleCompulsory="margin-left: 5px;"
-                                    v-model="actorInfor.actorCode"
                                     :newClass="!errorField.code ? '' : 'input-error'"
                                     :tooltipError="errorField.code"
                                     errorMessage="Mã không được để trống"
@@ -53,10 +53,10 @@
                                 <MInput
                                     labelInput="Tên"
                                     propTabindex="0"
+                                    v-model="actorInfor.fullname"
                                     compulsory="*"
                                     styleCompulsory="margin-left: 5px;"
                                     ref="reffullname"
-                                    v-model="actorInfor.fullname"
                                     :newClass="!errorField.fullname ? '' : 'input-error'"
                                     :tooltipError="errorField.fullname"
                                     errorMessage="Tên không được để trống"
@@ -146,7 +146,7 @@
                         <div class="content-element">
                             <div style="display: flex; flex-direction: column; row-gap: 22px">
                                 <img
-                                    :src="actorInfor.imagePath"
+                                    v-lazy="actorInfor.imagePath"
                                     alt="Ảnh minh họa"
                                     style="width: 150px; height: 150px"
                                 />
@@ -359,12 +359,85 @@ export default {
                         me.$emit('dataRecovery');
                     })
                     .catch((err) => {
+                        let response = err.response;
+                        switch (response.status) {
+                            case 500:
+                                if (response.data['errorCode'] === 5) {
+                                    this.$MToastMessage({
+                                        titleToast: this.$MResource.VI.TOAST.TITLE_ERROR,
+                                        messageToast: response.data['userMsg'],
+                                        showToastMessage: true,
+                                        typeToast: 'errorToast',
+                                    });
+                                } else {
+                                    this.$MToastMessage({
+                                        titleToast: this.$MResource.VI.TOAST.TITLE_ERROR,
+                                        messageToast: response.data['devMsg'],
+                                        showToastMessage: true,
+                                        typeToast: 'errorToast',
+                                    });
+                                }
+                                break;
+                            case 400:
+                                var userMsg = response.data['moreInfo'];
+                                userMsg.forEach((element) => {
+                                    this.showDialogWarning = true;
+                                    this.textWarning = element;
+                                });
+
+                                break;
+                            default:
+                                break;
+                        }
+                        console.log(err);
+                    });
+            } else {
+                axios
+                    .put(`https://localhost:7112/api/v1/Actors/UpdateActor?actorId=${me.id}`, formData, {
+                        headers: { 'Content-Type': 'multipart/form-data' },
+                    })
+                    .then(() => {
                         this.$MToastMessage({
-                            titleToast: this.$MResource.VI.TOAST.TITLE_ERROR,
-                            messageToast: err,
+                            titleToast: this.$MResource.VI.TOAST.TITLE_SUCCESS,
+                            messageToast: 'Sửa thông tin diễn viên thành công',
                             showToastMessage: true,
-                            typeToast: 'errorToast',
+                            typeToast: 'successToast',
                         });
+                        me.$emit('onClose');
+                        me.$emit('dataRecovery');
+                    })
+                    .catch((err) => {
+                        let response = err.response;
+                        switch (response.status) {
+                            case 500:
+                                if (response.data['errorCode'] === 5) {
+                                    this.$MToastMessage({
+                                        titleToast: this.$MResource.VI.TOAST.TITLE_ERROR,
+                                        messageToast: response.data['userMsg'],
+                                        showToastMessage: true,
+                                        typeToast: 'errorToast',
+                                    });
+                                } else {
+                                    this.$MToastMessage({
+                                        titleToast: this.$MResource.VI.TOAST.TITLE_ERROR,
+                                        messageToast: response.data['devMsg'],
+                                        showToastMessage: true,
+                                        typeToast: 'errorToast',
+                                    });
+                                }
+                                break;
+                            case 400:
+                                var userMsg = response.data['moreInfo'];
+                                userMsg.forEach((element) => {
+                                    this.showDialogWarning = true;
+                                    this.textWarning = element;
+                                });
+
+                                break;
+                            default:
+                                break;
+                        }
+                        console.log(err);
                     });
             }
         },
@@ -435,7 +508,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 /* .vc-popover-caret.direction-bottom.align-left {
     display: none;
 }

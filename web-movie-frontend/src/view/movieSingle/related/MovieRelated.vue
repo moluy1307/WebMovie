@@ -15,10 +15,10 @@
             </div>
             <template v-for="(movieRelatedItem, indexRelatedItem) in movieRelatedList" :key="indexRelatedItem">
                 <div class="movie-item-style-2">
-                    <img :src="movieRelatedItem.imagePath" alt="" style="max-width: 170px" />
+                    <img v-lazy="movieRelatedItem.imagePath" alt="" style="max-width: 170px" />
                     <div class="mv-item-infor">
                         <h6>
-                            <a href="#"
+                            <a @click="btnShowMovieSingle(movieRelatedItem.movieId)"
                                 >{{ movieRelatedItem.movieName }} &nbsp;
                                 <span
                                     ><font-awesome-icon :icon="['fas', 'coins']" />&nbsp;{{
@@ -44,7 +44,7 @@
                             <span>Ngày sản xuất: {{ movieRelatedItem.dateOfManufactor }}</span>
                         </p>
                         <p>
-                            Đạo diễn: <a href="#">{{ movieRelatedItem.movieDirector }}</a>
+                            Đạo diễn: <a>{{ movieRelatedItem.movieDirector }}</a>
                         </p>
                         <p>
                             Diễn viên: <a>{{ movieRelatedItem.actorMovie }}</a>
@@ -98,12 +98,12 @@ export default {
     watch: {
         perPageValue: function (value) {
             if (value) {
-                this.callApiPaginationReview();
+                this.callApiPaginationRelated();
             }
         },
         currentPage: function (value) {
             if (value) {
-                this.callApiPaginationReview();
+                this.callApiPaginationRelated();
             }
         },
     },
@@ -213,37 +213,47 @@ export default {
         isPageActive(page) {
             return this.currentPage === page;
         },
+
+        callApiPaginationRelated() {
+            axios
+                .get(
+                    `${this.$MResource.API}/Movies/GetSimilarMovieByFilter?pageNumber=${this.currentPage}&pageSize=${this.perPageValue}&movieId=${this.$route.params.id}`,
+                )
+                .then((response) => {
+                    this.movieRelatedList = response.data.data;
+                    this.totalPages = response.data.totalPages;
+                    this.totalRecord = response.data.totalRecords;
+
+                    this.movieRelatedList.forEach((movieRelatedItem) => {
+                        if (movieRelatedItem.imgByte != null && movieRelatedItem.imgByte.length > 0) {
+                            movieRelatedItem.imagePath = 'data:image/png;base64,' + movieRelatedItem.imgByte;
+                            // this.file = 'data:image/png;base64,' + this.movieInfor.imgByte;
+                        }
+                        if (
+                            movieRelatedItem.dateOfManufactor != null ||
+                            movieRelatedItem.dateOfManufactor != undefined
+                        ) {
+                            movieRelatedItem.dateOfManufactor = commonJS.formatDate(movieRelatedItem.dateOfManufactor);
+                        }
+                    });
+                })
+                .catch((err) => {
+                    this.$MToastMessage({
+                        titleToast: this.$MResource.VI.TOAST.TITLE_ERROR,
+                        messageToast: err,
+                        showToastMessage: true,
+                        typeToast: 'errorToast',
+                    });
+                });
+        },
+
+        btnShowMovieSingle(idMovie) {
+            this.$router.push({ name: 'MovieSingle', params: { id: idMovie } });
+        },
     },
     created() {
-        var me = this;
         this.perPageValue = 5;
-        axios
-            .get(
-                `${this.$MResource.API}/Movies/GetSimilarMovieByFilter?pageNumber=${this.currentPage}&pageSize=${this.perPageValue}&movieId=${this.$route.params.id}`,
-            )
-            .then((response) => {
-                me.movieRelatedList = response.data.data;
-                this.totalPages = response.data.totalPages;
-                this.totalRecord = response.data.totalRecords;
-
-                this.movieRelatedList.forEach((movieRelatedItem) => {
-                    if (movieRelatedItem.imgByte != null && movieRelatedItem.imgByte.length > 0) {
-                        movieRelatedItem.imagePath = 'data:image/png;base64,' + movieRelatedItem.imgByte;
-                        // this.file = 'data:image/png;base64,' + this.movieInfor.imgByte;
-                    }
-                    if (movieRelatedItem.dateOfManufactor != null || movieRelatedItem.dateOfManufactor != undefined) {
-                        movieRelatedItem.dateOfManufactor = commonJS.formatDate(movieRelatedItem.dateOfManufactor);
-                    }
-                });
-            })
-            .catch((err) => {
-                this.$MToastMessage({
-                    titleToast: this.$MResource.VI.TOAST.TITLE_ERROR,
-                    messageToast: err,
-                    showToastMessage: true,
-                    typeToast: 'errorToast',
-                });
-            });
+        this.callApiPaginationRelated();
         console.log('id overview: ', this.$route.params.id);
     },
     data() {

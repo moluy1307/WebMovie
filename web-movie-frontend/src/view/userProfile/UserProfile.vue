@@ -22,7 +22,7 @@
                 <div class="col-md-3 col-sm-12 col-xs-12">
                     <div class="user-information">
                         <div class="user-img">
-                            <a href="#"><img src="../../assets/img/user-img.png" alt="" /><br /></a>
+                            <a><img src="../../assets/img/user-img.png" alt="" /><br /></a>
                             <!-- <a href="#" class="redbtn">Change avatar</a> -->
                         </div>
                         <div class="user-fav">
@@ -41,8 +41,8 @@
                         <div class="user-fav">
                             <p>Khác</p>
                             <ul>
-                                <li><a href="#">Thay đổi mật khẩu</a></li>
-                                <li @click="btnLogout"><a>Đăng xuất</a></li>
+                                <li style="cursor: pointer"><a>Thay đổi mật khẩu</a></li>
+                                <li @click="btnLogout" style="cursor: pointer"><a>Đăng xuất</a></li>
                             </ul>
                         </div>
                     </div>
@@ -172,6 +172,20 @@
             titleButton="Đóng"
         ></MDialog>
     </div>
+    <div v-else-if="showDialogWarning">
+        <MDialog
+            @close-dialog="showDialogWarning = false"
+            :depict="textWarning"
+            dialogConfirm="false"
+            :hasCloseButton="false"
+            :hasCancelButton="{ 'btn-dialog-left': true }"
+            typeDialog="warningDialog"
+            titleDialog="Thông báo"
+            titleButton="Đồng ý"
+        ></MDialog>
+    </div>
+
+    <MLoadingClient v-if="showLoadingClient"></MLoadingClient>
 </template>
 
 <script>
@@ -187,7 +201,7 @@ export default {
             this.$router.push('/');
             setTimeout(() => {
                 location.reload();
-            }, 1000);
+            }, 100);
         },
 
         btnShowFormInstruction() {
@@ -318,11 +332,13 @@ export default {
         },
     },
     created() {
-        // console.log('router user prof: ', this.$route.params.id);
-        const storage = localStorage.getItem('userInfor');
-        if (storage !== null) {
-            this.userInformation = JSON.parse(storage);
-        }
+        setTimeout(() => {
+            this.showLoadingClient = false;
+            const storage = localStorage.getItem('userInfor');
+            if (storage !== null) {
+                this.userInformation = JSON.parse(storage);
+            }
+        }, 1000);
     },
     data() {
         return {
@@ -333,9 +349,121 @@ export default {
             txtNewPassword: '',
             showConfirmNewPassword: false,
             showRequestFill: false,
+
+            showDialogWarning: false,
+            textWarning: '',
+
+            showLoadingClient: true,
         };
     },
 };
 </script>
 
-<style></style>
+<style>
+.modal-instruction {
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.4);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* display: none; */
+    z-index: 99999;
+}
+
+.instructure-recharge {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #fff;
+}
+
+.instructure-recharge h2 {
+    margin-bottom: 12px;
+}
+.amount {
+    border: 2px solid red;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 20px;
+}
+
+.denomination {
+    display: flex;
+    flex-direction: row;
+}
+
+.provider-item.item-price {
+    display: block !important;
+    padding: 10px 10px 2px;
+}
+
+.provider-item {
+    display: block;
+    border: 1px solid #d3d3d3;
+    border-radius: 8px;
+    padding: 4px;
+    min-height: 60px !important;
+    max-width: 130px !important;
+    cursor: pointer;
+    position: relative;
+}
+
+.provider-item.item-price.selected {
+    display: block !important;
+    padding: 9px 9px 1px;
+}
+
+.provider-item.selected {
+    border: 2px solid #f25922;
+    padding: 3px;
+}
+
+.provider-item.item-price {
+    display: block !important;
+    padding: 10px 10px 2px;
+}
+
+.provider-item.item-price.selected .price-info {
+    color: #f25922 !important;
+    padding-bottom: 15px;
+    padding-top: 15px;
+}
+
+.provider-item .price-info {
+    color: #0a0a0a !important;
+    display: block;
+    padding-bottom: 15px;
+    padding-top: 15px;
+    font-size: 18px;
+    text-align: center;
+    font-weight: 500;
+}
+
+.provider-item .price-discount {
+    display: flex;
+    border-top: 1px dotted #333;
+    padding-top: 4px;
+    margin: 0;
+}
+
+.provider-item .price-discount .discount-text {
+    float: left;
+    font-size: 12px;
+    color: #0a0a0a;
+    width: 49%;
+}
+
+.provider-item .price-discount .discount-value {
+    float: right;
+    font-size: 13px;
+    color: #002bff;
+    width: 49%;
+    text-align: right;
+    font-weight: 500;
+}
+</style>

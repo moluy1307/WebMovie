@@ -33,14 +33,17 @@
                 <li>
                     <div>
                         Sau khi hoàn tất quá trình chuyển tiền (tên người nhận tiền là NGUYEN QUANG HUY), bạn vui lòng
-                        chọn mệnh giá mình đã chuyển và nhấn vào nút "Hoàn tất" ở bên dưới. Sau khoảng 1, 2 phút, tài
-                        khoản bạn trên web sẽ được cộng tiền.
+                        chọn
+                        <span style="color: #002bff; font-weight: 700">khung mệnh giá mình đã chuyển bên trên</span> và
+                        nhấn vào nút <span style="color: #50b83c; font-weight: 700">"Hoàn tất"</span> ở bên dưới. Sau
+                        khoảng 1, 2 phút, tài khoản bạn trên web sẽ được cộng tiền.
                     </div>
                     <div style="display: flex; justify-content: center; align-items: center">
                         <img src="../../assets/img/QR_VCB.png" style="width: 200px; height: 200px" />
                     </div>
                 </li>
                 <li>
+                    Nếu bạn không quét mã được, vui lòng chuyển tiền theo thông tin sau:
                     <ul style="list-style: circle; margin-left: 20px">
                         <li>Ngân hàng TMCP Ngoại thương Việt Nam (Vietcombank)</li>
                         <li>Số tài khoản: <span style="font-weight: 700">0341007208400</span></li>
@@ -52,7 +55,7 @@
                     </ul>
                 </li>
             </ol>
-            <div class="btn-group" style="padding-top: 0 !important">
+            <div class="btn-group" style="padding-top: 0 !important; display: flex; justify-content: space-between">
                 <MButton
                     @click="btnCloseOnClick"
                     :class="{ 'btn-custom-default': true, 'btn-bg': true }"
@@ -118,6 +121,20 @@ export default {
                         showToastMessage: true,
                         typeToast: 'successToast',
                     });
+
+                    const storage = localStorage.getItem('userInfor');
+                    if (storage !== null) {
+                        this.userInformation = JSON.parse(storage);
+                        axios
+                            .post(
+                                `${this.$MResource.API}/OrderUsers/SendEmail?subjectMess=${me.orderInfor.orderName}&accountName=${this.userInformation.username}&customerName=${this.userInformation.fullName}&moneyRecharge=${this.orderInfor.recharge}`,
+                            )
+                            .then(() => {})
+                            .catch((err) => {
+                                console.log(err);
+                            });
+                    }
+
                     me.$emit('onClose');
                     location.reload();
                 })
@@ -161,21 +178,23 @@ export default {
             denominationList: [
                 {
                     coin: 100,
-                    price: 10.0,
+                    price: '10.000',
                 },
                 {
                     coin: 200,
-                    price: 20.0,
+                    price: '20.000',
                 },
                 {
                     coin: 500,
-                    price: 50.0,
+                    price: '50.000',
                 },
                 {
                     coin: 1000,
-                    price: 100.0,
+                    price: '100.000',
                 },
             ],
+
+            userInformation: {},
         };
     },
 };
@@ -192,16 +211,16 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* display: none; */
-    z-index: 99;
+    z-index: 99999;
 }
 
 .instructure-recharge {
-    width: 80%;
+    width: 70%;
     margin: 0 auto;
     padding: 20px;
     border-radius: 10px;
     background-color: #fff;
+    max-height: 95%;
 }
 
 .instructure-recharge h2 {

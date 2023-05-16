@@ -19,6 +19,7 @@ using WebMovie.Backend.Common.Constants;
 using WebMovie.Backend.Common.Entities;
 using WebMovie.Backend.Common.Entities.DTO;
 using WebMovie.Backend.DL.UserDL;
+using static Org.BouncyCastle.Crypto.Engines.SM2Engine;
 
 namespace WebMovie.Backend.DL.MovieDL
 {
@@ -44,6 +45,7 @@ namespace WebMovie.Backend.DL.MovieDL
             string storedProceduredNameCategory = String.Format(ProcedureName.Get, typeof(MovieCategory).Name, "ByMovieId");
             string storedProceduredNameActor = String.Format(ProcedureName.Get, typeof(MovieActor).Name, "ByMovieId");
             string storedProceduredNameEpisode = String.Format(ProcedureName.Get, typeof(Episode).Name, "AllByMovieId");
+            string storedProceduredNameTrailer = String.Format(ProcedureName.Get, typeof(Trailer).Name, "AllByMovieId");
 
             //Chuẩn bị tham số đầu vào cho stored
             var parameters = new DynamicParameters();
@@ -63,11 +65,13 @@ namespace WebMovie.Backend.DL.MovieDL
                 if (recordById != null)
                 {
                     var listEpisode = mySqlConnection.Query<Episode>(storedProceduredNameEpisode, parameters, commandType: CommandType.StoredProcedure);
+                    var listTrailer = mySqlConnection.Query<Trailer>(storedProceduredNameTrailer, parameters, commandType: CommandType.StoredProcedure);
                     var listCategory = mySqlConnection.Query<MovieCategory>(storedProceduredNameCategory, parameters, commandType: CommandType.StoredProcedure);
                     var listActor = mySqlConnection.Query<MovieActor>(storedProceduredNameActor, parameters, commandType: CommandType.StoredProcedure);
 
                     recordById.Categories = listCategory.ToList();
                     recordById.Episodes = listEpisode.ToList();
+                    recordById.Trailers = listTrailer.ToList();
                     recordById.Actors = listActor.ToList();
                 }
                 return recordById;
@@ -76,14 +80,14 @@ namespace WebMovie.Backend.DL.MovieDL
 
         public int InsertMovie(Movie movie)
         {
-            string storedProceduredName = "Proc_Movie_InsertMultiple";
+            string storedProceduredName = String.Format(ProcedureName.Insert, typeof(Movie).Name);
 
             //Chuẩn bị tham số đầu vào cho stored
             var parameters = new DynamicParameters();
 
             //Lấy tất cả các thuộc tính có trong object record (Employee, Department,...)
             var properties = typeof(Movie).GetProperties();
-            var propertiesEpisode = typeof(Episode).GetProperties();
+            //var propertiesEpisode = typeof(Episode).GetProperties();
 
             Guid movieSingleId = Guid.NewGuid();
 
@@ -176,6 +180,23 @@ namespace WebMovie.Backend.DL.MovieDL
                                     transaction: transaction);
                             }
 
+                            //Thêm mới trailer
+                            foreach (var trailerItem in movie.Trailers)
+                            {
+                                mySqlConnection.Execute(@"INSERT INTO trailer (TrailerId, TrailerName,TrailerUrl,TrailerTime,MovieId,CreatedDate) 
+                                                            VALUES (@p_TrailerId, @p_TrailerName, @p_TrailerUrl, @p_TrailerTime, @p_MovieId, @p_CreatedDate);",
+                                    new
+                                    {
+                                        p_TrailerId = Guid.NewGuid(),
+                                        p_TrailerName = trailerItem.TrailerName,
+                                        p_TrailerUrl = trailerItem.TrailerUrl,
+                                        p_TrailerTime = trailerItem.TrailerTime,
+                                        p_MovieId = movieSingleId,
+                                        p_CreatedDate = DateTime.Now,
+                                    },
+                                    transaction: transaction);
+                            }
+
                         }
                         transaction.Commit();
                     }
@@ -223,7 +244,8 @@ namespace WebMovie.Backend.DL.MovieDL
         //    }
         //}
 
-        public PagingResult<Movie> GetAllMovieByTypeAndFilter(int pageNumber, int pageSize, Guid? categoryId, int? typeMovie, int columnFilter)
+        public PagingResult<Movie> GetAllMovieByTypeAndFilter(int pageNumber, int pageSize, Guid? categoryId, int? typeMovie, int columnFilter, string? keyword,
+             Guid? categorySearchImproveId, int? startYear, int? endYear, int? columnSort, int? filterAndSortReview)
         {
             //Chuẩn bị tên stored procedure
             string storedProceduredName = String.Format(ProcedureName.Get, typeof(Movie).Name, "ByType");
@@ -236,6 +258,12 @@ namespace WebMovie.Backend.DL.MovieDL
             parameters.Add("p_CategoryId", categoryId);
             parameters.Add("p_TypeMovie", typeMovie);
             parameters.Add("p_ColumnFilter", columnFilter);
+            parameters.Add("p_TextSearch", keyword);
+            parameters.Add("p_CategorySearchImproveId", categorySearchImproveId);
+            parameters.Add("p_StartYear", startYear);
+            parameters.Add("p_EndYear", endYear);
+            parameters.Add("p_ColumnSort", columnSort);
+            parameters.Add("p_FilterAndSortReview", filterAndSortReview); 
 
             //Khởi tạo kết nối đến DB
             using (var mySqlConnection = new MySqlConnection(DatabaseContext.ConnectionString))
@@ -358,6 +386,28 @@ namespace WebMovie.Backend.DL.MovieDL
                                 }
                             }
 
+                            //Cập nhật trailer
+                            int deleteTrailer = mySqlConnection.Execute("DELETE FROM trailer WHERE MovieId=@p_MovieId;", new { p_MovieId = movieId }, transaction: transaction);
+
+                            if (deleteTrailer >= 0)
+                            {
+                                foreach (var trailerItem in movie.Trailers)
+                                {
+                                    mySqlConnection.Execute(@"INSERT INTO trailer (TrailerId, TrailerName,TrailerUrl,TrailerTime,MovieId,CreatedDate) 
+                                                            VALUES (@p_TrailerId, @p_TrailerName, @p_TrailerUrl, @p_TrailerTime, @p_MovieId, @p_CreatedDate);",
+                                        new
+                                        {
+                                            p_TrailerId = Guid.NewGuid(),
+                                            p_TrailerName = trailerItem.TrailerName,
+                                            p_TrailerUrl = trailerItem.TrailerUrl,
+                                            p_TrailerTime = trailerItem.TrailerTime,
+                                            p_MovieId = movieId,
+                                            p_CreatedDate = DateTime.Now,
+                                        },
+                                        transaction: transaction);
+                                }
+                            }
+
                             transaction.Commit();
                         }
                         catch (Exception ex)
@@ -377,7 +427,7 @@ namespace WebMovie.Backend.DL.MovieDL
         {
             var movieById = GetRecordById(movieId);
             int totalReview = 0;
-            if(movieById.MovieReview == null)
+            if (movieById.MovieReview == null)
             {
                 totalReview = 1;
             }
@@ -395,8 +445,8 @@ namespace WebMovie.Backend.DL.MovieDL
                 {
                     try
                     {
-                        numberOfAffectedRows = mySqlConnection.Execute("UPDATE Movie SET MovieReview = @p_MovieReview WHERE MovieId = @p_MovieId;",
-                             new { p_MovieReview = totalReview, p_MovieId = movieId }, transaction: transaction);
+                        numberOfAffectedRows = mySqlConnection.Execute("UPDATE Movie SET MovieReview = @p_MovieReview, CreatedDate = @p_CreatedDate WHERE MovieId = @p_MovieId;",
+                             new { p_MovieReview = totalReview, p_CreatedDate = DateTime.Now, p_MovieId = movieId }, transaction: transaction);
 
                         transaction.Commit();
                     }
@@ -435,5 +485,82 @@ namespace WebMovie.Backend.DL.MovieDL
             }
             return numberOfAffectedRows;
         }
+
+        public int DeleteMovie(Guid movieId)
+        {
+            int res = 0;
+            using (var mySqlConnection = new MySqlConnection(DatabaseContext.ConnectionString))
+            {
+                mySqlConnection.Open();
+                using (var transaction = mySqlConnection.BeginTransaction())
+                {
+                    try
+                    {
+                        int deleteCategory = 0, deleteActor = 0, deleteEpisode = 0, deleteTrailer = 0;
+                        //Xoá thể loại phim bảng trung gian
+                        var listCategory = mySqlConnection.Query<MovieCategory>("SELECT * FROM moviecategory WHERE MovieId=@p_MovieId;", new { p_MovieId = movieId }, transaction: transaction);
+                        if(listCategory.ToList().Count > 0)
+                        {
+                            deleteCategory = mySqlConnection.Execute("DELETE FROM moviecategory WHERE MovieId=@p_MovieId;", new { p_MovieId = movieId }, transaction: transaction);
+                        }
+
+                        //Xoá diễn viên phim bảng trung gian
+                        var listActor = mySqlConnection.Query<MovieActor>("SELECT * FROM movieactor WHERE MovieId=@p_MovieId;", new { p_MovieId = movieId }, transaction: transaction);
+                        if (listActor.ToList().Count > 0)
+                        {
+                            deleteActor = mySqlConnection.Execute("DELETE FROM movieactor WHERE MovieId=@p_MovieId;", new { p_MovieId = movieId }, transaction: transaction);
+                        }
+
+                        //Xoá bộ phim
+                        var listEpisode = mySqlConnection.Query<Episode>("SELECT * FROM episode WHERE MovieId=@p_MovieId;", new { p_MovieId = movieId }, transaction: transaction);
+                        if (listEpisode.ToList().Count > 0)
+                        {
+                            deleteEpisode = mySqlConnection.Execute("DELETE FROM episode WHERE MovieId=@p_MovieId;", new { p_MovieId = movieId }, transaction: transaction);
+                        }
+
+                        //Xoá trailer
+                        var listTrailer = mySqlConnection.Query<Trailer>("SELECT * FROM trailer WHERE MovieId=@p_MovieId;", new { p_MovieId = movieId }, transaction: transaction);
+                        if (listTrailer.ToList().Count > 0)
+                        {
+                            deleteTrailer = mySqlConnection.Execute("DELETE FROM trailer WHERE MovieId=@p_MovieId;", new { p_MovieId = movieId }, transaction: transaction);
+                        }
+
+                        //if((listCategory.ToList().Count > 0 && deleteCategory > 0) && (listActor.ToList().Count == 0) && (listEpisode.ToList().Count == 0))
+                        //{
+                        //    res = DeleteRecord(movieId);
+                        //}
+
+                        //else if ((listActor.ToList().Count > 0 && deleteActor > 0) && (listCategory.ToList().Count == 0) && (listEpisode.ToList().Count == 0))
+                        //{
+                        //    res = DeleteRecord(movieId);
+                        //}
+                        //else if ((listEpisode.ToList().Count > 0 && deleteEpisode > 0) && (listCategory.ToList().Count == 0) && (listActor.ToList().Count == 0))
+                        //{
+                        //    res = DeleteRecord(movieId);
+                        //}
+                        //else if ((listEpisode.ToList().Count > 0 && deleteEpisode > 0) && (listCategory.ToList().Count > 0 && deleteCategory > 0) && (listActor.ToList().Count > 0 && deleteActor > 0))
+                        //{
+                        //    res = DeleteRecord(movieId);
+                        //}
+                        //else 
+                        if ((listEpisode.ToList().Count == 0) && (listCategory.ToList().Count == 0) && (listActor.ToList().Count == 0))
+                        {
+                            res = mySqlConnection.Execute("DELETE FROM movie WHERE MovieId=@p_MovieId;", new { p_MovieId = movieId }, transaction: transaction);
+                        }
+                        
+                        transaction.Commit();
+
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        Console.WriteLine(ex.Message);
+                    }
+                }
+
+            }
+            return res;
+        }
+
     }
 }

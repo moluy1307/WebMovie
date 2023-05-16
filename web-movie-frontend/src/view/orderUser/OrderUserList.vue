@@ -84,6 +84,7 @@
                 propValue="orderId"
                 propValueCode="username"
                 typeObject="Movies"
+                propValueStatus="enable"
                 :table="table"
                 :hasWiget="true"
                 :hasCheckbox="false"
@@ -378,10 +379,19 @@ export default {
                 },
                 {
                     dataField: 'fullName',
-                    title: 'Tên đầy đủ',
+                    title: 'Tên khách hàng',
                     className: 'column-230 text-left',
                     classTitle: 'column-230 text-left',
                     formatType: 'text',
+                    checkIsEnableSort: 'false',
+                    // styleElement: 'column-150',
+                },
+                {
+                    dataField: 'enable',
+                    title: 'Trạng thái',
+                    className: 'column-150 text-left',
+                    classTitle: 'column-150 text-left',
+                    formatType: 'Status',
                     checkIsEnableSort: 'false',
                     // styleElement: 'column-150',
                 },

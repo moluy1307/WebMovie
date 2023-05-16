@@ -5,21 +5,30 @@
             <div class="row ipad-width2">
                 <div class="col-md-4 col-sm-12 col-xs-12">
                     <div class="movie-img sticky-sb">
-                        <img :src="movieInfor.imagePath" alt="" />
+                        <img v-lazy="movieInfor.imagePath" alt="" />
                         <div class="movie-btn">
                             <div class="btn-transform transform-vertical red">
                                 <div>
-                                    <a href="#" class="item item-1 redbtn">
+                                    <a class="item item-1 redbtn">
                                         <font-awesome-icon :icon="['fas', 'trailer']" />
                                         <span style="margin-left: 4px">Xem trailer</span>
                                     </a>
                                 </div>
                                 <div>
-                                    <a
+                                    <router-link
+                                        class="item item-2 redbtn fancybox-media hvr-grow"
+                                        :to="{
+                                            name: 'moviemedia',
+                                            params: { id: this.$route.params.id },
+                                        }"
+                                    >
+                                        <font-awesome-icon :icon="['fas', 'trailer']" />
+                                    </router-link>
+                                    <!-- <a
                                         href="https://www.youtube.com/embed/o-0hcF97wy0"
                                         class="item item-2 redbtn fancybox-media hvr-grow"
                                         ><font-awesome-icon :icon="['fas', 'trailer']"
-                                    /></a>
+                                    /></a> -->
                                 </div>
                             </div>
                             <div @click="btnWatchMovie" class="btn-transform transform-vertical">
@@ -143,6 +152,7 @@
             titleButton="Đồng ý"
         ></MDialog>
     </div>
+    <MLoadingClient v-if="showLoadingClient"></MLoadingClient>
 </template>
 
 <script>
@@ -157,7 +167,13 @@ export default {
     // components: {
     //     TheFooter,
     // },
-
+    watch: {
+        '$route.params.id': function (value) {
+            if (value) {
+                location.reload();
+            }
+        },
+    },
     methods: {
         // selectRating(rating) {
         //     this.selectedRating = rating;
@@ -224,6 +240,94 @@ export default {
                 });
         },
 
+        checkBuyOrWatchMovie() {
+            if (this.userInformation.amountMoney < this.movieInfor.amount) {
+                this.hasAccount = true;
+                this.textWarning =
+                    'Bạn không đủ tiền để có thể xem phim. Vui lòng nạp tiền vào tài khoản để có thể trải nghiệm xem phim trực tuyến';
+            } else {
+                axios
+                    .put(
+                        `${this.$MResource.API}/Users/MinusMoneyUser?userId=${
+                            this.userInformation.userId
+                        }&amountMoneyMovie=${parseFloat(this.movieInfor.amount)}`,
+                    )
+                    .then(() => {
+                        this.orderInfor.orderName = 'Yêu cầu mua phim';
+                        this.orderInfor.userId = this.userInformation.userId;
+                        this.orderInfor.movieId = this.movieInfor.movieId;
+                        axios
+                            .post(`${this.$MResource.API}/OrderUsers`, this.orderInfor)
+                            .then(() => {})
+                            .catch((err) => {
+                                let response = err.response;
+                                switch (response.status) {
+                                    case 500:
+                                        if (response.data['errorCode'] === 5) {
+                                            this.$MToastMessage({
+                                                titleToast: this.$MResource.VI.TOAST.TITLE_ERROR,
+                                                messageToast: response.data['userMsg'],
+                                                showToastMessage: true,
+                                                typeToast: 'errorToast',
+                                            });
+                                        } else {
+                                            this.$MToastMessage({
+                                                titleToast: this.$MResource.VI.TOAST.TITLE_ERROR,
+                                                messageToast: response.data['devMsg'],
+                                                showToastMessage: true,
+                                                typeToast: 'errorToast',
+                                            });
+                                        }
+                                        break;
+                                    case 400:
+                                        var userMsg = response.data['moreInfo'];
+                                        userMsg.forEach((element) => {
+                                            this.showDialogWarning = true;
+                                            this.textWarning = element;
+                                        });
+
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            });
+                        this.$router.push({
+                            name: 'watchmovie',
+                            params: { id: this.movieInfor.movieId },
+                        });
+
+                        //Thông tin user mới
+                        axios
+                            .get(`${this.$MResource.API}/Users/recordId?recordId=${this.userInformation.userId}`)
+                            .then((response) => {
+                                this.newUserInfor = response.data;
+                                localStorage.setItem('userInfor', JSON.stringify(this.newUserInfor));
+                            })
+                            .catch((err) => {
+                                this.$MToastMessage({
+                                    titleToast: this.$MResource.VI.TOAST.TITLE_ERROR,
+                                    messageToast: err,
+                                    showToastMessage: true,
+                                    typeToast: 'errorToast',
+                                });
+                            });
+
+                        //Cập nhật thêm lượt xem
+                        axios
+                            .put(`${this.$MResource.API}/Movies/UpdateMovieReview?movieId=${this.movieInfor.movieId}`)
+                            .then(() => {})
+                            .catch((err) => {
+                                this.$MToastMessage({
+                                    titleToast: this.$MResource.VI.TOAST.TITLE_ERROR,
+                                    messageToast: err,
+                                    showToastMessage: true,
+                                    typeToast: 'errorToast',
+                                });
+                            });
+                    });
+            }
+        },
+
         btnWatchMovie() {
             var me = this;
             const storage = localStorage.getItem('userInfor');
@@ -233,26 +337,34 @@ export default {
                     .get(`${this.$MResource.API}/OrderUsers/GetByUserId?userId=${this.userInformation.userId}`)
                     .then((response) => {
                         me.orderInforByUserId = response.data;
-
-                        if (
-                            me.orderInforByUserId.movieId != null &&
-                            me.orderInforByUserId.movieId == this.movieInfor.movieId
-                        ) {
-                            //Cập nhật thêm lượt xem
-                            axios
-                                .put(
-                                    `${this.$MResource.API}/Movies/UpdateMovieReview?movieId=${this.movieInfor.movieId}`,
-                                )
-                                .then(() => {})
-                                .catch((err) => {
-                                    this.$MToastMessage({
-                                        titleToast: this.$MResource.VI.TOAST.TITLE_ERROR,
-                                        messageToast: err,
-                                        showToastMessage: true,
-                                        typeToast: 'errorToast',
-                                    });
-                                });
-                            this.$router.push({ name: 'watchmovie', params: { id: this.movieInfor.movieId } });
+                        console.log('orderInforByUserId', me.orderInforByUserId);
+                        if (me.orderInforByUserId.length < 1) {
+                            console.log('them');
+                            this.checkBuyOrWatchMovie();
+                        } else {
+                            me.orderInforByUserId.forEach((element) => {
+                                console.log('element', element);
+                                if (element.movieId != null && element.movieId == this.movieInfor.movieId) {
+                                    //Cập nhật thêm lượt xem
+                                    axios
+                                        .put(
+                                            `${this.$MResource.API}/Movies/UpdateMovieReview?movieId=${this.movieInfor.movieId}`,
+                                        )
+                                        .then(() => {})
+                                        .catch((err) => {
+                                            this.$MToastMessage({
+                                                titleToast: this.$MResource.VI.TOAST.TITLE_ERROR,
+                                                messageToast: err,
+                                                showToastMessage: true,
+                                                typeToast: 'errorToast',
+                                            });
+                                        });
+                                    this.$router.push({ name: 'watchmovie', params: { id: this.movieInfor.movieId } });
+                                } else {
+                                    console.log('them moi');
+                                    this.checkBuyOrWatchMovie();
+                                }
+                            });
                         }
                     })
                     .catch((err) => {
@@ -266,101 +378,6 @@ export default {
                                         showToastMessage: true,
                                         typeToast: 'errorToast',
                                     });
-                                } else {
-                                    if (
-                                        this.userInformation.amountMoney <= 0 &&
-                                        this.userInformation.amountMoney < this.movieInfor.amount
-                                    ) {
-                                        this.hasAccount = true;
-                                        this.textWarning =
-                                            'Bạn không đủ tiền để có thể xem phim. Vui lòng nạp tiền vào tài khoản để có thể trải nghiệm xem phim trực tuyến';
-                                    } else {
-                                        axios
-                                            .put(
-                                                `${this.$MResource.API}/Users/MinusMoneyUser?userId=${
-                                                    this.userInformation.userId
-                                                }&amountMoneyMovie=${parseFloat(this.movieInfor.amount)}`,
-                                            )
-                                            .then(() => {
-                                                me.orderInfor.orderName = 'Yêu cầu mua phim';
-                                                me.orderInfor.userId = this.userInformation.userId;
-                                                me.orderInfor.movieId = this.movieInfor.movieId;
-                                                axios
-                                                    .post(`${this.$MResource.API}/OrderUsers`, me.orderInfor)
-                                                    .then(() => {})
-                                                    .catch((err) => {
-                                                        let response = err.response;
-                                                        switch (response.status) {
-                                                            case 500:
-                                                                if (response.data['errorCode'] === 5) {
-                                                                    this.$MToastMessage({
-                                                                        titleToast:
-                                                                            this.$MResource.VI.TOAST.TITLE_ERROR,
-                                                                        messageToast: response.data['userMsg'],
-                                                                        showToastMessage: true,
-                                                                        typeToast: 'errorToast',
-                                                                    });
-                                                                } else {
-                                                                    this.$MToastMessage({
-                                                                        titleToast:
-                                                                            this.$MResource.VI.TOAST.TITLE_ERROR,
-                                                                        messageToast: response.data['devMsg'],
-                                                                        showToastMessage: true,
-                                                                        typeToast: 'errorToast',
-                                                                    });
-                                                                }
-                                                                break;
-                                                            case 400:
-                                                                var userMsg = response.data['moreInfo'];
-                                                                userMsg.forEach((element) => {
-                                                                    this.showDialogWarning = true;
-                                                                    this.textWarning = element;
-                                                                });
-
-                                                                break;
-                                                            default:
-                                                                break;
-                                                        }
-                                                    });
-                                                this.$router.push({
-                                                    name: 'watchmovie',
-                                                    params: { id: this.movieInfor.movieId },
-                                                });
-
-                                                //Thông tin user mới
-                                                axios
-                                                    .get(
-                                                        `${this.$MResource.API}/Users/recordId?recordId=${this.$route.params.id}`,
-                                                    )
-                                                    .then((response) => {
-                                                        me.newUserInfor = response.data;
-                                                        localStorage.setItem('userInfor', me.newUserInfor);
-                                                    })
-                                                    .catch((err) => {
-                                                        this.$MToastMessage({
-                                                            titleToast: this.$MResource.VI.TOAST.TITLE_ERROR,
-                                                            messageToast: err,
-                                                            showToastMessage: true,
-                                                            typeToast: 'errorToast',
-                                                        });
-                                                    });
-
-                                                //Cập nhật thêm lượt xem
-                                                axios
-                                                    .put(
-                                                        `${this.$MResource.API}/Movies/UpdateMovieReview?movieId=${this.movieInfor.movieId}`,
-                                                    )
-                                                    .then(() => {})
-                                                    .catch((err) => {
-                                                        this.$MToastMessage({
-                                                            titleToast: this.$MResource.VI.TOAST.TITLE_ERROR,
-                                                            messageToast: err,
-                                                            showToastMessage: true,
-                                                            typeToast: 'errorToast',
-                                                        });
-                                                    });
-                                            });
-                                    }
                                 }
                                 break;
                             case 400:
@@ -382,32 +399,34 @@ export default {
         },
     },
     created() {
-        var me = this;
-        axios
-            .get(`${this.$MResource.API}/Movies/GetMovieById?movieId=${this.$route.params.id}`)
-            .then((response) => {
-                me.movieInfor = response.data;
+        setTimeout(() => {
+            var me = this;
+            axios
+                .get(`${this.$MResource.API}/Movies/GetMovieById?movieId=${this.$route.params.id}`)
+                .then((response) => {
+                    this.showLoadingClient = false;
+                    me.movieInfor = response.data;
 
-                if (me.movieInfor.dateOfBirth != null || me.movieInfor.dateOfBirth != undefined) {
-                    me.movieInfor.dateOfBirth = commonJS.bindingFormatDate(me.movieInfor.dateOfBirth);
-                }
-                if (this.movieInfor.imgByte != null && this.movieInfor.imgByte.length > 0) {
-                    this.movieInfor.imagePath = 'data:image/png;base64,' + this.movieInfor.imgByte;
-                    // this.file = 'data:image/png;base64,' + this.movieInfor.imgByte;
-                }
-                console.log('y chinh: ', this.movieInfor);
-            })
-            .catch((err) => {
-                this.$MToastMessage({
-                    titleToast: this.$MResource.VI.TOAST.TITLE_ERROR,
-                    messageToast: err,
-                    showToastMessage: true,
-                    typeToast: 'errorToast',
+                    if (me.movieInfor.dateOfBirth != null || me.movieInfor.dateOfBirth != undefined) {
+                        me.movieInfor.dateOfBirth = commonJS.bindingFormatDate(me.movieInfor.dateOfBirth);
+                    }
+                    if (this.movieInfor.imgByte != null && this.movieInfor.imgByte.length > 0) {
+                        this.movieInfor.imagePath = 'data:image/png;base64,' + this.movieInfor.imgByte;
+                        // this.file = 'data:image/png;base64,' + this.movieInfor.imgByte;
+                    }
+                })
+                .catch((err) => {
+                    this.showLoadingClient = false;
+                    this.$MToastMessage({
+                        titleToast: this.$MResource.VI.TOAST.TITLE_ERROR,
+                        messageToast: err,
+                        showToastMessage: true,
+                        typeToast: 'errorToast',
+                    });
                 });
-            });
 
-        this.callApiPaginationReview();
-        console.log('router: ', this.$route.params.id);
+            this.callApiPaginationReview();
+        }, 1000);
     },
 
     data() {
@@ -417,7 +436,7 @@ export default {
             hasAccount: false,
             textWarning: null,
 
-            orderInfor: { orderName: '', recharge: 0, userId: '', movieId: '' },
+            orderInfor: { orderName: '', recharge: 0, userId: '', movieId: '', enable: 0 },
 
             orderInforByUserId: {},
 
@@ -430,6 +449,8 @@ export default {
             countRating: 0,
             totalRating: 0,
             mediumScore: 0,
+
+            showLoadingClient: true,
             // file: null,
         };
     },

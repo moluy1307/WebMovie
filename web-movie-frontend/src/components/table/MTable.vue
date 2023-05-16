@@ -79,7 +79,7 @@
                 <th class="title-function text-center" :style="styleColumnFunction" v-if="hasWiget" @click="testshow">
                     Chức năng
                 </th>
-                <th class="text-center" v-if="payDetail"></th>
+                <th class="text-center" style="width: 48px" v-if="payDetail"></th>
             </tr>
         </thead>
         <tbody ref="bodyTable">
@@ -122,10 +122,18 @@
                         <td class="text-center">{{ indexAccounting + 1 }}</td>
                         <template v-for="(col, indexCol) in titleTable" :key="indexCol">
                             <td>
-                                <MInput
-                                    styleLabel="display: none !important"
-                                    v-model="itemAccounting[col.dataField]"
-                                ></MInput>
+                                <slot v-if="col.hasInputTime == 'true'">
+                                    <MInputTime
+                                        styleLabel="display: none !important"
+                                        v-model="itemAccounting[col.dataField]"
+                                    ></MInputTime>
+                                </slot>
+                                <slot v-else>
+                                    <MInput
+                                        styleLabel="display: none !important"
+                                        v-model="itemAccounting[col.dataField]"
+                                    ></MInput>
+                                </slot>
                             </td>
                         </template>
                         <td
@@ -204,8 +212,22 @@
                         @dblclick.stop.prevent
                     >
                         <div class="text-function-center">
-                            <font-awesome-icon :icon="['fas', 'pen-to-square']" style="color: #1565c0" />
-                            <button class="btn-action btn-edit-form" @click="btnEditOnClick(item)">Sửa</button>
+                            <div
+                                @click="btnEditOnClick(item)"
+                                v-if="item[propValueStatus] == '0' || !item[propValueStatus]"
+                            >
+                                <slot v-if="item[propValueStatus] != null"
+                                    ><font-awesome-icon
+                                        :icon="['far', 'square-check']"
+                                        style="color: #1565c0; margin-right: 2px"
+                                /></slot>
+                                <slot v-else
+                                    ><font-awesome-icon :icon="['fas', 'pen-to-square']" style="color: #1565c0"
+                                /></slot>
+                                <button class="btn-action btn-edit-form">
+                                    {{ item[propValueStatus] == null ? 'Sửa' : 'Xác thực' }}
+                                </button>
+                            </div>
                             <!-- <MBoxFunction
                                 @getIdReplicate="transmissionIdReplicate"
                                 @itemDelete="transmissionInfoDelete"
@@ -215,14 +237,11 @@
                                     'focus-row': checkedItem[item[propValue]],
                                 }"
                             ></MBoxFunction> -->
-                            <font-awesome-icon :icon="['fas', 'eraser']" style="color: #eb3333" />
-                            <button
-                                style="color: #eb3333"
-                                class="btn-action btn-edit-form"
-                                @click="btnDeleteOnClick(item)"
-                            >
-                                Xóa
-                            </button>
+                            <div @click="btnDeleteOnClick(item)">
+                                <font-awesome-icon :icon="['fas', 'eraser']" style="color: #eb3333" />
+                                <button style="color: #eb3333" class="btn-action btn-edit-form">Xóa</button>
+                            </div>
+                            <!-- <button v-if="item[propValueStatus] == '0'">Xac nhan</button> -->
                         </div>
                     </td>
                 </tr>
@@ -352,6 +371,10 @@ export default {
             type: Array,
         },
         styleColumnFunction: {
+            type: String,
+        },
+
+        propValueStatus: {
             type: String,
         },
     },
@@ -495,6 +518,11 @@ export default {
                         return commonJS.formatDate(value);
                     case 'Enum': {
                         return commonJS.formatGender(value);
+                    }
+                    case 'Currency':
+                        return commonJS.formatCurrency(value);
+                    case 'Status': {
+                        return commonJS.formatStatus(value);
                     }
                     default:
                         return value;
@@ -1030,6 +1058,7 @@ export default {
                             showToastMessage: true,
                             typeToast: 'errorToast',
                         });
+                        console.log(err);
                     });
 
                 // if (this.hasCheckbox == true) {

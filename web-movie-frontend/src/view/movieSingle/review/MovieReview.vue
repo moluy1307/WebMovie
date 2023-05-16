@@ -5,7 +5,7 @@
                 <div class="div">
                     <h2>{{ movieInfor.movieName }}</h2>
                 </div>
-                <a @click="showFormReview = true" class="redbtn" style="cursor: pointer">Viết bình luận</a>
+                <a @click="btnShowFormReview" class="redbtn" style="cursor: pointer">Viết bình luận</a>
             </div>
             <div class="topbar-filter">
                 <p>
@@ -92,6 +92,19 @@
         @onClose="showFormReview = false"
         :idMovie="movieInfor.movieId"
     ></MovieWriteReview>
+
+    <div v-if="showDialogWarning">
+        <MDialog
+            @close-dialog="showDialogWarning = false"
+            :depict="textWarning"
+            dialogConfirm="false"
+            :hasCloseButton="false"
+            :hasCancelButton="{ 'btn-dialog-left': true }"
+            typeDialog="warningDialog"
+            titleDialog="Thông báo"
+            titleButton="Đồng ý"
+        ></MDialog>
+    </div>
 </template>
 
 <script>
@@ -257,6 +270,20 @@ export default {
         isPageActive(page) {
             return this.currentPage === page;
         },
+
+        /**
+         * Hien thi form binh luan
+         */
+        btnShowFormReview() {
+            const storage = localStorage.getItem('userInfor');
+            if (storage !== null) {
+                this.showFormReview = true;
+            } else {
+                this.showFormReview = false;
+                this.textWarning = 'Bạn cần đăng nhập để có thể bình luận phim này';
+                this.showDialogWarning = true;
+            }
+        },
     },
     created() {
         var me = this;
@@ -292,6 +319,8 @@ export default {
             actorList: [],
 
             showFormReview: false,
+            showDialogWarning: false,
+            textWarning: '',
 
             currentPage: 1,
             perPageValue: 5,

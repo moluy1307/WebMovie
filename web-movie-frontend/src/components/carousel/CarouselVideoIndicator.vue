@@ -9,11 +9,13 @@
         :style="yValue"
     >
         <div class="trailer-img">
-            <img :src="img.trailerImg" alt="photo by Barn Images" width="4096" height="2737" />
+            <!-- <img :src="img.trailerImg" alt="photo by Barn Images" width="4096" height="2737" /> -->
+            <!-- <iframe :src="img.trailerUrl" width="4096" height="2737"></iframe> -->
+            <div v-lazyload-youtube="img.trailerUrl" width="4096" height="2737"></div>
         </div>
         <div class="trailer-infor">
-            <h4 class="desc">Wonder Woman</h4>
-            <p>2:30</p>
+            <h4 class="desc">{{ img.trailerName }}</h4>
+            <p>{{ img.trailerTime }}</p>
         </div>
     </div>
 </template>
@@ -23,6 +25,7 @@ export default {
     name: 'CarouselVideoIndicator',
     emits: ['switch'],
     props: ['imgVideo', 'currentIndex', 'direction'],
+
     computed: {
         yValue() {
             return `transform: translateY(-${this.currentIndex * 87}px);`;

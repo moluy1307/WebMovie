@@ -340,3 +340,32 @@
 
 /* ======================================
 Css danh sách phim */
+
+.body-detail {
+    width: 100%;
+    display: flex;
+}
+
+.box-episode {
+    width: 50% !important;
+    padding-right: 0;
+}
+
+.body-table-episode {
+    padding-left: 20px;
+    max-height: 214.4px;
+}
+
+.box-trailer {
+    flex: 1;
+}
+
+.body-table-trailer {
+    padding-left: 20px;
+    max-height: 214.4px;
+}
+
+.text-title {
+    font-size: 16px;
+    font-weight: 700;
+}

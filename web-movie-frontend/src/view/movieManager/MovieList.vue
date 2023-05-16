@@ -46,6 +46,7 @@
                 :checkedRows="paymentDel"
                 @getMasterId="getMovieId"
                 styleColumnFunction="width: 135px"
+                @getIdDeleteRecord="getIdDel"
             ></MTable>
             <MPaging
                 v-if="!noData"
@@ -60,11 +61,11 @@
         <div class="divider-section">
             <MIcon nameIcon="arrow" newStyle="" :class="{ 'icon-extend-table': true }"></MIcon>
         </div>
-        <div class="tab-title"><div class="tab-item">Chi tiết</div></div>
+        <div class="tab-title"><div class="tab-item">Chi tiết tập phim</div></div>
         <div class="detail-section" :key="tableReload">
             <MTable
-                propValue="accountId"
-                propValueCode="accountNumber"
+                propValue="movieId"
+                propValueCode="movieCode"
                 typeObject="Accounts"
                 propParentId="accountParentId"
                 :table="table"
@@ -98,6 +99,19 @@
         :id="movieEdit"
         @onClose="showMovieDetail = false"
     ></MovieDetail>
+
+    <MDialog
+        :depict="`Bạn có thực sự muốn xóa phim có mã <${codeDelete}> không? Hành động này sẽ xóa tất cả các tập phim và trailer của phim.`"
+        v-if="showConfirmDel"
+        dialogConfirm="true"
+        :hasCloseButton="true"
+        :hasCancelButton="{ 'btn-dialog-left': true }"
+        typeDialog="warningDialog"
+        @close-dialog="showConfirmDel = false"
+        @click-action="btnDeleteOrderById"
+        titleDialog="Xóa yêu cầu"
+        titleButton="Có"
+    ></MDialog>
 </template>
 
 <script>
@@ -333,6 +347,36 @@ export default {
                 });
             }
         },
+
+        getIdDel(idDel, nameRecord) {
+            this.idDelete = idDel;
+            this.codeDelete = nameRecord;
+            this.showConfirmDel = true;
+            console.log('ma xoa: ', idDel);
+        },
+
+        btnDeleteOrderById() {
+            try {
+                const me = this;
+                axios.delete(`${this.$MResource.API}/Movies/DeleteMovie?movieId=${me.idDelete}`).then(() => {
+                    this.$MToastMessage({
+                        titleToast: this.$MResource.VI.TOAST.TITLE_SUCCESS,
+                        messageToast: this.$MResource.VI.TOAST.DELETE_SUCCESS,
+                        showToastMessage: true,
+                        typeToast: 'successToast',
+                    });
+                    this.showConfirmDel = false;
+                    me.onUpdate();
+                });
+            } catch (err) {
+                this.$MToastMessage({
+                    titleToast: this.$MResource.VI.TOAST.TITLE_ERROR,
+                    messageToast: err,
+                    showToastMessage: true,
+                    typeToast: 'errorToast',
+                });
+            }
+        },
     },
     created() {
         axios
@@ -511,6 +555,10 @@ export default {
                     // styleElement: 'column-150',
                 },
             ],
+
+            idDelete: null,
+            codeDelete: null,
+            showConfirmDel: false,
         };
     },
 };

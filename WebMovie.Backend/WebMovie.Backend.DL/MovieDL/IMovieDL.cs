@@ -19,7 +19,8 @@ namespace WebMovie.Backend.DL.MovieDL
 
         //IEnumerable<Movie> GetAllMovieByType (int typeMovie, int? limit);
 
-        PagingResult<Movie> GetAllMovieByTypeAndFilter(int pageNumber, int pageSize, Guid? categoryId, int? typeMovie, int columnFilter);
+        PagingResult<Movie> GetAllMovieByTypeAndFilter(int pageNumber, int pageSize, Guid? categoryId, int? typeMovie, int columnFilter, 
+            string? keyword, Guid? categorySearchImproveId, int? startYear, int? endYear, int? columnSort, int? filterAndSortReview);
 
         PagingResult<Movie> GetSimilarMovieByFilter(int pageNumber, int pageSize, Guid? movieId);
 
@@ -28,5 +29,7 @@ namespace WebMovie.Backend.DL.MovieDL
         int UpdateReview(Guid movieId);
 
         int UpdateMediumScore(Guid movieId, decimal mediumScore);
+
+        int DeleteMovie(Guid movieId);
     }
 }

@@ -1,10 +1,14 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Dapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MISA.Amis.API.Controllers;
+using MySqlConnector;
+using System.Data;
 using WebMovie.Backend.BL.UserBL;
 using WebMovie.Backend.Common;
 using WebMovie.Backend.Common.Entities;
 using WebMovie.Backend.Common.Entities.DTO;
+using WebMovie.Backend.DL;
 
 namespace WebMovie.Backend.API.Controllers
 {
@@ -163,6 +167,23 @@ namespace WebMovie.Backend.API.Controllers
             }
 
         }
+
+        //[HttpPost("SendEmail")]
+        //public async Task<IActionResult> SendEmail(string emailMess, string subjectMess, string bodyMess)
+        //{
+        //    try
+        //    {
+        //        await _userBL.SendEmail(emailMess, subjectMess, bodyMess);
+
+        //        return Ok();
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+        //        Console.WriteLine(ex.Message);
+        //        return HandleException(ex);
+        //    }
+        //}
 
         [HttpPut("MinusMoneyUser")]
         public IActionResult MinusAmountMoney(Guid userId, float amountMoneyMovie)

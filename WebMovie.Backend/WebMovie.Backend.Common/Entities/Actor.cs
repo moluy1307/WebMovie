@@ -19,6 +19,8 @@ namespace WebMovie.Backend.Common.Entities
         [RecordCode]
         public string ActorCode { get; set; }
 
+        [CheckIsEmpty]
+        [PropertyName("Tên diễn viên")]
         public string Fullname { get; set; }
 
         public DateTime? DateOfBirth { get; set; }
@@ -58,5 +60,7 @@ namespace WebMovie.Backend.Common.Entities
         public byte[]? ImgByte { get; set; }
 
         public string? ImagePath { get; set; }
+
+        public DateTime CreatedDate { get; set; }
     }
 }

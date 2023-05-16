@@ -108,6 +108,12 @@
                                         labelInput="Mã phim"
                                         v-model="movieInfor.movieCode"
                                         propTabindex="0"
+                                        ref="refMovieCode"
+                                        compulsory="*"
+                                        styleCompulsory="margin-left: 5px;"
+                                        :newClass="!errorField.code ? '' : 'input-error'"
+                                        :tooltipError="errorField.code"
+                                        errorMessage="Mã không được để trống"
                                     ></MInput>
                                 </div>
                                 <div class="w-350">
@@ -115,6 +121,12 @@
                                         labelInput="Tên phim"
                                         v-model="movieInfor.movieName"
                                         propTabindex="0"
+                                        compulsory="*"
+                                        styleCompulsory="margin-left: 5px;"
+                                        ref="refMovieName"
+                                        :newClass="!errorField.name ? '' : 'input-error'"
+                                        :tooltipError="errorField.name"
+                                        errorMessage="Tên không được để trống"
                                     ></MInput>
                                 </div>
                                 <div class="field-flex">
@@ -242,7 +254,7 @@
                         <div class="left-line-information">
                             <div style="display: flex; flex-direction: column; row-gap: 22px; flex: 1">
                                 <img
-                                    :src="movieInfor.imagePath"
+                                    v-lazy="movieInfor.imagePath"
                                     alt="Ảnh minh họa"
                                     style="width: 220px; height: 200px"
                                 />
@@ -268,35 +280,70 @@
                     </div>
                 </div>
             </div>
-            <div class="body-content" style="height: auto">
-                <div class="body-content-top" style="padding-left: 20px; z-index: 1">
-                    {{ this.$MResource.VI.TAB_PROCEDURE.PAYMENT.ACCOUNTING }}
+            <div class="body-detail">
+                <div class="body-content box-episode" style="height: auto">
+                    <div class="body-content-top text-title" style="padding-left: 20px; z-index: 1">
+                        Danh sách tập phim
+                    </div>
+                    <div class="body-content-bottom body-table-episode" :key="tableReload">
+                        <MTable
+                            :payDetail="true"
+                            :hasWiget="false"
+                            :hasCheckbox="false"
+                            :titleTable="titleTableData"
+                            :orderNumber="orderNumber"
+                            :arrayRowTable="movieInfor.episodes"
+                            @indexDelRow="delRowTable"
+                            @newValueEp="arrayEpisodes"
+                        ></MTable>
+                    </div>
+                    <div class="control-row-table">
+                        <MButton
+                            @click="btnAddRowTable"
+                            :class="{ 'btn-custom-default': true }"
+                            :label="this.$MResource.VI.BUTTONS.ADD_ROW"
+                            ref="btnSave"
+                            style="margin-right: 8px"
+                        ></MButton
+                        ><MButton
+                            @click="btnDelAllRow"
+                            :class="{ 'btn-custom-default': true, 'btn-bg': true }"
+                            :label="this.$MResource.VI.BUTTONS.DELETE_ALL_ROW"
+                            ref="btnSave"
+                        ></MButton>
+                    </div>
                 </div>
-                <div class="body-content-bottom" :key="tableReload" style="padding: 0 20px">
-                    <MTable
-                        :payDetail="true"
-                        :hasWiget="false"
-                        :hasCheckbox="false"
-                        :titleTable="titleTableData"
-                        :orderNumber="orderNumber"
-                        :arrayRowTable="movieInfor.episodes"
-                        @indexDelRow="delRowTable"
-                        @newValueEp="arrayEpisodes"
-                    ></MTable>
-                </div>
-                <div class="control-row-table">
-                    <MButton
-                        @click="btnAddRowTable"
-                        :class="{ btn: true, 'btn-bg': true }"
-                        :label="this.$MResource.VI.BUTTONS.ADD_ROW"
-                        ref="btnSave"
-                    ></MButton
-                    ><MButton
-                        @click="btnDelAllRow"
-                        :class="{ btn: true, 'btn-bg': true }"
-                        :label="this.$MResource.VI.BUTTONS.DELETE_ALL_ROW"
-                        ref="btnSave"
-                    ></MButton>
+                <div class="body-content box-trailer" style="height: auto">
+                    <div class="body-content-top text-title" style="padding-left: 20px; z-index: 1">
+                        Danh sách trailer
+                    </div>
+                    <div class="body-content-bottom body-table-trailer" :key="tableReload">
+                        <MTable
+                            :payDetail="true"
+                            :hasWiget="false"
+                            :hasCheckbox="false"
+                            :titleTable="titleTableDataTrailer"
+                            :orderNumber="orderNumber"
+                            :arrayRowTable="movieInfor.trailers"
+                            @indexDelRow="delRowTableTrailer"
+                            @newValueEp="arrayTrailers"
+                        ></MTable>
+                    </div>
+                    <div class="control-row-table">
+                        <MButton
+                            @click="btnAddRowTableTrailer"
+                            :class="{ 'btn-custom-default': true }"
+                            :label="this.$MResource.VI.BUTTONS.ADD_ROW"
+                            ref="btnSave"
+                            style="margin-right: 8px"
+                        ></MButton
+                        ><MButton
+                            @click="btnDelAllRowTrailer"
+                            :class="{ 'btn-custom-default': true, 'btn-bg': true }"
+                            :label="this.$MResource.VI.BUTTONS.DELETE_ALL_ROW"
+                            ref="btnSave"
+                        ></MButton>
+                    </div>
                 </div>
             </div>
             <div class="btn-group form-pay-footer">
@@ -327,80 +374,68 @@
             </div>
         </div>
     </div>
-    <!-- <div class="modal" @click.self="$emit('onClose')" @keydown="inputOnKeyDown" @keyup="inputOnKeyUp">
-        <div class="form">
-            <div class="frm-content">
-                <div class="content-flex">
-                    <div style="display: flex; flex-direction: column; row-gap: 22px; width: 405px">
-                        <MInput labelInput="Ma Movie" v-model="movieInfor.movieCode" propTabindex="0"></MInput>
-                        <MInput labelInput="Ten Movie" v-model="movieInfor.movieName" propTabindex="0"></MInput>
-                    </div>
-
-                    <div style="display: flex; flex-direction: column; row-gap: 22px; flex: 1">
-                        <img :src="movieInfor.imagePath" alt="User image" />
-
-                        <div class="button-wrapper">
-                            <span class="label"> Chọn tệp </span>
-
-                            <input
-                                type="file"
-                                ref="fileInput"
-                                @change="onFileChange($event)"
-                                id="upload"
-                                class="upload-box"
-                                placeholder="Upload File"
-                            />
-                        </div>
-                    </div>
-                </div>
-
-                <div class="content-element" style="margin-bottom: 22px">
-                    <div class="frm-cal">
-                      
-                    </div>
-                </div>
-
-                <div class="btn-group">
-
-                    <MButton
-                        @click="btnCloseOnClick"
-                        :class="{ 'btn-custom-default': true, 'btn-bg': true }"
-                        label="Hủy"
-                    ></MButton>
-                    <div class="btn-left">
-
-                        <MButton
-                            :eventOnClick="btnSaveOnClick"
-                            :class="{ 'btn-custom-default': true, 'btn-bg': true }"
-                            label="Cất"
-                            ref="btnSave"
-                        ></MButton>
-                        <MButton
-                            :class="{ 'btn-custom-default': true }"
-                            @click="btnAddAndSaveOnClick"
-                            label="Cất và Thêm"
-                            ref="btnLastFocus"
-                            @keydown.tab="focusFirst"
-                            @keydown.shift.tab="focusPerButton"
-                        ></MButton>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
+    <div v-if="showDialog">
+        <MDialog
+            @close-dialog="showDialog = false"
+            v-for="(item, index) in error"
+            :key="index"
+            :depict="item"
+            dialogConfirm="false"
+            :hasCloseButton="false"
+            :hasCancelButton="{ 'btn-dialog-left': true }"
+            typeDialog="errorDialog"
+            titleDialog="Thông báo"
+            titleButton="Đóng"
+        ></MDialog>
+    </div>
+    <div v-else-if="showDialogWarning">
+        <MDialog
+            @close-dialog="showDialogWarning = false"
+            :depict="textWarning"
+            dialogConfirm="false"
+            :hasCloseButton="false"
+            :hasCancelButton="{ 'btn-dialog-left': true }"
+            typeDialog="warningDialog"
+            titleDialog="Thông báo"
+            titleButton="Đồng ý"
+        ></MDialog>
+    </div>
 </template>
 
 <script>
 import axios from 'axios';
 import Multiselect from '@vueform/multiselect';
 import commonJS from '@/js/common';
+
+// import moment from 'moment';
 export default {
     name: 'MovieDetail',
     props: ['id'],
     components: {
         Multiselect,
     },
-
+    watch: {
+        'movieInfor.movieCode': function (value) {
+            if (value.length <= 0) {
+                this.errorField.code = true;
+                this.$refs.refMovieCode.$refs.txtInput.classList.add('input-error');
+                // this.$refs.refUsername.$refs.txtInput.focus();
+            } else {
+                this.$refs.refMovieCode.$refs.txtInput.classList.remove('input-error');
+                this.errorField.code = false;
+            }
+        },
+        'movieInfor.movieName': function (value) {
+            if (value.length <= 0) {
+                this.errorField.name = true;
+                this.$refs.refMovieName.$refs.txtInput.classList.add('input-error');
+                // this.$refs.reffullname.$refs.txtInput.focus();
+            } else {
+                this.$refs.refMovieName.$refs.txtInput.classList.remove('input-error');
+                this.errorField.name = false;
+            }
+        },
+    },
     computed: {
         isAdd() {
             if (this.id) {
@@ -409,9 +444,64 @@ export default {
                 return true;
             }
         },
+
+        // formattedValue() {
+        //     // if (!this.inputValue) {
+        //     //     return '';
+        //     // }
+        //     // const value = parseInt(this.inputValue);
+        //     // const minutes = Math.floor(value / 60);
+        //     // const seconds = value % 60;
+        //     // return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
+        //     // const inputValue = this.inputValue.trim();
+        //     // if (!inputValue) {
+        //     //     return '';
+        //     // }
+        //     // const seconds = parseInt(inputValue);
+        //     // const minutes = Math.floor(seconds / 60);
+        //     // const remainingSeconds = seconds % 60;
+        //     // return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+
+        //     // if (this.inputValue !== null) {
+        //     //     const seconds = parseInt(this.inputValue);
+        //     //     return moment().startOf('day').seconds(seconds).format('m:ss');
+        //     // }
+        //     // return '';
+
+        //     // if (this.inputValue.length === 3) {
+        //     //     const minutes = this.inputValue.charAt(0);
+        //     //     const seconds = this.inputValue.substr(1);
+        //     //     return `${minutes}:${seconds}`;
+        //     // }
+        //     // return this.inputValue;
+
+        //     const input = this.inputValue.replace(/[^\d]/g, '');
+        //     const minutes = input.substr(0, 2);
+        //     const seconds = input.substr(2, 2);
+        //     return `${minutes}:${seconds}`;
+        // },
     },
 
     methods: {
+        formatInput() {
+            const input = this.inputValue.replace(/[^\d]/g, '');
+            const minutes = input.substr(0, 2);
+            const seconds = input.substr(2, 2);
+            this.inputValue = `${minutes}:${seconds}`;
+        },
+
+        deleteValue(event) {
+            if (event.keyCode === 8) {
+                event.preventDefault();
+                const input = this.inputValue.replace(/[^\d]/g, '');
+                const newInput = input.slice(0, -1);
+                const minutes = newInput.substr(0, 2);
+                const seconds = newInput.substr(2, 2);
+                this.inputValue = `${minutes}:${seconds}`;
+            }
+        },
+
         btnAddAndSaveOnClick() {
             // console.log('movie category: ', this.movieInfor.categories);
             // for (let test of this.movieInfor.categories) {
@@ -429,8 +519,50 @@ export default {
             this.file = event.target.files[0];
             this.movieInfor.imagePath = URL.createObjectURL(this.file);
         },
+
+        /**
+         * Kiểm tra dữ liệu bắt buộc nhập
+         * <br/>
+         * CreatedBy: huynq (5/1/2023)
+         */
+        checkForm() {
+            try {
+                this.error = [];
+                var isValid = true;
+
+                if (!this.movieInfor.movieName) {
+                    isValid = false;
+                    this.error.push('Tên phim không được để trống');
+                    this.showDialog = true;
+                    this.errorField.name = true;
+                    // this.$refs.fullnameInput.$refs.txtInput.focus();
+                }
+
+                if (!this.movieInfor.movieCode) {
+                    isValid = false;
+                    this.error.push('Mã phim không được để trống');
+                    this.showDialog = true;
+                    this.errorField.code = true;
+                }
+
+                return isValid;
+            } catch (err) {
+                this.$MToastMessage({
+                    titleToast: this.$MResource.VI.TOAST.TITLE_ERROR,
+                    messageToast: err,
+                    showToastMessage: true,
+                    typeToast: 'errorToast',
+                });
+            }
+        },
         btnSaveOnClick() {
             var me = this;
+
+            var isValid = me.checkForm();
+            if (!isValid) {
+                return;
+            }
+
             const formData = new FormData();
             me.movieInfor.categories = [];
             me.movieInfor.actors = [];
@@ -455,10 +587,19 @@ export default {
             } else {
                 formData.append('movieReview', 0);
             }
-            if (this.movieInfor.dateOfManufactor != null || this.movieInfor.dateOfManufactor != undefined) {
+            if (this.movieInfor.dateOfManufactor != null && this.movieInfor.dateOfManufactor != undefined) {
+                // const formattedDate = commonJS.bindingFormatDate(this.movieInfor.dateOfManufactor);
+                // if (isNaN(Date.parse(formattedDate)) == true) {
+                //     this.movieInfor.dateOfManufactor = '';
+                // } else {
+                //     this.movieInfor.dateOfManufactor = formattedDate;
+                // }
+
                 this.movieInfor.dateOfManufactor = commonJS.bindingFormatDate(this.movieInfor.dateOfManufactor);
+
                 formData.append('dateOfManufactor', this.movieInfor.dateOfManufactor);
             }
+
             formData.append('movieArea', this.movieInfor.movieArea);
             formData.append('movieTime', this.movieInfor.movieTime);
             formData.append('amount', this.movieInfor.amount);
@@ -467,6 +608,7 @@ export default {
             formData.append('cateMovie', JSON.stringify(this.movieInfor.categories));
             formData.append('actorMovie', JSON.stringify(this.movieInfor.actors));
             formData.append('episodeMovie', JSON.stringify(this.movieInfor.episodes));
+            formData.append('trailerMovie', JSON.stringify(this.movieInfor.trailers));
 
             if (this.$refs.fileInput.files.length > 0) {
                 console.log('da co duong dan link image', this.$refs.fileInput.files[0]);
@@ -489,12 +631,39 @@ export default {
                         me.$emit('dataRecovery');
                     })
                     .catch((err) => {
-                        this.$MToastMessage({
-                            titleToast: this.$MResource.VI.TOAST.TITLE_ERROR,
-                            messageToast: err,
-                            showToastMessage: true,
-                            typeToast: 'errorToast',
-                        });
+                        let response = err.response;
+                        switch (response.status) {
+                            case 500:
+                                if (response.data['errorCode'] === 5) {
+                                    this.$MToastMessage({
+                                        titleToast: this.$MResource.VI.TOAST.TITLE_ERROR,
+                                        messageToast: response.data['userMsg'],
+                                        showToastMessage: true,
+                                        typeToast: 'errorToast',
+                                    });
+                                } else {
+                                    this.$MToastMessage({
+                                        titleToast: this.$MResource.VI.TOAST.TITLE_ERROR,
+                                        messageToast: response.data['devMsg'],
+                                        showToastMessage: true,
+                                        typeToast: 'errorToast',
+                                    });
+                                }
+                                break;
+                            case 400:
+                                var userMsg = response.data['moreInfo'];
+                                if (userMsg != null || userMsg != undefined) {
+                                    userMsg.forEach((element) => {
+                                        this.showDialogWarning = true;
+                                        this.textWarning = element;
+                                    });
+                                }
+
+                                break;
+                            default:
+                                break;
+                        }
+                        console.log(err);
                     });
             } else {
                 axios
@@ -504,7 +673,7 @@ export default {
                     .then(() => {
                         this.$MToastMessage({
                             titleToast: this.$MResource.VI.TOAST.TITLE_SUCCESS,
-                            messageToast: this.$MResource.VI.TOAST.ADD_SUCCESS,
+                            messageToast: 'Sửa thông tin phim thành công',
                             showToastMessage: true,
                             typeToast: 'successToast',
                         });
@@ -512,12 +681,37 @@ export default {
                         me.$emit('dataRecovery');
                     })
                     .catch((err) => {
-                        this.$MToastMessage({
-                            titleToast: this.$MResource.VI.TOAST.TITLE_ERROR,
-                            messageToast: err,
-                            showToastMessage: true,
-                            typeToast: 'errorToast',
-                        });
+                        let response = err.response;
+                        switch (response.status) {
+                            case 500:
+                                if (response.data['errorCode'] === 5) {
+                                    this.$MToastMessage({
+                                        titleToast: this.$MResource.VI.TOAST.TITLE_ERROR,
+                                        messageToast: response.data['userMsg'],
+                                        showToastMessage: true,
+                                        typeToast: 'errorToast',
+                                    });
+                                } else {
+                                    this.$MToastMessage({
+                                        titleToast: this.$MResource.VI.TOAST.TITLE_ERROR,
+                                        messageToast: response.data['devMsg'],
+                                        showToastMessage: true,
+                                        typeToast: 'errorToast',
+                                    });
+                                }
+                                break;
+                            case 400:
+                                var userMsg = response.data['moreInfo'];
+                                userMsg.forEach((element) => {
+                                    this.showDialogWarning = true;
+                                    this.textWarning = element;
+                                });
+
+                                break;
+                            default:
+                                break;
+                        }
+                        console.log(err);
                     });
             }
         },
@@ -551,6 +745,37 @@ export default {
          */
         arrayEpisodes(arr) {
             this.movieInfor.episodes = arr;
+        },
+
+        //Table trailer
+        /**
+         * Thêm hàng mới vào bảng chi tiết trailer
+         */
+        btnAddRowTableTrailer() {
+            this.movieInfor.trailers.push({});
+        },
+
+        /**
+         * Xóa 1 hàng trailer
+         * @param {*} indexDel
+         */
+        delRowTableTrailer(indexDel) {
+            this.movieInfor.trailers.splice(indexDel, 1);
+        },
+
+        /**
+         * Xóa tất cả các dòng trailer
+         */
+        btnDelAllRowTrailer() {
+            this.movieInfor.trailers = [{}];
+        },
+
+        /**
+         * Nhận mảng các bộ phim đã được thay đổi trailer
+         * @param {*} arr
+         */
+        arrayTrailers(arr) {
+            this.movieInfor.trailers = arr;
         },
 
         btnCloseOrChangeData() {
@@ -622,14 +847,17 @@ export default {
                 cateMovie: '',
                 actorMovie: '',
                 actors: [],
-                typeMovie: 0,
+                typeMovie: 1,
                 episodes: [{ episodeName: '', episodeNumber: '', episodeUrl: '' }],
                 episodeMovie: '',
+                trailers: [{ trailerName: '', trailerUrl: '', trailerTime: '' }],
+                trailerMovie: '',
             };
         }
     },
     data() {
         return {
+            inputValue: '',
             movieInfor: {
                 movieCode: '',
                 movieName: '',
@@ -647,27 +875,17 @@ export default {
                 typeMovie: 0,
                 episodes: [{ episodeName: '', episodeNumber: '', episodeUrl: '' }],
                 episodeMovie: '',
+                trailers: [{ trailerName: '', trailerUrl: '', trailerTime: '' }],
+                trailerMovie: '',
             },
             file: null,
-            sportsData: [
-                'Badminton',
-                'Basketball',
-                'Cricket',
-                'Football',
-                'Golf',
-                'Gymnastics',
-                'Hockey',
-                'Rugby',
-                'Snooker',
-                'Tennis',
-            ],
+
             valueCategory: [],
             categoryList: [],
 
             valueActor: [],
             actorList: [],
 
-            episodeOfMovie: [{}],
             titleTableData: [
                 {
                     dataField: 'episodeUrl',
@@ -681,7 +899,7 @@ export default {
                 },
                 {
                     dataField: 'episodeName',
-                    title: 'Tên bộ phim',
+                    title: 'Tên tập phim',
                     className: 'text-left',
                     classTitle: 'column-150 text-left',
                     formatType: 'text',
@@ -693,9 +911,42 @@ export default {
                     dataField: 'episodeNumber',
                     title: 'Số tập',
                     className: 'text-left ',
-                    classTitle: ' column-230 text-right',
+                    classTitle: ' column-230 text-left',
                     formatType: 'Number',
                     checkIsEnableSort: 'false',
+                    // styleElement: 'column-150',
+                },
+            ],
+
+            titleTableDataTrailer: [
+                {
+                    dataField: 'trailerUrl',
+                    title: 'Đường dẫn video',
+                    className: 'text-left',
+                    classTitle: 'column-230 text-left',
+                    formatType: 'text',
+                    checkIsEnableSort: 'true',
+                    hasFilter: 'true',
+                    // styleElement: 'element-col-150',
+                },
+                {
+                    dataField: 'trailerName',
+                    title: 'Tên trailer',
+                    className: 'text-left',
+                    classTitle: 'column-150 text-left',
+                    formatType: 'text',
+                    checkIsEnableSort: 'true',
+                    hasFilter: 'true',
+                    // styleElement: 'element-col-230',
+                },
+                {
+                    dataField: 'trailerTime',
+                    title: 'Thời lượng',
+                    className: 'text-left ',
+                    classTitle: ' column-230 text-left',
+                    formatType: 'Number',
+                    checkIsEnableSort: 'false',
+                    hasInputTime: 'true',
                     // styleElement: 'column-150',
                 },
             ],
@@ -708,15 +959,21 @@ export default {
                     valueCombobox: 2,
                     title: 'Phim lẻ',
                 },
-                {
-                    valueCombobox: 3,
-                    title: 'Phim chiếu rạp',
-                },
+                // {
+                //     valueCombobox: 3,
+                //     title: 'Phim chiếu rạp',
+                // },
                 {
                     valueCombobox: 4,
                     title: 'Phim hot',
                 },
             ],
+            showDialogWarning: false,
+            textWarning: '',
+
+            error: [],
+            showDialog: false,
+            errorField: { code: false, name: false },
         };
     },
 };

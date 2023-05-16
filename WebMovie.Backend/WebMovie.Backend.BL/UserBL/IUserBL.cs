@@ -14,6 +14,8 @@ namespace WebMovie.Backend.BL.UserBL
 
         Task SendNewPassword(string emailMess);
 
+        //Task SendEmail(string emailMess, string subjectMess, string bodyMess);
+
         User GetUserByEmail(string emailUser);
 
         ServiceResult MinusAmountMoney(Guid userId, float amountMoneyMovie);

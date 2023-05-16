@@ -45,6 +45,10 @@
       "PackagePath": "staticwebassets\\Images\\Actors\\Actor-00011.png"
     },
     {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Actor-0008.png",
+      "PackagePath": "staticwebassets\\Images\\Actors\\Actor-0008.png"
+    },
+    {
       "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Movie-00001.png",
       "PackagePath": "staticwebassets\\Images\\Movie-00001.png"
     },

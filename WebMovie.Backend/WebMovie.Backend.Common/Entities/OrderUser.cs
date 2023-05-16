@@ -32,6 +32,8 @@ namespace WebMovie.Backend.Common.Entities
 
         public Guid? MovieId { get; set; }
 
+        public int Enable { get; set; }
+
         public DateTime? CreatedDate { get; set; }
 
     }

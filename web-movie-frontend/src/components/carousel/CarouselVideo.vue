@@ -9,7 +9,7 @@
                     <CarouselVideoItem
                         v-for="(vid, indexVid) in videoSlides"
                         :key="`item-${indexVid}`"
-                        :videoSlide="vid.trailerVideo"
+                        :videoSlide="vid.trailerUrl"
                         :index="indexVid"
                         :current-slide="currentSlide"
                         :direction="direction"

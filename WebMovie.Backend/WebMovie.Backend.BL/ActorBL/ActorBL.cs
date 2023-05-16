@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebMovie.Backend.BL.BaseBL;
+using WebMovie.Backend.Common;
 using WebMovie.Backend.Common.Entities;
+using WebMovie.Backend.Common.Entities.DTO;
 using WebMovie.Backend.DL.ActorDL;
 
 namespace WebMovie.Backend.BL.ActorBL
@@ -28,10 +30,84 @@ namespace WebMovie.Backend.BL.ActorBL
 
         #region Method
 
-        public int InsertActor(Actor actor, Guid? parent)
+        public ServiceResult InsertActor(Actor actor, Guid? parent)
         {
-            var res = _actorDL.InsertActor(actor, parent);
-            return res;
+            //Validate
+            var validateResults = ValidateRequest(actor, parent);
+
+            //Thất bại -> Return lỗi
+            if (validateResults.Count > 0)
+            {
+                return new ServiceResult
+                {
+                    IsSuccess = false,
+                    ErrorCode = Common.Enums.ErrorCode.InvalidData,
+                    Message = ResourceVI.Invalid_InputData,
+                    Data = validateResults
+                };
+            }
+            //var res = _actorDL.InsertActor(actor, parent);
+            //return res;
+
+            //Thành công -> Gọi vào DL để chạy stored
+            var numberOfAffectedRows = _actorDL.InsertActor(actor, parent);
+
+            //XỬ lý kết quả trả về
+            if (numberOfAffectedRows > 0)
+            {
+                return new ServiceResult
+                {
+                    IsSuccess = true
+                };
+            }
+            else
+            {
+                return new ServiceResult
+                {
+                    IsSuccess = false,
+                    ErrorCode = Common.Enums.ErrorCode.InsertFailed,
+                    Message = ResourceVI.InsertFaild
+                };
+            }
+        }
+
+        public ServiceResult UpdateActor(Guid actorId, Actor? actor)
+        {
+            //Validate
+            var validateResults = ValidateRequest(actorId, actor);
+
+            //Thất bại -> Return lỗi
+            if (validateResults.Count > 0)
+            {
+                return new ServiceResult
+                {
+                    IsSuccess = false,
+                    ErrorCode = Common.Enums.ErrorCode.InvalidData,
+                    Message = ResourceVI.Invalid_InputData,
+                    Data = validateResults
+                };
+            }
+
+            //Thành công -> Gọi vào DL để chạy stored
+            var numberOfAffectedRows = _actorDL.UpdateActor(actorId, actor);
+
+            //XỬ lý kết quả trả về
+            if (numberOfAffectedRows > 0)
+            {
+                return new ServiceResult
+                {
+                    IsSuccess = true
+                };
+            }
+            else
+            {
+                return new ServiceResult
+                {
+                    IsSuccess = false,
+                    ErrorCode = Common.Enums.ErrorCode.InsertFailed,
+                    Message = ResourceVI.UpdateFailed
+                };
+            }
         }
 
         public Actor GetActorById(Guid actorId)
@@ -46,6 +122,11 @@ namespace WebMovie.Backend.BL.ActorBL
             return res;
         }
 
+        public PagingResult<Actor> GetActorBySearchingImprove(int pageNumber, int pageSize, string? keyword, int? gender, int? startYear, int? endYear, int? columnSort)
+        {
+            var res = _actorDL.GetActorBySearchingImprove(pageNumber, pageSize, keyword, gender, startYear, endYear, columnSort);
+            return res;
+        }
         #endregion
     }
 }

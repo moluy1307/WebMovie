@@ -89,12 +89,13 @@
                 :hasWiget="true"
                 :hasCheckbox="false"
                 :titleTable="titleTableData"
-                :api="`${this.$MResource.API}/Actors/filter?keyword=${keyword}&pageNumber=${currentPage}&pageSize=${perPageValue}`"
+                :api="`${this.$MResource.API}/Actors/GetActorBySearchingImprove?pageNumber=${currentPage}&pageSize=${perPageValue}&keyword=${keyword}`"
                 :key="tableReload"
                 @totalNumberPages="totalPages"
                 @totalRecords="totalRecords"
                 @getEmployeeId="getId"
                 :checkedRows="paymentDel"
+                @getIdDeleteRecord="getIdDel"
             ></MTable>
             <MPaging
                 v-if="!noData"
@@ -116,9 +117,23 @@
         @onClose="showActorDetail = false"
         @dataRecovery="onUpdate()"
     ></ActorDetail>
+    <MDialog
+        :depict="`Bạn có thực sự muốn xóa diễn viên có mã <${codeDelete}> không?`"
+        v-if="showConfirmDel"
+        dialogConfirm="true"
+        :hasCloseButton="true"
+        :hasCancelButton="{ 'btn-dialog-left': true }"
+        typeDialog="warningDialog"
+        @close-dialog="showConfirmDel = false"
+        @click-action="btnDeleteOrderById"
+        titleDialog="Xóa yêu cầu"
+        titleButton="Có"
+    ></MDialog>
 </template>
 
 <script>
+import axios from 'axios';
+
 import ActorDetail from './ActorDetail.vue';
 export default {
     name: 'ActorList',
@@ -255,6 +270,35 @@ export default {
                 });
             }
         },
+
+        getIdDel(idDel, nameRecord) {
+            this.idDelete = idDel;
+            this.codeDelete = nameRecord;
+            this.showConfirmDel = true;
+        },
+
+        btnDeleteOrderById() {
+            try {
+                const me = this;
+                axios.delete(`${this.$MResource.API}/Actors/${me.idDelete}`).then(() => {
+                    this.$MToastMessage({
+                        titleToast: this.$MResource.VI.TOAST.TITLE_SUCCESS,
+                        messageToast: this.$MResource.VI.TOAST.DELETE_SUCCESS,
+                        showToastMessage: true,
+                        typeToast: 'successToast',
+                    });
+                    this.showConfirmDel = false;
+                    me.onUpdate();
+                });
+            } catch (err) {
+                this.$MToastMessage({
+                    titleToast: this.$MResource.VI.TOAST.TITLE_ERROR,
+                    messageToast: err,
+                    showToastMessage: true,
+                    typeToast: 'errorToast',
+                });
+            }
+        },
     },
 
     data() {
@@ -328,9 +372,15 @@ export default {
                     // styleElement: 'column-150',
                 },
             ],
+
+            idDelete: null,
+            codeDelete: null,
+            showConfirmDel: false,
         };
     },
 };
 </script>
 
-<style></style>
+<style>
+@import url('../movieManager/movie.css');
+</style>

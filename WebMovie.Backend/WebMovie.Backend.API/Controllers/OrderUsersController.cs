@@ -182,6 +182,83 @@ namespace WebMovie.Backend.API.Controllers
             }
         }
 
+
+        [HttpGet]
+        [Route("GetOrderRevenue")]
+        public IActionResult GetOrderRevenue(int? sortByYear)
+        {
+            try
+            {
+                var recordById = _orderUserBL.GetOrderRevenue(sortByYear);
+
+                //Xử lý kết quả trả về
+                if (recordById != null)
+                {
+                    return StatusCode(StatusCodes.Status200OK, recordById);
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult
+                    {
+                        ErrorCode = Common.Enums.ErrorCode.GetFailed,
+                        DevMsg = ResourceVI.Error_DatabaseQuery,
+                        UserMsg = ResourceVI.Error_Exception
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return HandleException(ex);
+            }
+        }
+
+        [HttpGet]
+        [Route("GetUserIdBoughtMovie")]
+        public IActionResult GetUserIdBoughtMovie()
+        {
+            try
+            {
+                var recordById = _orderUserBL.GetUserIdBoughtMovie();
+
+                //Xử lý kết quả trả về
+                if (recordById != null)
+                {
+                    return StatusCode(StatusCodes.Status200OK, recordById);
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult
+                    {
+                        ErrorCode = Common.Enums.ErrorCode.GetFailed,
+                        DevMsg = ResourceVI.Error_DatabaseQuery,
+                        UserMsg = ResourceVI.Error_Exception
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return HandleException(ex);
+            }
+        }
+
+        [HttpPost("SendEmail")]
+        public async Task<IActionResult> SendEmail(string subjectMess, string accountName, string customerName, int moneyRecharge)
+        {
+            try
+            {
+                await _orderUserBL.SendEmail(subjectMess, accountName, customerName, moneyRecharge);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message);
+                return HandleException(ex);
+            }
+        }
         #endregion
     }
 }

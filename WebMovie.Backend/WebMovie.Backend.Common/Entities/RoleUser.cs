@@ -12,6 +12,8 @@ namespace WebMovie.Backend.Common.Entities
 
         public string RoleName { get; set; }
 
+        public string? RoleNameVi { get; set; }
+
         public DateTime? CreatedDate { get; set; }
     }
 }

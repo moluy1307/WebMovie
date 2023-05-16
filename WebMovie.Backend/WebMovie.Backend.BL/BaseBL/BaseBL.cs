@@ -475,7 +475,7 @@ namespace WebMovie.Backend.BL.BaseBL
         /// <param name="record">Object muốn validate</param>
         /// <returns>danh sách thông báo lỗi</returns>
         /// CreatedBy: huynq (10/2/2023)
-        private List<string> ValidateRequest(T record, Guid? parentId)
+        protected virtual List<string> ValidateRequest(T record, Guid? parentId)
         {
             var errorData = new List<string>();
 
@@ -541,28 +541,29 @@ namespace WebMovie.Backend.BL.BaseBL
                         }
                     }
                 }
+                
+            }
 
-                var primaryCode = record.GetType().GetProperties().Where(p => Attribute.IsDefined(p, typeof(RecordCode)));
-                foreach (var property in primaryCode)
+            var primaryCode = record.GetType().GetProperties().Where(p => Attribute.IsDefined(p, typeof(RecordCode)));
+            foreach (var property in primaryCode)
+            {
+                var value = property.GetValue(record);
+                //var name = property.Name;
+                var ErrorpropertyName = string.Empty;
+                var propertyName = property.GetCustomAttributes(typeof(PropertyName), false);
+
+                if (propertyName.Length > 0)
                 {
-                    var value = property.GetValue(record);
-                    //var name = property.Name;
-                    var ErrorpropertyName = string.Empty;
-                    var propertyName = property.GetCustomAttributes(typeof(PropertyName), false);
+                    ErrorpropertyName = (propertyName[0] as PropertyName).Name;
+                }
 
-                    if (propertyName.Length > 0)
+                if (GetRecordCodeById((Guid)recordId) != value.ToString())
+                {
+                    var isDuplicate = CheckRecordCode((value.ToString()).Trim());
+                    if (isDuplicate == true)
                     {
-                        ErrorpropertyName = (propertyName[0] as PropertyName).Name;
-                    }
-
-                    if (GetRecordCodeById((Guid)recordId) != value.ToString())
-                    {
-                        var isDuplicate = CheckRecordCode((value.ToString()).Trim());
-                        if (isDuplicate == true)
-                        {
-                            //errorData.Add(name, string.Format(ResourceVI.UserMsg_DuplicateCode, ErrorpropertyName));
-                            errorData.Add(string.Format(ResourceVI.UserMsg_DuplicateCode, ErrorpropertyName, (value.ToString()).Trim()));
-                        }
+                        //errorData.Add(name, string.Format(ResourceVI.UserMsg_DuplicateCode, ErrorpropertyName));
+                        errorData.Add(string.Format(ResourceVI.UserMsg_DuplicateCode, ErrorpropertyName, (value.ToString()).Trim()));
                     }
                 }
             }

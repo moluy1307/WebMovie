@@ -1,0 +1,24 @@
+.actor-tablet {
+    row-gap: 12px;
+}
+
+.column-element {
+    display: flex;
+    flex-direction: column;
+}
+
+.text-infor-title {
+    color: #fff;
+}
+
+.text-infor-detail {
+    opacity: 0.7;
+}
+
+.para-actor {
+    margin-bottom: 0;
+}
+
+.main-actor {
+    row-gap: 15px;
+}

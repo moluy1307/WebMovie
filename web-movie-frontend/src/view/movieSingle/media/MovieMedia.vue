@@ -1,28 +1,34 @@
 <template>
     <div id="media" class="tab">
         <div class="row">
-            <div class="rv-hd">
+            <!-- <div class="rv-hd">
                 <div>
                     <h3>Trailer phim</h3>
                     <h2>Thanh Gươm Diệt Quỷ: Phần Làng Rèn Kiếm</h2>
                 </div>
-            </div>
+            </div> -->
             <div class="title-hd-sm">
-                <h4>Videos <span>(8)</span></h4>
+                <h4>
+                    Videos <span>({{ trailerList.length }})</span>
+                </h4>
             </div>
             <div class="mvsingle-item media-item">
-                <template v-for="n in 10" :key="n">
+                <template v-for="trailerItem in trailerList" :key="trailerItem">
                     <div class="vd-item">
                         <div class="vd-it">
-                            <iframe
+                            <!-- <iframe
                                 class="item-video"
-                                src="https://www.youtube.com/embed/o-0hcF97wy0"
+                                v-lazy="trailerItem.trailerUrl"
                                 style="width: 170px; height: 111px"
-                            ></iframe>
+                                allowpaymentrequest
+                            ></iframe> -->
+                            <div v-lazyload-youtube="trailerItem.trailerUrl" style="width: 170px; height: 111px"></div>
                         </div>
                         <div class="vd-infor">
-                            <h6><a href="#">Trailer: Watch New Scenes</a></h6>
-                            <p class="time">1: 31</p>
+                            <h6>
+                                <a>Trailer: {{ trailerItem.trailerName }}</a>
+                            </h6>
+                            <p class="time">{{ trailerItem.trailerTime }}</p>
                         </div>
                     </div>
                 </template>
@@ -32,8 +38,30 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
     name: 'MovieMedia',
+    created() {
+        axios
+            .get(`${this.$MResource.API}/Trailers/GetAllTrailerByMovieId?movieId=${this.$route.params.id}`)
+            .then((response) => {
+                this.trailerList = response.data;
+            })
+            .catch((err) => {
+                this.showLoadingClient = false;
+                this.$MToastMessage({
+                    titleToast: this.$MResource.VI.TOAST.TITLE_ERROR,
+                    messageToast: err,
+                    showToastMessage: true,
+                    typeToast: 'errorToast',
+                });
+            });
+    },
+    data() {
+        return {
+            trailerList: [],
+        };
+    },
 };
 </script>
 

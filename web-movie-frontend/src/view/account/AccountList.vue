@@ -1,15 +1,7 @@
 <template>
-    <!-- <div class="body-header">
-        <div class="body-title">{{ this.$MResource.VI.MENU.EMPLOYEE }}</div>
-        <MButton label="Thêm mới nhân viên" :class="{ 'btn-custom-default': true }" @click="btnAddOnClick"></MButton>
-    </div>
-    <ul v-for="movie in accountList" :key="movie.movieId">
-        <li>{{ movie.movieCode }}</li>
-        <li @click="btnShowEdit(movie.movieId)">{{ movie.movieName }}</li>
-    </ul> -->
-
     <div class="body-header">
         <div class="body-title">Danh sách tài khoản</div>
+        <MButton label="Thêm mới" :class="{ 'btn-custom-default': true }" @click="btnAddOnClick"></MButton>
     </div>
     <div class="body-content">
         <div class="body-content-top">
@@ -91,7 +83,7 @@
         <div class="body-content-bottom" :key="tableReload">
             <MTable
                 propValue="userId"
-                propValueCode="movieCode"
+                propValueCode="username"
                 typeObject="Users"
                 :table="table"
                 :hasWiget="true"
@@ -103,7 +95,7 @@
                 @totalRecords="totalRecords"
                 @getEmployeeId="getId"
                 :checkedRows="paymentDel"
-                @getMasterId="getMovieId"
+                @getIdDeleteRecord="getIdDel"
             ></MTable>
             <MPaging
                 v-if="!noData"
@@ -119,11 +111,29 @@
             <div class="content-no-data" style="text-align: center; margin-top: 150px">Không có dữ liệu</div>
         </div>
     </div>
-    <AccountDetail v-if="showAccountDetail" :id="accountEdit" @onClose="showAccountDetail = false"></AccountDetail>
+    <AccountDetail
+        @dataRecovery="onUpdate()"
+        v-if="showAccountDetail"
+        :id="accountEdit"
+        @onClose="showAccountDetail = false"
+    ></AccountDetail>
+
+    <MDialog
+        :depict="`Bạn có thực sự muốn xóa tài khoản <${codeDelete}> không?`"
+        v-if="showConfirmDel"
+        dialogConfirm="true"
+        :hasCloseButton="true"
+        :hasCancelButton="{ 'btn-dialog-left': true }"
+        typeDialog="warningDialog"
+        @close-dialog="showConfirmDel = false"
+        @click-action="btnDeleteOrderById"
+        titleDialog="Xóa yêu cầu"
+        titleButton="Có"
+    ></MDialog>
 </template>
 
 <script>
-// import axios from 'axios';
+import axios from 'axios';
 import AccountDetail from './AccountDetail.vue';
 export default {
     name: 'AccountList',
@@ -245,6 +255,54 @@ export default {
                 });
             }
         },
+
+        /**
+         * Nhận lại id để truyền dữ liệu và hiển thị lên form edit
+         * CreatedBy: huynq (2/2/2023)
+         * @param {*} event
+         */
+        getId(event) {
+            try {
+                this.accountEdit = event;
+                this.showAccountDetail = true;
+            } catch (err) {
+                this.$MToastMessage({
+                    titleToast: this.$MResource.VI.TOAST.TITLE_ERROR,
+                    messageToast: err,
+                    showToastMessage: true,
+                    typeToast: 'errorToast',
+                });
+            }
+        },
+
+        getIdDel(idDel, nameRecord) {
+            this.idDelete = idDel;
+            this.codeDelete = nameRecord;
+            this.showConfirmDel = true;
+        },
+
+        btnDeleteOrderById() {
+            try {
+                const me = this;
+                axios.delete(`${this.$MResource.API}/Users/${me.idDelete}`).then(() => {
+                    this.$MToastMessage({
+                        titleToast: this.$MResource.VI.TOAST.TITLE_SUCCESS,
+                        messageToast: this.$MResource.VI.TOAST.DELETE_SUCCESS,
+                        showToastMessage: true,
+                        typeToast: 'successToast',
+                    });
+                    this.showConfirmDel = false;
+                    me.onUpdate();
+                });
+            } catch (err) {
+                this.$MToastMessage({
+                    titleToast: this.$MResource.VI.TOAST.TITLE_ERROR,
+                    messageToast: err,
+                    showToastMessage: true,
+                    typeToast: 'errorToast',
+                });
+            }
+        },
     },
     created() {
         // axios
@@ -318,7 +376,7 @@ export default {
                     title: 'Số tiền',
                     className: 'column-150 text-right',
                     classTitle: 'column-150 text-right',
-                    formatType: 'Number',
+                    formatType: 'Currency',
                     checkIsEnableSort: 'false',
                     // styleElement: 'column-150',
                 },
@@ -332,6 +390,10 @@ export default {
                     // styleElement: 'column-150',
                 },
             ],
+
+            idDelete: null,
+            codeDelete: null,
+            showConfirmDel: false,
         };
     },
 };

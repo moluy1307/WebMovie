@@ -6,6 +6,8 @@ using WebMovie.Backend.BL.CommentBL;
 using WebMovie.Backend.BL.EpisodeBL;
 using WebMovie.Backend.BL.MovieBL;
 using WebMovie.Backend.BL.OrderUserBL;
+using WebMovie.Backend.BL.RoleUserBL;
+using WebMovie.Backend.BL.TrailerBL;
 using WebMovie.Backend.BL.UserBL;
 using WebMovie.Backend.DL;
 using WebMovie.Backend.DL.ActorDL;
@@ -15,6 +17,8 @@ using WebMovie.Backend.DL.CommentDL;
 using WebMovie.Backend.DL.EpisodeDL;
 using WebMovie.Backend.DL.MovieDL;
 using WebMovie.Backend.DL.OrderUserDL;
+using WebMovie.Backend.DL.RoleUserDL;
+using WebMovie.Backend.DL.TrailerDL;
 using WebMovie.Backend.DL.UserDL;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -49,6 +53,12 @@ builder.Services.AddScoped<IActorBL, ActorBL>();
 
 builder.Services.AddScoped<ICommentDL, CommentDL>();
 builder.Services.AddScoped<ICommentBL, CommentBL>();
+
+builder.Services.AddScoped<IRoleUserDL, RoleUserDL>();
+builder.Services.AddScoped<IRoleUserBL, RoleUserBL>();
+
+builder.Services.AddScoped<ITrailerDL, TrailerDL>();
+builder.Services.AddScoped<ITrailerBL, TrailerBL>();
 
 DatabaseContext.ConnectionString = builder.Configuration.GetConnectionString("MySql");
 

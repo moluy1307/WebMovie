@@ -1,7 +1,8 @@
 <template>
     <transition :name="transitionEffect">
         <div v-show="currentSlide === index">
-            <iframe class="item-video" :src="videoSlide"></iframe>
+            <!-- <iframe class="item-video" :src="videoSlide"></iframe> -->
+            <div v-lazyload-youtube="videoSlide"></div>
         </div>
     </transition>
 </template>

@@ -2,7 +2,7 @@
     <div class="overlay openform" @click.self="$emit('on-close')">
         <div class="login-wrapper" id="login-content">
             <div class="login-content">
-                <a href="#" class="close">x</a>
+                <a @click="$emit('on-close')" class="close">x</a>
                 <h3>Quên mật khẩu ?</h3>
                 <form method="post" action="#">
                     <div class="row">

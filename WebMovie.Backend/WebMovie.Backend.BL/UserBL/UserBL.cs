@@ -78,6 +78,11 @@ namespace WebMovie.Backend.BL.UserBL
             await _userDL.SendNewPassword(emailMess);
         }
 
+        //public async Task SendEmail(string emailMess, string subjectMess, string bodyMess)
+        //{
+        //    await _userDL.SendEmail(emailMess, subjectMess, bodyMess);
+        //}
+
         public ServiceResult MinusAmountMoney(Guid userId, float amountMoneyMovie)
         {
             int res = _userDL.MinusAmountMoney(userId, amountMoneyMovie);

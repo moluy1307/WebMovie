@@ -76,10 +76,27 @@ namespace WebMovie.Backend.BL.OrderUserBL
             }
         }
 
-        public OrderUser GetOrderByUserId(Guid userId)
+        public IEnumerable<OrderUser> GetOrderByUserId(Guid userId)
         {
             var res = _orderUserDL.GetOrderByUserId(userId);
             return res;
+        }
+
+        public IEnumerable<OrderUser> GetOrderRevenue(int? sortByYear)
+        {
+            var res = _orderUserDL.GetOrderRevenue(sortByYear);
+            return res;
+        }
+
+        public IEnumerable<OrderUser> GetUserIdBoughtMovie()
+        {
+            var res = _orderUserDL.GetUserIdBoughtMovie();
+            return res;
+        }
+
+        public async Task SendEmail(string subjectMess, string accountName, string customerName, int moneyRecharge)
+        {
+            await _orderUserDL.SendEmail(subjectMess, accountName, customerName, moneyRecharge);
         }
         #endregion
     }

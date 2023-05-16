@@ -14,6 +14,7 @@ using WebMovie.Backend.Common.Entities;
 using WebMovie.Backend.Common.Entities.DTO;
 using WebMovie.Backend.DL.MovieDL;
 using WebMovie.Backend.DL;
+using System.Transactions;
 
 namespace WebMovie.Backend.API.Controllers
 {
@@ -137,27 +138,53 @@ namespace WebMovie.Backend.API.Controllers
                     Amount = movieId.Amount,
                     TypeMovie = movieId.TypeMovie,
                     CateMovie = movieId.CateMovie,
-                    EpisodeMovie = movieId.EpisodeMovie,
                     Categories = JsonConvert.DeserializeObject<List<MovieCategory>>(movieId.CateMovie),
                     ActorMovie = movieId.ActorMovie,
                     Actors = JsonConvert.DeserializeObject<List<MovieActor>>(movieId.ActorMovie),
+                    EpisodeMovie = movieId.EpisodeMovie,
                     Episodes = JsonConvert.DeserializeObject<List<Episode>>(movieId.EpisodeMovie),
+                    TrailerMovie = movieId.TrailerMovie,
+                    Trailers = JsonConvert.DeserializeObject<List<Trailer>>(movieId.TrailerMovie),
                 };
 
                 var result = _movieBL.InsertMovie(newMovie);
 
                 //Xử lý kết quả trả về
-                if (result > 0)
+                //if (result > 0)
+                //{
+                //    return StatusCode(StatusCodes.Status201Created);
+                //}
+                //else
+                //{
+                //    return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult
+                //    {
+                //        ErrorCode = Common.Enums.ErrorCode.GetFailed,
+                //        DevMsg = ResourceVI.Error_DatabaseQuery,
+                //        UserMsg = ResourceVI.Login_Failed
+                //    });
+                //}
+                if (result.IsSuccess)
                 {
                     return StatusCode(StatusCodes.Status201Created);
+                }
+                else if (!result.IsSuccess && result.ErrorCode == WebMovie.Backend.Common.Enums.ErrorCode.InvalidData)
+                {
+                    return StatusCode(StatusCodes.Status400BadRequest, new ErrorResult
+                    {
+                        ErrorCode = result.ErrorCode,
+                        DevMsg = result.Message,
+                        MoreInfo = result.Data,
+                        TradeId = HttpContext.TraceIdentifier
+                    });
                 }
                 else
                 {
                     return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult
                     {
-                        ErrorCode = Common.Enums.ErrorCode.GetFailed,
-                        DevMsg = ResourceVI.Error_DatabaseQuery,
-                        UserMsg = ResourceVI.Login_Failed
+                        ErrorCode = result.ErrorCode,
+                        DevMsg = result.Message,
+                        MoreInfo = result.Data,
+                        TradeId = HttpContext.TraceIdentifier
                     });
                 }
             }
@@ -210,11 +237,13 @@ namespace WebMovie.Backend.API.Controllers
 
         [HttpGet]
         [Route("GetAllMovieByTypeAndFilter")]
-        public IActionResult GetAllMovieByTypeAndFilter(int pageNumber, int pageSize, Guid? categoryId, int? typeMovie, int columnFilter)
+        public IActionResult GetAllMovieByTypeAndFilter(int pageNumber, int pageSize, Guid? categoryId, int? typeMovie, int columnFilter, string? keyword, 
+            Guid? categorySearchImproveId, int? startYear, int? endYear, int? columnSort, int? filterAndSortReview)
         {
             try
             {
-                var result = _movieBL.GetAllMovieByTypeAndFilter(pageNumber, pageSize, categoryId, typeMovie, columnFilter);
+                var result = _movieBL.GetAllMovieByTypeAndFilter(pageNumber, pageSize, categoryId, typeMovie, columnFilter, keyword, 
+                    categorySearchImproveId, startYear, endYear, columnSort, filterAndSortReview);
 
                 //var result = _movieBL.GetMovieById(movieId);
 
@@ -340,22 +369,49 @@ namespace WebMovie.Backend.API.Controllers
                     ActorMovie = movie.ActorMovie,
                     Actors = JsonConvert.DeserializeObject<List<MovieActor>>(movie.ActorMovie),
                     Episodes = JsonConvert.DeserializeObject<List<Episode>>(movie.EpisodeMovie),
+                    TrailerMovie = movie.TrailerMovie,
+                    Trailers = JsonConvert.DeserializeObject<List<Trailer>>(movie.TrailerMovie),
                 };
 
                 var result = _movieBL.UpdateMovie(movieId, newMovie);
 
                 //Xử lý kết quả trả về
-                if (result > 0)
+                //if (result > 0)
+                //{
+                //    return StatusCode(StatusCodes.Status201Created);
+                //}
+                //else
+                //{
+                //    return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult
+                //    {
+                //        ErrorCode = Common.Enums.ErrorCode.GetFailed,
+                //        DevMsg = ResourceVI.Error_DatabaseQuery,
+                //        UserMsg = ResourceVI.Login_Failed
+                //    });
+                //}
+
+                if (result.IsSuccess)
                 {
-                    return StatusCode(StatusCodes.Status201Created);
+                    return StatusCode(StatusCodes.Status200OK);
+                }
+                else if (!result.IsSuccess && result.ErrorCode == WebMovie.Backend.Common.Enums.ErrorCode.InvalidData)
+                {
+                    return StatusCode(StatusCodes.Status400BadRequest, new ErrorResult
+                    {
+                        ErrorCode = result.ErrorCode,
+                        DevMsg = result.Message,
+                        MoreInfo = result.Data,
+                        TradeId = HttpContext.TraceIdentifier
+                    });
                 }
                 else
                 {
                     return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResult
                     {
-                        ErrorCode = Common.Enums.ErrorCode.GetFailed,
-                        DevMsg = ResourceVI.Error_DatabaseQuery,
-                        UserMsg = ResourceVI.Login_Failed
+                        ErrorCode = result.ErrorCode,
+                        DevMsg = result.Message,
+                        MoreInfo = result.Data,
+                        TradeId = HttpContext.TraceIdentifier
                     });
                 }
             }
@@ -420,6 +476,82 @@ namespace WebMovie.Backend.API.Controllers
                         UserMsg = ResourceVI.Login_Failed
                     });
                 }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return HandleException(ex);
+            }
+        }
+
+        /// <summary>
+        /// Hàm xóa thông tin bản ghi
+        /// </summary>
+        /// <param name="recordId">Khóa chính</param>
+        /// <param name="record">Bản ghi có Id trên</param>
+        /// <returns>
+        /// 200 - Sửa thông tin bản ghi thành công
+        /// 400 - Đầu vào không hợp lệ
+        /// 500 - Có exception
+        /// </returns>
+        /// CreatedBy: huynq (9/2/2023)
+        [HttpDelete]
+        [Route("DeleteMovie")]
+        public IActionResult DeleteMovie(Guid movieId)
+        {
+            try
+            {
+                using (var mySqlConnection = new MySqlConnection(DatabaseContext.ConnectionString))
+                {
+                    mySqlConnection.Open();
+                    using (var transaction = mySqlConnection.BeginTransaction())
+                    {
+                        try
+                        {
+
+                            //Xoá thể loại phim bảng trung gian
+                            var listCategory = mySqlConnection.Query<MovieCategory>("SELECT * FROM moviecategory WHERE MovieId=@p_MovieId;", new { p_MovieId = movieId }, transaction: transaction);
+                            if (listCategory.ToList().Count > 0)
+                            {
+                                mySqlConnection.Execute("DELETE FROM moviecategory WHERE MovieId=@p_MovieId;", new { p_MovieId = movieId }, transaction: transaction);
+                            }
+
+                            //Xoá diễn viên phim bảng trung gian
+                            var listActor = mySqlConnection.Query<MovieActor>("SELECT * FROM movieactor WHERE MovieId=@p_MovieId;", new { p_MovieId = movieId }, transaction: transaction);
+                            if (listActor.ToList().Count > 0)
+                            {
+                                mySqlConnection.Execute("DELETE FROM movieactor WHERE MovieId=@p_MovieId;", new { p_MovieId = movieId }, transaction: transaction);
+                            }
+
+                            //Xoá bộ phim
+                            var listEpisode = mySqlConnection.Query<Episode>("SELECT * FROM episode WHERE MovieId=@p_MovieId;", new { p_MovieId = movieId }, transaction: transaction);
+                            if (listEpisode.ToList().Count > 0)
+                            {
+                                mySqlConnection.Execute("DELETE FROM episode WHERE MovieId=@p_MovieId;", new { p_MovieId = movieId }, transaction: transaction);
+                            }
+
+                            //Xoá trailer
+                            var listTrailer = mySqlConnection.Query<Trailer>("SELECT * FROM trailer WHERE MovieId=@p_MovieId;", new { p_MovieId = movieId }, transaction: transaction);
+                            if (listTrailer.ToList().Count > 0)
+                            {
+                                mySqlConnection.Execute("DELETE FROM trailer WHERE MovieId=@p_MovieId;", new { p_MovieId = movieId }, transaction: transaction);
+                            }
+
+                            mySqlConnection.Execute("DELETE FROM movie WHERE MovieId=@p_MovieId;", new { p_MovieId = movieId }, transaction: transaction);
+
+                            transaction.Commit();
+
+                        }
+                        catch (Exception ex)
+                        {
+                            transaction.Rollback();
+                            Console.WriteLine(ex.Message);
+                        }
+                    }
+
+                }
+                return Ok();
+
             }
             catch (Exception ex)
             {

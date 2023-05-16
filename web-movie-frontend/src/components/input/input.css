@@ -48,7 +48,7 @@
 
 .input-error {
     /* border-radius: 4px; */
-    border: 1px solid #e61d1d;
+    border: 1px solid #e61d1d !important;
 }
 
 .input-error:focus {

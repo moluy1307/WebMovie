@@ -6,7 +6,7 @@
             @mouseenter="$emit('mouseenter')"
             @mouseout="$emit('mouseout')"
         >
-            <img :src="slide" />
+            <img v-lazy="slide" />
             <div class="general-intro">
                 <h3>{{ titleSlide }}</h3>
                 <p class="title2"></p>
@@ -67,7 +67,7 @@ export default {
     padding: 14px 12px 9px 14px;
     max-width: 280px;
     position: absolute;
-    z-index: 100;
+    /* z-index: 100; */
     bottom: 1.5em;
     left: 2.5em;
 }

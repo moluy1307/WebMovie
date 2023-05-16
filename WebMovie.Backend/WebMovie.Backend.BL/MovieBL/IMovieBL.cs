@@ -11,7 +11,7 @@ namespace WebMovie.Backend.BL.MovieBL
 {
     public interface IMovieBL : IBasaBL<Movie>
     {
-        int InsertMovie(Movie movie);
+        ServiceResult InsertMovie(Movie movie);
 
         Movie GetMovieById(Guid movieId);
 
@@ -19,14 +19,17 @@ namespace WebMovie.Backend.BL.MovieBL
 
         //IEnumerable<Movie> GetAllMovieByType(int typeMovie, int? limit);
 
-        PagingResult<Movie> GetAllMovieByTypeAndFilter(int pageNumber, int pageSize, Guid? categoryId, int? typeMovie, int columnFilter);
+        PagingResult<Movie> GetAllMovieByTypeAndFilter(int pageNumber, int pageSize, Guid? categoryId, int? typeMovie, int columnFilter, string? keyword,
+            Guid? categorySearchImproveId, int? startYear, int? endYear, int? columnSort, int? filterAndSortReview);
 
         PagingResult<Movie> GetSimilarMovieByFilter(int pageNumber, int pageSize, Guid? movieId);
 
-        int UpdateMovie(Guid movieId, Movie movie);
+        ServiceResult UpdateMovie(Guid movieId, Movie movie);
 
         int UpdateReview(Guid movieId);
 
         int UpdateMediumScore(Guid movieId, decimal mediumScore);
+
+        ServiceResult DeleteMovie(Guid movieId);
     }
 }

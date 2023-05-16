@@ -13,8 +13,13 @@ namespace WebMovie.Backend.Common.Entities
         [Key]
         public Guid MovieId { get; set; }
 
+        [CheckIsEmpty]
+        [PropertyName("Mã phim")]
+        [RecordCode]
         public string MovieCode { get; set; }
 
+        [CheckIsEmpty]
+        [PropertyName("Tên phim")]
         public string MovieName { get; set; }
 
         public IFormFile? Image { get; set; }
@@ -39,12 +44,12 @@ namespace WebMovie.Backend.Common.Entities
 
         public string? CateMovie { get; set; }
 
-        public string? EpisodeMovie { get; set; }
-
         [NoParam]
         public List<MovieCategory>? Categories { get; set; }
 
         public string? GenreNames { get; set; }
+
+        public string? EpisodeMovie { get; set; }
 
         [NoParam]
         public List<Episode>? Episodes { get; set; }
@@ -53,6 +58,13 @@ namespace WebMovie.Backend.Common.Entities
 
         [NoParam]
         public List<MovieActor>? Actors { get; set; }
+
+        public string? ActorNames { get; set; }
+
+        public string? TrailerMovie { get; set; }
+
+        [NoParam]
+        public List<Trailer>? Trailers { get; set; }
 
         public int TypeMovie { get; set; }
 

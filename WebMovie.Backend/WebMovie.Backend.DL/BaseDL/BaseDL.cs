@@ -345,7 +345,16 @@ namespace Misa.Amis.DL.BaseDL
             //Chuẩn bị tham số đầu vào cho stored
             var parameters = new DynamicParameters();
 
-            parameters.Add($"p_{typeof(T).Name}Id", recordId);
+            //Tìm thuộc tính được đánh dấu là id
+            var primaryCode = typeof(T).GetProperties().Where(p => Attribute.IsDefined(p, typeof(KeyAttribute)));
+            foreach (var property in primaryCode)
+            {
+                var propName = property.Name;
+
+                parameters.Add($"@p_{propName}", recordId);
+            }
+
+            //parameters.Add($"p_{typeof(T).Name}Id", recordId);
 
             //Khởi tạo kết nối đến DB
             int numberOfAffectedRows;
@@ -633,7 +642,19 @@ namespace Misa.Amis.DL.BaseDL
 
             //Chuẩn bị tham số đầu vào cho stored
             var parameters = new DynamicParameters();
-            parameters.Add($"@p_{typeof(T).Name}Id", recordId);
+
+            var primaryCode = typeof(T).GetProperties().Where(p => Attribute.IsDefined(p, typeof(KeyAttribute)));
+            foreach (var property in primaryCode)
+            {
+                //Đọc tên thuộc tính có trong object record (Employee, Department,...)
+                string name = property.Name;
+
+                //Viết đối số trong DB
+                string argument = "@p_" + name;
+
+                parameters.Add($"{argument}", recordId);
+            }
+            //parameters.Add($"@p_{typeof(T).Name}Id", recordId);
 
             //Khởi tạo kết nối đến DB
             using (var mySqlConnection = new MySqlConnection(DatabaseContext.ConnectionString))
