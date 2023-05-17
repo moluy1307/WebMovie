@@ -26,6 +26,7 @@
                         margin: 0px;
                         transform: translate3d(7.2px, 23.2px, 0px);
                         max-height: 500px;
+                        overflow-y: auto;
                     "
                     v-if="showBoxNotif"
                     v-click-away="() => (showBoxNotif = false)"
@@ -44,7 +45,7 @@
                             <div>
                                 <h4>{{ orderItem.orderName }}</h4>
                                 <p>{{ orderItem.username }}</p>
-                                <p>{{ descriptionTime }} trước</p>
+                                <p>{{ calcDateTime(orderItem.createdDate) }} trước</p>
                             </div>
                         </li>
                     </template>
@@ -121,6 +122,20 @@ export default {
                 this.isShowedNotif = true;
             }
         },
+
+        calcDateTime(createdDate) {
+            // Lấy thời điểm hiện tại
+            const now = moment();
+
+            // Lấy thời điểm truyền vào
+            const date = moment(createdDate);
+
+            // Tính toán khoảng thời gian từ thời điểm đó đến hiện tại
+            const duration = moment.duration(now.diff(date));
+
+            // Xuất ra chuỗi mô tả khoảng thời gian
+            return duration.humanize();
+        },
     },
     created() {
         const storage = localStorage.getItem('adminInfor');
@@ -141,6 +156,7 @@ export default {
 
                         // Xuất ra chuỗi mô tả khoảng thời gian
                         this.descriptionTime = duration.humanize();
+                        console.log('this.orderList[item].createdDate', this.descriptionTime);
                     }
                 })
                 .catch((err) => {

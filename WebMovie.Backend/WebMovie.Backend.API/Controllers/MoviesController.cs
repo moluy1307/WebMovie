@@ -77,7 +77,7 @@ namespace WebMovie.Backend.API.Controllers
 
                 var result = _movieBL.GetMovieById(movieId);
 
-                string imagePath = $"{result.MovieCode}.png";
+                string imagePath = $"{result.MovieName}.png";
                 string imageSavePath = Path.Combine(_webHostEnvironment.WebRootPath, "Images", imagePath);
                 result.ImgByte = System.IO.File.ReadAllBytes(imageSavePath);
 
@@ -112,7 +112,7 @@ namespace WebMovie.Backend.API.Controllers
                 string imagePath = null;
                 if (movieId.Image != null)
                 {
-                    imagePath = $"{movieId.MovieCode}{Path.GetExtension(movieId.Image.FileName)}";
+                    imagePath = $"{movieId.MovieName}{Path.GetExtension(movieId.Image.FileName)}";
                     string imageSavePath = Path.Combine(_webHostEnvironment.WebRootPath, "Images", imagePath);
                     using (var stream = new FileStream(imageSavePath, FileMode.Create))
                     {
@@ -256,7 +256,7 @@ namespace WebMovie.Backend.API.Controllers
 
                 foreach (var movieItem in result.Data)
                 {
-                    imagePath = $"{movieItem.MovieCode}.png";
+                    imagePath = $"{movieItem.MovieName}.png";
                     imageSavePath = Path.Combine(_webHostEnvironment.WebRootPath, "Images", imagePath);
                     movieItem.ImgByte = System.IO.File.ReadAllBytes(imageSavePath);
                 }
@@ -302,7 +302,7 @@ namespace WebMovie.Backend.API.Controllers
 
                 foreach (var movieItem in result.Data)
                 {
-                    imagePath = $"{movieItem.MovieCode}.png";
+                    imagePath = $"{movieItem.MovieName}.png";
                     imageSavePath = Path.Combine(_webHostEnvironment.WebRootPath, "Images", imagePath);
                     movieItem.ImgByte = System.IO.File.ReadAllBytes(imageSavePath);
                 }
@@ -338,7 +338,7 @@ namespace WebMovie.Backend.API.Controllers
                 string imagePath = null;
                 if (movie.Image != null)
                 {
-                    imagePath = $"{movie.MovieCode}{Path.GetExtension(movie.Image.FileName)}";
+                    imagePath = $"{movie.MovieName}{Path.GetExtension(movie.Image.FileName)}";
                     string imageSavePath = Path.Combine(_webHostEnvironment.WebRootPath, "Images", imagePath);
                     using (var stream = new FileStream(imageSavePath, FileMode.Create))
                     {

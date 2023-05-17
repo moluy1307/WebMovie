@@ -58,6 +58,11 @@
                                 >
                                     <div @click="btnShowMovieSingle(movieItemGrid.movieId)">
                                         <span class="label">{{ movieItemGrid.newestEpisode.episodeName }}</span>
+                                        <span class="watcher"
+                                            ><font-awesome-icon :icon="['fas', 'eye']" style="margin-right: 2px" />{{
+                                                movieItemGrid.movieReview
+                                            }}</span
+                                        >
                                         <img
                                             class="img-film"
                                             :title="movieItemGrid.movieName"
@@ -96,6 +101,7 @@
                                 {{ itemCbo.title }}
                             </option>
                         </select>
+
                         <div class="page-number">
                             <!-- <button class="btn-page-number btn-none">Trước</button> -->
                             <MButton
@@ -234,6 +240,7 @@ export default {
     watch: {
         perPageValue: function (value) {
             if (value) {
+                this.currentPage = 1;
                 this.callApiPaginationListMovieGrid();
             }
         },
@@ -485,7 +492,8 @@ export default {
     created() {
         setTimeout(() => {
             this.showLoadingClient = false;
-            this.perPageValue = 5;
+            this.perPageValue = 4;
+
             this.columnSort = 1;
             this.callApiPaginationListMovieGrid();
 
@@ -517,19 +525,19 @@ export default {
             totalRecord: 0,
             dataCombobox: [
                 {
-                    valueCombobox: 5,
-                    title: '5 phim',
+                    valueCombobox: 4,
+                    title: '4 phim',
                 },
                 {
-                    valueCombobox: 10,
-                    title: '10 phim',
+                    valueCombobox: 8,
+                    title: '8 phim',
                 },
                 {
                     valueCombobox: 20,
                     title: '20 phim',
                 },
                 {
-                    valueCombobox: 50,
+                    valueCombobox: 40,
                     title: '50 phim',
                 },
             ],

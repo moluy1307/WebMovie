@@ -357,7 +357,7 @@
                     <!-- <button class="btn btn-bg" @click.prevent="btnSaveOnClick">Cất</button> -->
                     <MButton
                         @click="btnSaveOnClick"
-                        :class="{ 'btn-custom-default': true, 'btn-bg': true, 'btn-form-pay': true }"
+                        :class="{ 'btn-custom-default': true }"
                         label="Cất"
                         ref="btnSave"
                     ></MButton>

@@ -407,6 +407,8 @@ export default {
                     this.showLoadingClient = false;
                     me.movieInfor = response.data;
 
+                    console.log('movieInfor.mediumScore: ', me.movieInfor.mediumScore);
+
                     if (me.movieInfor.dateOfBirth != null || me.movieInfor.dateOfBirth != undefined) {
                         me.movieInfor.dateOfBirth = commonJS.bindingFormatDate(me.movieInfor.dateOfBirth);
                     }

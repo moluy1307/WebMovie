@@ -41,7 +41,7 @@ namespace WebMovie.Backend.API.Controllers
 
                 var result = _actorBL.GetActorById(actorId);
 
-                string imagePath = $"{result.ActorCode}.png";
+                string imagePath = $"{result.Fullname}.png";
                 string imageSavePath = Path.Combine(_webHostEnvironment.WebRootPath, "Images\\Actors", imagePath);
                 result.ImgByte = System.IO.File.ReadAllBytes(imageSavePath);
 
@@ -79,7 +79,7 @@ namespace WebMovie.Backend.API.Controllers
                 string imagePath = null;
                 if (actor.Image != null)
                 {
-                    imagePath = $"{actor.ActorCode}{Path.GetExtension(actor.Image.FileName)}";
+                    imagePath = $"{actor.Fullname}{Path.GetExtension(actor.Image.FileName)}";
                     string imageSavePath = Path.Combine(_webHostEnvironment.WebRootPath, "Images\\Actors", imagePath);
                     using (var stream = new FileStream(imageSavePath, FileMode.Create))
                     {
@@ -146,7 +146,7 @@ namespace WebMovie.Backend.API.Controllers
                 string imagePath = null;
                 if (actor.Image != null)
                 {
-                    imagePath = $"{actor.ActorCode}{Path.GetExtension(actor.Image.FileName)}";
+                    imagePath = $"{actor.Fullname}{Path.GetExtension(actor.Image.FileName)}";
                     string imageSavePath = Path.Combine(_webHostEnvironment.WebRootPath, "Images\\Actors", imagePath);
                     using (var stream = new FileStream(imageSavePath, FileMode.Create))
                     {
@@ -218,7 +218,7 @@ namespace WebMovie.Backend.API.Controllers
 
                 foreach (var actorItem in result)
                 {
-                    imagePath = $"{actorItem.ActorCode}.png";
+                    imagePath = $"{actorItem.Fullname}.png";
                     imageSavePath = Path.Combine(_webHostEnvironment.WebRootPath, "Images\\Actors", imagePath);
                     actorItem.ImgByte = System.IO.File.ReadAllBytes(imageSavePath);
                 }
@@ -262,7 +262,7 @@ namespace WebMovie.Backend.API.Controllers
 
                 foreach (var actorItem in result.Data)
                 {
-                    imagePath = $"{actorItem.ActorCode}.png";
+                    imagePath = $"{actorItem.Fullname}.png";
                     imageSavePath = Path.Combine(_webHostEnvironment.WebRootPath, "Images\\Actors", imagePath);
                     actorItem.ImgByte = System.IO.File.ReadAllBytes(imageSavePath);
                 }

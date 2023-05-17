@@ -206,8 +206,7 @@ const routes = [
     {
         path: '/actor',
         components: {
-            // routerAdmin: () => import('./view/actorManager/ActorList.vue'),
-            routerAdmin: './view/actorManager/ActorList.vue',
+            routerAdmin: () => import('./view/actorManager/ActorList.vue'),
         },
     },
 ];

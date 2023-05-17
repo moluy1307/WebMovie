@@ -72,6 +72,22 @@ header {
     left: 0;
 }
 
+.tab .watcher {
+    position: absolute;
+    display: inline-block;
+    white-space: normal;
+    text-align: left;
+    line-height: 1.2em;
+    padding: 5px;
+    font-size: 11px;
+    font-weight: normal;
+    color: #abb7c4;
+    background: #475569;
+    top: 35px;
+    box-shadow: rgba(0, 0, 0, 0.75) 2px 2px 3px 0px;
+    left: 0px;
+}
+
 .tab .name {
     margin: 0;
     color: #fff;

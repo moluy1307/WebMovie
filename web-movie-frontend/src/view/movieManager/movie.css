@@ -273,7 +273,7 @@
 
 .fields-information {
     display: flex;
-    width: 950px;
+    width: 1000px;
 }
 .w-350 {
     width: 300px;
@@ -353,7 +353,7 @@ Css danh sách phim */
 
 .body-table-episode {
     padding-left: 20px;
-    max-height: 214.4px;
+    max-height: 200px;
 }
 
 .box-trailer {

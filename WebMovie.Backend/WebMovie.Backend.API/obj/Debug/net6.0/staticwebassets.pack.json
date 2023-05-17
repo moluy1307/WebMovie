@@ -1,52 +1,208 @@
 {
   "Files": [
     {
-      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Actor-00001.png",
-      "PackagePath": "staticwebassets\\Images\\Actors\\Actor-00001.png"
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Akari Kitō.png",
+      "PackagePath": "staticwebassets\\Images\\Actors\\Akari Kitō.png"
     },
     {
-      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Actor-00002.png",
-      "PackagePath": "staticwebassets\\Images\\Actors\\Actor-00002.png"
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Anya Taylor-Joy.png",
+      "PackagePath": "staticwebassets\\Images\\Actors\\Anya Taylor-Joy.png"
     },
     {
-      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Actor-00003.png",
-      "PackagePath": "staticwebassets\\Images\\Actors\\Actor-00003.png"
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Asher Angel.png",
+      "PackagePath": "staticwebassets\\Images\\Actors\\Asher Angel.png"
     },
     {
-      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Actor-00004.png",
-      "PackagePath": "staticwebassets\\Images\\Actors\\Actor-00004.png"
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Bai Lu.png",
+      "PackagePath": "staticwebassets\\Images\\Actors\\Bai Lu.png"
     },
     {
-      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Actor-00005.png",
-      "PackagePath": "staticwebassets\\Images\\Actors\\Actor-00005.png"
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Ben Affleck.png",
+      "PackagePath": "staticwebassets\\Images\\Actors\\Ben Affleck.png"
     },
     {
-      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Actor-00006.png",
-      "PackagePath": "staticwebassets\\Images\\Actors\\Actor-00006.png"
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Chen Xiao.png",
+      "PackagePath": "staticwebassets\\Images\\Actors\\Chen Xiao.png"
     },
     {
-      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Actor-00007.png",
-      "PackagePath": "staticwebassets\\Images\\Actors\\Actor-00007.png"
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Chris Evans.png",
+      "PackagePath": "staticwebassets\\Images\\Actors\\Chris Evans.png"
     },
     {
-      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Actor-00008.png",
-      "PackagePath": "staticwebassets\\Images\\Actors\\Actor-00008.png"
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Chris Hemsworth.png",
+      "PackagePath": "staticwebassets\\Images\\Actors\\Chris Hemsworth.png"
     },
     {
-      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Actor-00009.png",
-      "PackagePath": "staticwebassets\\Images\\Actors\\Actor-00009.png"
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Chris Pine.png",
+      "PackagePath": "staticwebassets\\Images\\Actors\\Chris Pine.png"
     },
     {
-      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Actor-00010.png",
-      "PackagePath": "staticwebassets\\Images\\Actors\\Actor-00010.png"
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Chris Pratt.png",
+      "PackagePath": "staticwebassets\\Images\\Actors\\Chris Pratt.png"
     },
     {
-      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Actor-00011.png",
-      "PackagePath": "staticwebassets\\Images\\Actors\\Actor-00011.png"
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Daniel Radcliffe.png",
+      "PackagePath": "staticwebassets\\Images\\Actors\\Daniel Radcliffe.png"
     },
     {
-      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Actor-0008.png",
-      "PackagePath": "staticwebassets\\Images\\Actors\\Actor-0008.png"
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Donnie Yen.png",
+      "PackagePath": "staticwebassets\\Images\\Actors\\Donnie Yen.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Dwayne Johnson.png",
+      "PackagePath": "staticwebassets\\Images\\Actors\\Dwayne Johnson.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Elizabeth Olsen.png",
+      "PackagePath": "staticwebassets\\Images\\Actors\\Elizabeth Olsen.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Emma Watson.png",
+      "PackagePath": "staticwebassets\\Images\\Actors\\Emma Watson.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Evangeline Lilly.png",
+      "PackagePath": "staticwebassets\\Images\\Actors\\Evangeline Lilly.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Gal Gadot.png",
+      "PackagePath": "staticwebassets\\Images\\Actors\\Gal Gadot.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Henry Cavill.png",
+      "PackagePath": "staticwebassets\\Images\\Actors\\Henry Cavill.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Jason Statham.png",
+      "PackagePath": "staticwebassets\\Images\\Actors\\Jason Statham.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Jennifer Lopez.png",
+      "PackagePath": "staticwebassets\\Images\\Actors\\Jennifer Lopez.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Joseph Fiennes.png",
+      "PackagePath": "staticwebassets\\Images\\Actors\\Joseph Fiennes.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Josh Brolin.png",
+      "PackagePath": "staticwebassets\\Images\\Actors\\Josh Brolin.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Keanu Reeves.png",
+      "PackagePath": "staticwebassets\\Images\\Actors\\Keanu Reeves.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Lee Dong-wook.png",
+      "PackagePath": "staticwebassets\\Images\\Actors\\Lee Dong-wook.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Luo Yunxi.png",
+      "PackagePath": "staticwebassets\\Images\\Actors\\Luo Yunxi.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Morena Baccarin.png",
+      "PackagePath": "staticwebassets\\Images\\Actors\\Morena Baccarin.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Natsuki Hanae.png",
+      "PackagePath": "staticwebassets\\Images\\Actors\\Natsuki Hanae.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Nicholas Hoult.png",
+      "PackagePath": "staticwebassets\\Images\\Actors\\Nicholas Hoult.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Oscar Isaac.png",
+      "PackagePath": "staticwebassets\\Images\\Actors\\Oscar Isaac.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Paul Bettany.png",
+      "PackagePath": "staticwebassets\\Images\\Actors\\Paul Bettany.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Paul Rudd.png",
+      "PackagePath": "staticwebassets\\Images\\Actors\\Paul Rudd.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Robert Downey Jr..png",
+      "PackagePath": "staticwebassets\\Images\\Actors\\Robert Downey Jr..png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Rupert Grint.png",
+      "PackagePath": "staticwebassets\\Images\\Actors\\Rupert Grint.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Ryan Reynolds.png",
+      "PackagePath": "staticwebassets\\Images\\Actors\\Ryan Reynolds.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Scarlett Johansson.png",
+      "PackagePath": "staticwebassets\\Images\\Actors\\Scarlett Johansson.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Vin Diesel.png",
+      "PackagePath": "staticwebassets\\Images\\Actors\\Vin Diesel.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Wu Jing.png",
+      "PackagePath": "staticwebassets\\Images\\Actors\\Wu Jing.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Zachary Levi.png",
+      "PackagePath": "staticwebassets\\Images\\Actors\\Zachary Levi.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Actors\\Zoe Saldana.png",
+      "PackagePath": "staticwebassets\\Images\\Actors\\Zoe Saldana.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Biệt Tích.png",
+      "PackagePath": "staticwebassets\\Images\\Biệt Tích.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Biệt Đội Siêu Anh Hùng 4.png",
+      "PackagePath": "staticwebassets\\Images\\Biệt Đội Siêu Anh Hùng 4.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Bác sĩ Cha.png",
+      "PackagePath": "staticwebassets\\Images\\Bác sĩ Cha.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Bạn Trai Tôi Là Hồ Ly 2.png",
+      "PackagePath": "staticwebassets\\Images\\Bạn Trai Tôi Là Hồ Ly 2.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Captain America 3.png",
+      "PackagePath": "staticwebassets\\Images\\Captain America 3.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Cái chết của bảy vị vua.png",
+      "PackagePath": "staticwebassets\\Images\\Cái chết của bảy vị vua.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Cô Thành Trong Gương.png",
+      "PackagePath": "staticwebassets\\Images\\Cô Thành Trong Gương.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Harry Potter và Tên Tù Nhân Ngục Azkaban.png",
+      "PackagePath": "staticwebassets\\Images\\Harry Potter và Tên Tù Nhân Ngục Azkaban.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Kỵ Sĩ Mặt Trăng.png",
+      "PackagePath": "staticwebassets\\Images\\Kỵ Sĩ Mặt Trăng.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Liên Minh Công Lý.png",
+      "PackagePath": "staticwebassets\\Images\\Liên Minh Công Lý.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Lưu Lạc Địa Cầu 2.png",
+      "PackagePath": "staticwebassets\\Images\\Lưu Lạc Địa Cầu 2.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Mashle.png",
+      "PackagePath": "staticwebassets\\Images\\Mashle.png"
     },
     {
       "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Movie-00001.png",
@@ -73,12 +229,88 @@
       "PackagePath": "staticwebassets\\Images\\Movie-00006.png"
     },
     {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Người Kiến và Chiến binh Ong 3.png",
+      "PackagePath": "staticwebassets\\Images\\Người Kiến và Chiến binh Ong 3.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Người thầy y đức.png",
+      "PackagePath": "staticwebassets\\Images\\Người thầy y đức.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Nữ Thần Chiến Binh.png",
+      "PackagePath": "staticwebassets\\Images\\Nữ Thần Chiến Binh.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Phim anh em Super Mario.png",
+      "PackagePath": "staticwebassets\\Images\\Phim anh em Super Mario.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Quá Nhanh Quá Nguy Hiểm 8.png",
+      "PackagePath": "staticwebassets\\Images\\Quá Nhanh Quá Nguy Hiểm 8.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Quái nhân Deadpool 2.png",
+      "PackagePath": "staticwebassets\\Images\\Quái nhân Deadpool 2.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Quý bà điệp viên.png",
+      "PackagePath": "staticwebassets\\Images\\Quý bà điệp viên.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Shazam! Cơn thịnh nộ của các vị thần.png",
+      "PackagePath": "staticwebassets\\Images\\Shazam! Cơn thịnh nộ của các vị thần.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Sát thủ John Wick.png",
+      "PackagePath": "staticwebassets\\Images\\Sát thủ John Wick.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Tay Sai Của Quỷ.png",
+      "PackagePath": "staticwebassets\\Images\\Tay Sai Của Quỷ.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Thanh gươm diệt quỷ.png",
+      "PackagePath": "staticwebassets\\Images\\Thanh gươm diệt quỷ.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\The Legend & Butterfly.png",
+      "PackagePath": "staticwebassets\\Images\\The Legend & Butterfly.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\The Mother.png",
+      "PackagePath": "staticwebassets\\Images\\The Mother.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Trường Nguyệt Tẫn Minh.png",
+      "PackagePath": "staticwebassets\\Images\\Trường Nguyệt Tẫn Minh.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Tây Hành Kỷ.png",
+      "PackagePath": "staticwebassets\\Images\\Tây Hành Kỷ.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Vân Tương Truyện.png",
+      "PackagePath": "staticwebassets\\Images\\Vân Tương Truyện.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Vệ binh dải ngân hà 2.png",
+      "PackagePath": "staticwebassets\\Images\\Vệ binh dải ngân hà 2.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\WandaVision.png",
+      "PackagePath": "staticwebassets\\Images\\WandaVision.png"
+    },
+    {
       "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\bannerMovie1.png",
       "PackagePath": "staticwebassets\\Images\\bannerMovie1.png"
     },
     {
       "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\bannerMovie2.png",
       "PackagePath": "staticwebassets\\Images\\bannerMovie2.png"
+    },
+    {
+      "Id": "C:\\D\\WorkSpace\\WebMovie\\WebMovie.Backend\\WebMovie.Backend.API\\wwwroot\\Images\\Địa ngục cực lạc.png",
+      "PackagePath": "staticwebassets\\Images\\Địa ngục cực lạc.png"
     },
     {
       "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.WebMovie.Backend.API.Microsoft.AspNetCore.StaticWebAssets.props",

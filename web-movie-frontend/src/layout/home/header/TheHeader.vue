@@ -128,7 +128,7 @@
                                             >
                                                 {{
                                                     item.newestEpisode == null
-                                                        ? item.genreNames
+                                                        ? `${item.movieReview} Lượt xem`
                                                         : item.newestEpisode.episodeName
                                                 }}
                                             </p>
@@ -184,7 +184,7 @@
                                         >
                                             {{
                                                 item.newestEpisode == null
-                                                    ? item.genreNames
+                                                    ? `${item.movieReview} Lượt xem`
                                                     : item.newestEpisode.episodeName
                                             }}
                                         </p>

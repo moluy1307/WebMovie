@@ -28,11 +28,18 @@
                                             @mouseover="showButtonPlay(indexN)"
                                             @mouseout="hideButtonPlay"
                                             @click="showMovieSingle"
+                                            style="margin-right: 21px !important"
                                         >
                                             <div @click="btnShowMovieSingle(seriesMovieItem.movieId)">
                                                 <span class="label">{{
                                                     seriesMovieItem.newestEpisode.episodeName
                                                 }}</span>
+                                                <span class="watcher"
+                                                    ><font-awesome-icon
+                                                        :icon="['fas', 'eye']"
+                                                        style="margin-right: 2px"
+                                                    />{{ seriesMovieItem.movieReview }}</span
+                                                >
                                                 <img
                                                     class="img-film"
                                                     :title="seriesMovieItem.movieName"
@@ -89,9 +96,16 @@
                                             @mouseover="showButtonPlay(indexN)"
                                             @mouseout="hideButtonPlay"
                                             @click="showMovieSingle"
+                                            style="margin-right: 21px !important"
                                         >
                                             <div @click="btnShowMovieSingle(oddMovieItem.movieId)">
                                                 <span class="label">{{ oddMovieItem.newestEpisode.episodeName }}</span>
+                                                <span class="watcher"
+                                                    ><font-awesome-icon
+                                                        :icon="['fas', 'eye']"
+                                                        style="margin-right: 2px"
+                                                    />{{ oddMovieItem.movieReview }}</span
+                                                >
                                                 <img
                                                     class="img-film"
                                                     :title="oddMovieItem.movieName"
@@ -285,7 +299,7 @@ export default {
         callApiSeriesMovie() {
             axios
                 .get(
-                    `${this.$MResource.API}/Movies/GetAllMovieByTypeAndFilter?pageNumber=1&pageSize=9&typeMovie=1&columnFilter=2`,
+                    `${this.$MResource.API}/Movies/GetAllMovieByTypeAndFilter?pageNumber=1&pageSize=8&typeMovie=1&columnFilter=2`,
                 )
                 .then((response) => {
                     this.serieMovieList = response.data.data;
@@ -308,7 +322,7 @@ export default {
         callApiOddMovie() {
             axios
                 .get(
-                    `${this.$MResource.API}/Movies/GetAllMovieByTypeAndFilter?pageNumber=1&pageSize=9&typeMovie=2&columnFilter=2`,
+                    `${this.$MResource.API}/Movies/GetAllMovieByTypeAndFilter?pageNumber=1&pageSize=8&typeMovie=2&columnFilter=2`,
                 )
                 .then((response) => {
                     this.oddMovieList = response.data.data;

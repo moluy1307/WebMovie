@@ -38,6 +38,11 @@
                                 >
                                     <div @click="btnShowMovieSingle(movieItemGrid.movieId)">
                                         <span class="label">{{ movieItemGrid.newestEpisode.episodeName }}</span>
+                                        <span class="watcher"
+                                            ><font-awesome-icon :icon="['fas', 'eye']" style="margin-right: 2px" />{{
+                                                movieItemGrid.movieReview
+                                            }}</span
+                                        >
                                         <img
                                             class="img-film"
                                             :title="movieItemGrid.movieName"
