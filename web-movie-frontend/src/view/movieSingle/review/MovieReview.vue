@@ -12,11 +12,11 @@
                     <span>{{ totalRecord }}</span> bình luận
                 </p>
                 <div style="display: flex; align-items: center; column-gap: 12px">
-                    <label>Sắp xếp theo:</label>
+                    <!-- <label>Sắp xếp theo:</label>
                     <select>
                         <option value="popularity">Mới nhất</option>
                         <option value="popularity">Cũ nhất</option>
-                    </select>
+                    </select> -->
                 </div>
             </div>
             <template v-for="(commentItem, indexComment) in commentList" :key="indexComment">
@@ -34,7 +34,8 @@
                                     :class="[n <= commentItem.rating ? 'star-selected' : 'star-icon']"
                                 />
                             </div>
-                            <a class="time"> Bình luận</a><a> &nbsp;{{ descriptionTime }} trước</a>
+                            <a class="time"> Bình luận</a
+                            ><a> &nbsp;{{ calcDateTime(commentItem.createdDate) }} trước</a>
                         </div>
                     </div>
                     <p>
@@ -283,6 +284,20 @@ export default {
                 this.textWarning = 'Bạn cần đăng nhập để có thể bình luận phim này';
                 this.showDialogWarning = true;
             }
+        },
+
+        calcDateTime(createdDate) {
+            // Lấy thời điểm hiện tại
+            const now = moment();
+
+            // Lấy thời điểm truyền vào
+            const date = moment(createdDate);
+
+            // Tính toán khoảng thời gian từ thời điểm đó đến hiện tại
+            const duration = moment.duration(now.diff(date));
+
+            // Xuất ra chuỗi mô tả khoảng thời gian
+            return duration.humanize();
         },
     },
     created() {

@@ -444,12 +444,12 @@ export default {
                         });
                     })
                     .catch((err) => {
-                        this.$MToastMessage({
-                            titleToast: this.$MResource.VI.TOAST.TITLE_ERROR,
-                            messageToast: err,
-                            showToastMessage: true,
-                            typeToast: 'errorToast',
-                        });
+                        // this.$MToastMessage({
+                        //     titleToast: this.$MResource.VI.TOAST.TITLE_ERROR,
+                        //     messageToast: err,
+                        //     showToastMessage: true,
+                        //     typeToast: 'errorToast',
+                        // });
                         console.log('err: ', err);
                     });
             }

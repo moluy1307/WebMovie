@@ -211,7 +211,11 @@
                                     ></MInput>
                                 </div>
                                 <div class="w-350">
-                                    <MInput labelInput="Số tiền" propTabindex="0" v-model="movieInfor.amount"></MInput>
+                                    <MInputMoney
+                                        label="Số tiền"
+                                        propTabindex="0"
+                                        v-model="movieInfor.amount"
+                                    ></MInputMoney>
                                 </div>
                                 <div class="field-flex">
                                     <div class="infor">

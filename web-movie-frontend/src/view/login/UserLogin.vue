@@ -32,6 +32,15 @@
                             styleTooltip="top: 42px !important"
                         ></MInput>
                     </div>
+                    <!-- <div class="row" v-if="isFormSignup == true">
+                        <MInput
+                            labelInput="Tên đầy đủ:"
+                            v-model="insertUser.fullName"
+                            styleLabel="margin-bottom: 8px !important"
+                            newStyle="height: 42px !important;"
+                            styleBoxInput="height: 42px !important; margin-bottom: 25px"
+                        ></MInput>
+                    </div> -->
 
                     <div class="row" v-if="isFormSignup == true">
                         <MInput
@@ -334,6 +343,7 @@ export default {
             if (!isValid) {
                 return;
             }
+
             axios
                 .post(`${this.$MResource.API}/Users`, me.insertUser)
                 .then(() => {
@@ -387,7 +397,13 @@ export default {
             userInfor: {},
 
             txtConfirmPass: null,
-            insertUser: { username: '', password: '', email: '', roleId: '142cb08f-7c31-21fa-8e90-67245e8b283e' },
+            insertUser: {
+                username: '',
+                password: '',
+                fullName: '',
+                email: '',
+                roleId: '142cb08f-7c31-21fa-8e90-67245e8b283e',
+            },
 
             error: [],
             showDialog: false,

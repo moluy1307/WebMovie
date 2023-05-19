@@ -309,6 +309,14 @@ namespace Misa.Amis.DL.BaseDL
                     continue;
                 }
 
+                //Kiểm tra thuộc tính là mật khẩu
+                var isPass = Attribute.IsDefined(property, typeof(isPassword));
+
+                if (isPass == true)
+                {
+                    continue;
+                }
+
                 //Viết đối số trong DB
                 string argument = "@p_" + name;
 

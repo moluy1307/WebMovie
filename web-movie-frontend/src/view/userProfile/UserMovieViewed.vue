@@ -428,4 +428,10 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.noData {
+    margin-bottom: 30px;
+    /* font-size: 14px; */
+    color: #abb7c4;
+}
+</style>

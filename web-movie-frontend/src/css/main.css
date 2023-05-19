@@ -65,6 +65,70 @@ iframe {
     max-width: 100%;
     vertical-align: middle;
 }
+/* Custom checkbox */
+.chkCustom {
+    display: block;
+    position: relative;
+    padding-left: 28px;
+    margin-bottom: 0;
+    cursor: pointer;
+    font-weight: 500;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.chkCustom input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.chkCheckmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 18px;
+    width: 18px;
+    border: 2px solid #afafaf;
+    background-color: #fff;
+    border-radius: 4px;
+}
+
+.chkCustom input:checked ~ .chkCheckmark {
+    background-color: #50b83c;
+    border: 2px solid #50b83c;
+}
+
+.chkCustom input:focus ~ .chkCheckmark {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(115, 198, 99, 0.4);
+}
+
+.chkCheckmark:after {
+    content: '';
+    position: absolute;
+    display: none;
+}
+
+.chkCustom input:checked ~ .chkCheckmark:after {
+    display: block;
+}
+
+.chkCustom .chkCheckmark:after {
+    left: 5px;
+    top: 0px;
+    width: 5px;
+    height: 10px;
+    border: solid #fff;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
 
 /* =================================================== */
 /* Css custom multiple select */

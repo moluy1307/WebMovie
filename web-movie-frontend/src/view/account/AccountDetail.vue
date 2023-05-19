@@ -4,7 +4,21 @@
             <div class="form-header">
                 <div class="frm-header-left">
                     <div class="frm-title">Thông tin tài khoản</div>
+                    <div class="content-gap-12" v-if="!isAdd">
+                        <label class="chkCustom">
+                            Đổi mật khẩu
+                            <input
+                                type="checkbox"
+                                ref="titleCheckbox"
+                                v-model="checkEnableChangePass"
+                                :true-value="0"
+                                :false-value="1"
+                            />
+                            <span class="chkCheckmark"></span>
+                        </label>
+                    </div>
                 </div>
+
                 <div class="content-gap-12">
                     <div
                         v-tippy="{
@@ -44,28 +58,58 @@
                                 ></MInput>
                             </div>
                             <div class="frm-cal">
-                                <MInput
-                                    labelInput="Mật khẩu"
-                                    :isInputPassword="true"
-                                    v-model="userInformation.password"
-                                    propTabindex="0"
-                                    :newClass="!errorField.password ? '' : 'input-error'"
-                                    ref="refPassword"
-                                    :tooltipError="errorField.password"
-                                    errorMessage="Mật khẩu không được để trống"
-                                ></MInput>
+                                <template v-if="isAdd">
+                                    <MInput
+                                        labelInput="Mật khẩu"
+                                        :isInputPassword="true"
+                                        v-model="userInformation.password"
+                                        propTabindex="0"
+                                        :newClass="!errorField.password ? '' : 'input-error'"
+                                        ref="refPassword"
+                                        :tooltipError="errorField.password"
+                                        errorMessage="Mật khẩu không được để trống"
+                                    ></MInput>
+                                </template>
+                                <template v-else>
+                                    <MInput
+                                        labelInput="Mật khẩu mới"
+                                        :isInputPassword="true"
+                                        v-model="txtNewPass"
+                                        propTabindex="0"
+                                        :newClass="!errorField.password ? '' : 'input-error'"
+                                        ref="refPassword"
+                                        :tooltipError="errorField.password"
+                                        errorMessage="Mật khẩu không được để trống"
+                                        :isDisabled="checkEnableChangePass == 1"
+                                    ></MInput>
+                                </template>
                             </div>
                         </div>
-                        <MInput
-                            labelInput="Xác nhận mật khẩu"
-                            :isInputPassword="true"
-                            v-model="txtConfirmPass"
-                            propTabindex="0"
-                            :newClass="!errorField.confirm ? '' : 'input-error'"
-                            ref="refTextConfirm"
-                            :tooltipError="errorField.confirm"
-                            errorMessage="Nhập mật khẩu xác nhận"
-                        ></MInput>
+                        <template v-if="isAdd">
+                            <MInput
+                                labelInput="Xác nhận mật khẩu"
+                                :isInputPassword="true"
+                                v-model="txtConfirmPass"
+                                propTabindex="0"
+                                :newClass="!errorField.confirm ? '' : 'input-error'"
+                                ref="refTextConfirm"
+                                :tooltipError="errorField.confirm"
+                                errorMessage="Nhập mật khẩu xác nhận"
+                            ></MInput>
+                        </template>
+                        <template v-else
+                            ><MInput
+                                labelInput="Xác nhận mật khẩu mới"
+                                :isInputPassword="true"
+                                v-model="txtConfirmNewPass"
+                                propTabindex="0"
+                                :newClass="!errorField.confirm ? '' : 'input-error'"
+                                ref="refTextConfirm"
+                                :tooltipError="errorField.confirm"
+                                errorMessage="Nhập mật khẩu xác nhận"
+                                :isDisabled="checkEnableChangePass == 1"
+                            ></MInput
+                        ></template>
                         <div class="infor">
                             <MDropdownList
                                 typeCbo="dropdown"
@@ -182,13 +226,20 @@
                     ></MButton>
                     <div class="btn-left">
                         <!-- <button class="btn btn-bg" @click.prevent="btnSaveOnClick">Cất</button> -->
+                        <button
+                            class="btn-custom-default btn-bg"
+                            @click="changePassword"
+                            :disabled="checkEnableChangePass == 1"
+                            v-if="!isAdd"
+                        >
+                            Đổi mật khẩu
+                        </button>
                         <MButton
                             @click="btnSaveOnClick"
-                            :class="{ 'btn-custom-default': true, 'btn-bg': true }"
+                            :class="{ 'btn-custom-default': true }"
                             label="Cất"
                             ref="btnSave"
                         ></MButton>
-                        <!-- <button class="btn" onclick="keepadd()">Cất và Thêm</button> -->
                     </div>
                 </div>
             </div>
@@ -308,6 +359,28 @@ export default {
             } else {
                 this.$refs.dropdownRole.$refs.inputDropdown.classList.remove('input-error');
                 this.errorField.role = false;
+            }
+        },
+
+        txtConfirmNewPass: function (value) {
+            if (value.length <= 0) {
+                this.errorField.confirm = true;
+                this.$refs.refTextConfirm.$refs.txtInput.classList.add('input-error');
+                // this.$refs.refTextConfirm.$refs.txtInput.focus();
+            } else {
+                this.$refs.refTextConfirm.$refs.txtInput.classList.remove('input-error');
+                this.errorField.confirm = false;
+            }
+        },
+
+        txtNewPass: function (value) {
+            if (value.length <= 0) {
+                this.errorField.password = true;
+                this.$refs.refPassword.$refs.txtInput.classList.add('input-error');
+                // this.$refs.refPassword.$refs.txtInput.focus();
+            } else {
+                this.$refs.refPassword.$refs.txtInput.classList.remove('input-error');
+                this.errorField.password = false;
             }
         },
     },
@@ -487,6 +560,76 @@ export default {
                     });
             }
         },
+
+        /**
+         * Kiểm tra dữ liệu mật khẩu bắt buộc nhập
+         * <br/>
+         * CreatedBy: huynq (5/1/2023)
+         */
+        checkFormPass() {
+            try {
+                this.error = [];
+                var isValid = true;
+
+                if (this.txtConfirmNewPass != null && this.txtNewPass != null) {
+                    if (this.txtNewPass != this.txtConfirmNewPass) {
+                        isValid = false;
+                        this.error.push('Mật khẩu xác nhận chưa đúng');
+                        this.showDialog = true;
+                    }
+                }
+
+                if (this.txtConfirmNewPass == null) {
+                    isValid = false;
+                    this.error.push('Nhập mật khẩu xác nhận');
+                    this.showDialog = true;
+                    this.errorField.confirm = true;
+                }
+
+                if (this.txtNewPass == null) {
+                    isValid = false;
+                    this.error.push('Mật khẩu không được để trống');
+                    this.showDialog = true;
+                    this.errorField.password = true;
+                }
+
+                return isValid;
+            } catch (err) {
+                this.$MToastMessage({
+                    titleToast: this.$MResource.VI.TOAST.TITLE_ERROR,
+                    messageToast: err,
+                    showToastMessage: true,
+                    typeToast: 'errorToast',
+                });
+            }
+        },
+
+        changePassword() {
+            var isValid = this.checkFormPass();
+            if (!isValid) {
+                return;
+            }
+            axios
+                .put(`${this.$MResource.API}/Users/changePassword?userId=${this.id}&password=${this.txtConfirmNewPass}`)
+                .then(() => {
+                    this.$MToastMessage({
+                        titleToast: this.$MResource.VI.TOAST.TITLE_SUCCESS,
+                        messageToast: 'Thay đổi mật khẩu thành công',
+                        showToastMessage: true,
+                        typeToast: 'successToast',
+                    });
+                    this.$emit('onClose');
+                    this.$emit('dataRecovery');
+                })
+                .catch((err) => {
+                    this.$MToastMessage({
+                        titleToast: this.$MResource.VI.TOAST.TITLE_ERROR,
+                        messageToast: err,
+                        showToastMessage: true,
+                        typeToast: 'errorToast',
+                    });
+                });
+        },
     },
     created() {
         var me = this;
@@ -523,7 +666,10 @@ export default {
 
             showDialogWarning: false,
             textWarning: '',
-            // uuid: uuid.v1(),
+
+            checkEnableChangePass: 1,
+            txtConfirmNewPass: null,
+            txtNewPass: null,
         };
     },
 };
@@ -531,4 +677,11 @@ export default {
 
 <style scoped>
 @import url('./account.css');
+
+button:disabled,
+button[disabled] {
+    border: 1px solid #999999;
+    background-color: #cccccc;
+    color: #666666;
+}
 </style>

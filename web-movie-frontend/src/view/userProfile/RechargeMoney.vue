@@ -107,12 +107,12 @@ export default {
             this.orderInfor.recharge = valueCoin;
         },
 
-        btnRecharge() {
+        async btnRecharge() {
             var me = this;
             me.orderInfor.orderName = 'Yêu cầu nạp tiền';
             me.orderInfor.userId = this.$route.params.id;
             me.orderInfor.movieId = null;
-            axios
+            await axios
                 .post(`${this.$MResource.API}/OrderUsers`, me.orderInfor)
                 .then(() => {
                     this.$MToastMessage({
@@ -125,9 +125,13 @@ export default {
                     const storage = localStorage.getItem('userInfor');
                     if (storage !== null) {
                         this.userInformation = JSON.parse(storage);
+                        console.log('du lieu da duoc goi den day: ', this.userInformation);
+                        if (this.userInformation.fullName == '' || this.userInformation.fullName == null) {
+                            this.userInformation.fullName = 'Tài khoản chưa cập nhật tên đầy đủ';
+                        }
                         axios
                             .post(
-                                `${this.$MResource.API}/OrderUsers/SendEmail?subjectMess=${me.orderInfor.orderName}&accountName=${this.userInformation.username}&customerName=${this.userInformation.fullName}&moneyRecharge=${this.orderInfor.recharge}`,
+                                `${this.$MResource.API}/OrderUsers/SendEmail?subjectMess=${this.orderInfor.orderName}&accountName=${this.userInformation.username}&customerName=${this.userInformation.fullName}&moneyRecharge=${this.orderInfor.recharge}`,
                             )
                             .then(() => {})
                             .catch((err) => {
@@ -136,7 +140,7 @@ export default {
                     }
 
                     me.$emit('onClose');
-                    location.reload();
+                    // location.reload();
                 })
                 .catch((err) => {
                     let response = err.response;

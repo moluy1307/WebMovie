@@ -18,6 +18,7 @@ namespace WebMovie.Backend.Common.Entities
         [RecordCode]
         public string Username { get; set; }
 
+        [isPassword]
         public string? Password { get; set; }
 
         public Guid? RoleId { get; set; }

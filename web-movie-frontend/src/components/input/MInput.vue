@@ -40,6 +40,7 @@
                     {{ errorMessage }}
                 </div>
             </div>
+            <div class="disabled-input" v-if="isDisabled == true"></div>
         </div>
     </div>
 </template>
@@ -65,6 +66,7 @@ export default {
         'styleLabel',
         'styleTooltip',
         'isInputPassword',
+        'isDisabled',
     ],
     emits: ['update:modelValue'],
     watch: {
@@ -116,5 +118,15 @@ export default {
     flex-direction: column;
     justify-content: center;
     position: relative;
+}
+
+.disabled-input {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    cursor: pointer;
+    border-radius: 4px;
+    background-color: #ebebeb;
+    border: 1px solid #e0e0e0;
 }
 </style>

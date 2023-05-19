@@ -109,4 +109,12 @@
     {
     }
 
+    /// <summary>
+    /// Attribute đánh dấu thuộc tính là mật khẩu
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Property)]
+    public class isPassword : Attribute
+    {
+    }
+
 }

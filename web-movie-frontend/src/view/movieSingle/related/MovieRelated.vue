@@ -6,11 +6,11 @@
                     Tổng số: <span>{{ totalRecord }} phim</span>
                 </p>
                 <div style="display: flex; align-items: center; column-gap: 12px">
-                    <label>Sắp xếp theo:</label>
+                    <!-- <label>Sắp xếp theo:</label>
                     <select>
                         <option value="popularity">Mới nhất</option>
                         <option value="popularity">Cũ nhất</option>
-                    </select>
+                    </select> -->
                 </div>
             </div>
             <template v-for="(movieRelatedItem, indexRelatedItem) in movieRelatedList" :key="indexRelatedItem">
